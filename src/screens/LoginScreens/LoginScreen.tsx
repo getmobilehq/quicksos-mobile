@@ -6,7 +6,9 @@ import {Input, Stack, Button, Box} from "native-base"
 import styles from './styles';
 
 export default function HomeScreen(props: any) {
-  console.log(props)
+  React.useEffect(() => {
+    props.navigation.navigate("Home")
+  }, [])
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.loginIntro}>Log in into your account</Text>

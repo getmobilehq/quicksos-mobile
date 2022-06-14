@@ -1,12 +1,29 @@
 import { Avatar } from 'native-base';
-import * as React from 'react';
+import React, {useState} from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
+import NotificationComponent from "../../components/NotificationComponent.tsx/index"
 
 export default function HomeScreen() {
+  const [tabs, setTabs] = useState([{
+    name: "Recents",
+    active: false,
+  },
+  {
+    name: "Today",
+    active: true,
+  },
+  {
+    name: "Recents",
+    active: false,
+  },
+
+
+
+])
     return (
       <SafeAreaView style={styles.container}>
         {/* DashBoard */}
@@ -40,9 +57,21 @@ export default function HomeScreen() {
 
         {/* Updates on happenings */}
         <View> 
-          
+          {/* Tabs */}
+          <View 
+          style={styles.tabsContainer}>
+          {tabs.map(({name, active}) => (
+            <View>
+            <Text style={styles.tabsText}>{name}</Text>
+            {active && <View style={styles.indicator}/>}
+            </View>
+          ))}
+          </View>
+        
         </View>
-
+           {[1,2,3, 4].map(data => (
+            <NotificationComponent />
+           )) }
         </View>
       </SafeAreaView>
     );

@@ -10,7 +10,6 @@ import { View, Text, Image } from 'react-native';
 const Logo  = require("./assets/QuickSOS.png")
 
 const screnOptions: NativeStackNavigationOptions = {
-  headerMode: "screen",
   // header: () => (
   //   <View> 
   //     <Image source={Logo} width={60} height={20}/>

@@ -63,6 +63,24 @@ const styles = StyleSheet.create({
         fontSize: 24,
         lineHeight: 22,
         color: primaryColors.white
+        },
+        tabsContainer: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingVertical: 10,
+            marginBottom: 10,
+        },
+        tabsText: {
+           color:  primaryColors.white,
+           fontSize: 16,
+        },
+        indicator: {
+            width: 25,
+            height:2,
+            backgroundColor: primaryColors.white,
+            marginHorizontal: 10,
         }
      
 })
