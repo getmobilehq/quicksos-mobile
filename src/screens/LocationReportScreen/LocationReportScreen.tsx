@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './styles'
 import { Box, Button, Image, Input, ScrollView, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
@@ -8,8 +8,14 @@ const Image2 = require("../../../assets/Image-3.png")
 import { Ionicons } from '@expo/vector-icons';
 import App from '../../../App'
 import AppHeader from '../../components/AppHeader/AppHeader'
+import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
 
 const locationReportScreen = (props: any) => {
+  const [showModal, setShowModal] = useState(false)
+
+  const onClickButton = () => {
+    setShowModal(false)
+  }
   return (
     <SafeAreaView style={styles.container}>
     <View style={{paddingVertical:10}}>
@@ -57,7 +63,7 @@ const locationReportScreen = (props: any) => {
       
     </View>
     <TouchableOpacity onPress={() => props.navigation.navigate("ResetPassword")} > 
-        <Box alignItems="center" width="100%" py="10">
+        <Box alignItems="center" width="100%" py="5">
           <Button isLoading={false} 
           bgColor={primaryColors.white} 
            width="300" _text={{color: "black", fontWeight: "bold"}}>
@@ -65,9 +71,19 @@ const locationReportScreen = (props: any) => {
           </Button>
       </Box>
     </TouchableOpacity>
+    <TouchableOpacity onPress={() => setShowModal(true)}>
     <Text style={styles.requestText}>Request for other responders</Text>
+    </TouchableOpacity>
+    <Box mt="10"/>
+
     </ScrollView>
     {/* </ScrollView> */}
+    <RequestResponder
+    showModal={showModal}
+    setShowModal={setShowModal}
+    buttonText='Send Request'
+    onClickButton={onClickButton}
+    />
 </SafeAreaView>
   )
 }
