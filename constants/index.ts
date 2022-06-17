@@ -3,6 +3,6 @@ export const primaryColors = {
     primaryGray: "#808080",
     naturalColor: "#1D2671",
     naturalColorDark: "#0F084E",
-    white: "#fff"
+    white: "#fff",
 }
 

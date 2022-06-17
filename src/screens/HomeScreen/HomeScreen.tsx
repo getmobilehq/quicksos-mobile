@@ -1,5 +1,5 @@
 import { Avatar } from 'native-base';
-import React, {useState} from 'react';
+import React, {PropsWithChildren, useState} from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import NotificationComponent from "../../components/NotificationComponent.tsx/index"
 
-export default function HomeScreen() {
+export default function HomeScreen(props: any) {
   const [tabs, setTabs] = useState([{
     name: "Recents",
     active: false,
@@ -21,9 +21,11 @@ export default function HomeScreen() {
     active: false,
   },
 
-
-
 ])
+
+React.useEffect(() => {
+  props.navigation.navigate("Alert")
+})
     return (
       <SafeAreaView style={styles.container}>
         {/* DashBoard */}
