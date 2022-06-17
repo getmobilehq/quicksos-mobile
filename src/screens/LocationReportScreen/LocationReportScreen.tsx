@@ -6,10 +6,15 @@ import { primaryColors } from '../../../constants'
 const Image1 = require("../../../assets/Image-2.png")
 const Image2 = require("../../../assets/Image-3.png")
 import { Ionicons } from '@expo/vector-icons';
+import App from '../../../App'
+import AppHeader from '../../components/AppHeader/AppHeader'
 
 const locationReportScreen = (props: any) => {
   return (
     <SafeAreaView style={styles.container}>
+    <View style={{paddingVertical:10}}>
+      <AppHeader />
+      </View>
     <ScrollView style={styles.alertContainer}>
         <Text style={styles.alertHeader}>Location Report</Text>
   <Stack  space={4} w="100%" py={5}> 

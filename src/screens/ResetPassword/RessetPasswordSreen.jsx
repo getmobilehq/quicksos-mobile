@@ -4,6 +4,7 @@ import styles from "./styles"
 import InputComponent from '../../components/InputComponent/InputComponent'
 import { TouchableOpacityBase } from 'react-native'
 import { Box, Button } from 'native-base'
+import ModalComponent from '../../components/Modal/Modal'
 const RessetPasswordSreen = () => {
   return (
     <SafeAreaView styles={styles.container}>
@@ -29,6 +30,7 @@ const RessetPasswordSreen = () => {
               </Button>
           </Box>
         </TouchableOpacity>
+        <ModalComponent />
     </SafeAreaView>
   )
 }

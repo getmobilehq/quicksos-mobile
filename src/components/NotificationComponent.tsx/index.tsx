@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Button, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from './styles'
+import { useNavigation } from '@react-navigation/native'
 
-const Index = () => {
+const Index = (props: any) => {
+  const navigation = useNavigation()
   return (
-    <View 
+    <TouchableOpacity 
+    onPress={() =>  navigation.navigate("Alert")}
     style={styles.container}> 
         <Text style={styles.text}>
             01
@@ -16,7 +19,7 @@ const Index = () => {
             <Text style={styles.text}>Pen Cinema, Agege</Text>
         </View>
         <Text style={styles.underlineText}>Open</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 

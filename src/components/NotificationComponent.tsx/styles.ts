@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native"
+import { scale } from "react-native-size-matters"
 import { primaryColors } from "../../../constants"
 const styles = StyleSheet.create({
 container: {
@@ -7,15 +8,15 @@ container: {
     flexDirection: "row",
     alignItems : "flex-start",
     justifyContent : "space-between",
-    paddingVertical: 10,
-    marginVertical: 10,
-    borderRadius: 10,
+    paddingVertical: scale(10),
+    marginVertical: scale(10),
+    borderRadius: scale(10),
     backgroundColor: primaryColors.naturalColorDark,
-    padding: 10,
-    height: 80,
+    padding: scale(10),
+    height: scale(60),
 }, 
 content: {
-marginLeft: -100,
+marginLeft: -70,
 height: "100%",
 display: "flex",
 justifyContent: "space-between",
@@ -24,19 +25,19 @@ boldText: {
     fontFamily: 'Montserrat',
     fontStyle: "normal",
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: scale(14),
     color: primaryColors.white,
 },
 text: {
 fontFamily: 'Montserrat',
 fontWeight: "400",
-fontSize: 14,
+fontSize: scale(14),
 color: primaryColors.white,
 },
 underlineText: {
     fontFamily: 'Montserrat',
     fontWeight: "700",
-    fontSize: 14,
+    fontSize: scale(14),
     color: primaryColors.white,
     textDecoration: "underline", 
     textDecorationStyle: "solid", 

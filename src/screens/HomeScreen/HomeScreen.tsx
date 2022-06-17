@@ -1,4 +1,4 @@
-import { Avatar } from 'native-base';
+import { Avatar, ScrollView } from 'native-base';
 import React, {PropsWithChildren, useState} from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import styles from './styles';
@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import NotificationComponent from "../../components/NotificationComponent.tsx/index"
+import AppHeader from '../../components/AppHeader/AppHeader';
 
 export default function HomeScreen(props: any) {
   const [tabs, setTabs] = useState([{
@@ -22,12 +23,22 @@ export default function HomeScreen(props: any) {
   },
 
 ])
-
-React.useEffect(() => {
+const navigate = () => {
   props.navigation.navigate("Alert")
-})
+  console.log("clicking")
+
+}
+// React.useEffect(() => {
+//   props.navigation.navigate("Alert")
+
+// })
     return (
       <SafeAreaView style={styles.container}>
+        <View style={{paddingVertical: 10}}> 
+        <AppHeader />
+        </View>
+        <ScrollView>
+
         {/* DashBoard */}
         <View style={styles.dashboard}>
           <View style={styles.dashboardHeader}> 
@@ -71,10 +82,17 @@ React.useEffect(() => {
           </View>
         
         </View>
+        <ScrollView>
            {[1,2,3, 4].map(data => (
-            <NotificationComponent />
+               <NotificationComponent navigate={() => navigate()}/>
+           
            )) }
+        </ScrollView>
+
+
         </View>
+        </ScrollView>
+
       </SafeAreaView>
     );
   }

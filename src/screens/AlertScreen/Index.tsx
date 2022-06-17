@@ -4,15 +4,20 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Box, Button, Input,  Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"
+import AppHeader from '../../components/AppHeader/AppHeader'
 const FireImage = require("../../../assets/Image.png")
 
 const AlertScreen = (props: any) => {
   const [buttonText, setButtonText] = React.useState("Respond")
-  React.useEffect(() => {
-    props.navigation.navigate("Location")
-  })
+  // React.useEffect(() => {
+  //   props.navigation.navigate("Location")
+  // })
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{paddingVertical:10}}>
+      <AppHeader />
+      </View>
+
         <ScrollView style={styles.alertContainer}>
         <Text style={styles.alertHeader}>Alerts</Text>
       <Stack  space={4} w="100%" py={5}> 
@@ -48,7 +53,11 @@ const AlertScreen = (props: any) => {
             />
             </View>
         </View>
-        <TouchableOpacity onPress={() => setButtonText("Arrived") }> 
+        <TouchableOpacity onPress={() =>  {
+            // setButtonText("Arrived")  
+    props.navigation.navigate("Location")
+
+        } }> 
             <Box alignItems="center" width="100%" py="10">
               <Button isLoading={false} 
               bgColor={primaryColors.white} 

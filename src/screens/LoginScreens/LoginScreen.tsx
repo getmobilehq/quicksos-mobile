@@ -2,15 +2,26 @@ import * as React from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {primaryColors} from "../../../constants/index"
-import {Input, Stack, Button, Box} from "native-base"
+import {Input, Stack, Button, Box, Image} from "native-base"
 import styles from './styles';
-
+import AppHeader from '../../components/AppHeader/AppHeader';
+const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
-  React.useEffect(() => {
-    props.navigation.navigate("Home")
-  }, [])
+  // React.useEffect(() => {
+  //   props.navigation.navigate("Home")
+  // }, [])
     return (
       <SafeAreaView style={styles.container}>
+        <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
+        <Image
+        source={QuickSos}
+        style={{
+            width:60,
+            height:30,
+            resizeMode: "contain",
+        }}
+        />
+        </View>
         <Text style={styles.loginIntro}>Log in into your account</Text>
         <Text style={styles.smallText}>Please enter the details below to log into your account.</Text>
 
