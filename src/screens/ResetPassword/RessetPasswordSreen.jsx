@@ -6,6 +6,7 @@ import { TouchableOpacityBase } from 'react-native'
 import { Box, Button } from 'native-base'
 import ModalComponent from '../../components/Modal/Modal'
 import routes from '../../routes'
+import AppHeader from '../../components/AppHeader/AppHeader'
 const RessetPasswordSreen = (props) => {
   const [showModal, setShowModal] = useState(false)
   const ModalButtonPressed = () => {
@@ -14,6 +15,7 @@ const RessetPasswordSreen = (props) => {
   }
   return (
     <SafeAreaView styles={styles.container}>
+      <AppHeader />
       <Text style={styles.headerText}>Password Reset</Text>
       <Text style={styles.headerTextLigher}>Please enter the details below to reset your password</Text>
       <View style={styles.inputComponentWrapper}> 
@@ -30,8 +32,8 @@ const RessetPasswordSreen = (props) => {
       </View>
 
       <TouchableOpacity onPress={() => {
-//  props.navigation.navigate("Home")
- setShowModal(true)
+ props.navigation.navigate(routes.profile)
+//  setShowModal(true)
       } }> 
             <Box alignItems="center" width="100%" py="5">
               <Button isLoading={false} variant="solid" width="300">

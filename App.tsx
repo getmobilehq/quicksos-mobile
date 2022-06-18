@@ -11,6 +11,7 @@ import AlertScreen from './src/screens/AlertScreen/Index';
 import locationReportScreen from './src/screens/LocationReportScreen/LocationReportScreen';
 import RessetPasswordSreen from './src/screens/ResetPassword/RessetPasswordSreen';
 import routes from './src/routes';
+import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
 const Logo  = require("./assets/QuickSOS.png")
 
 const screnOptions: NativeStackNavigationOptions = {
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name={routes.Alert} component={AlertScreen} />
         <Stack.Screen name={routes.Location}component={locationReportScreen} />
         <Stack.Screen name={routes.ResetPassword}component={RessetPasswordSreen} />
+        <Stack.Screen name={routes.profile}component={ProfileScreen} />
 
       </Stack.Navigator>
       </NativeBaseProvider>

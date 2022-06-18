@@ -4,6 +4,7 @@ const routes = {
     Alert: "Alert",
     Location: "Location",
     ResetPassword: "ResetPassword",
+profile: "Profile"
 
 }
 

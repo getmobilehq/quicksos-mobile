@@ -27,11 +27,11 @@ const AppHeader = (props:any) => {
         />
         </TouchableOpacity>
        
-           {/* <Avatar source={{
+        { props.avatar &&  <Avatar source={{
       uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg"
     }}>
         L
-      </Avatar> */}
+      </Avatar>}
     </View>
   )
 }
