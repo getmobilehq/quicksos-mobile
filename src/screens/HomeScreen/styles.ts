@@ -75,6 +75,14 @@ const styles = StyleSheet.create({
         tabsText: {
            color:  primaryColors.white,
            fontSize: 16,
+          
+        },
+        tabsActive: {
+            color:  primaryColors.white,
+            fontSize: 16,
+            textDecorationColor: primaryColors.white,
+            textDecorationStyle: "solid",
+            textDecorationLine: "underline",
         },
         indicator: {
             width: 25,

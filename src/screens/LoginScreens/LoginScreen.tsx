@@ -5,11 +5,20 @@ import {primaryColors} from "../../../constants/index"
 import {Input, Stack, Button, Box, Image} from "native-base"
 import styles from './styles';
 import AppHeader from '../../components/AppHeader/AppHeader';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
   // React.useEffect(() => {
   //   props.navigation.navigate("Home")
   // }, [])
+
+  const { isLoading, error, data } = useQuery('repoData', () =>
+     axios.get('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
+       console.log(res.data)
+    )
+   )
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>

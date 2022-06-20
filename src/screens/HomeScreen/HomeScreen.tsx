@@ -1,6 +1,6 @@
-import { Avatar, ScrollView } from 'native-base';
+import { Avatar, ScrollView,  } from 'native-base';
 import React, {PropsWithChildren, useState} from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -9,20 +9,32 @@ import NotificationComponent from "../../components/NotificationComponent.tsx/in
 import AppHeader from '../../components/AppHeader/AppHeader';
 
 export default function HomeScreen(props: any) {
-  const [tabs, setTabs] = useState([{
-    name: "Recents",
-    active: false,
-  },
-  {
-    name: "Today",
-    active: true,
-  },
-  {
-    name: "Recents",
-    active: false,
-  },
+  const [recents, setRecents] = useState(true)
+  const [today, setToday] = useState(false)
+  const [all, setAll] = useState(false)
 
-])
+  const getRecents = () => {
+    setToday(false)
+    setAll(false)
+    setRecents(true)
+
+  }
+
+  const getToday = () => {
+    setAll(false)
+    setRecents(false)
+    setToday(true)
+
+  }
+
+  const getAll = () => {
+    setRecents(false)
+    setToday(false)
+    setAll(true)
+
+  }
+
+
 const navigate = () => {
   props.navigation.navigate("Alert")
   console.log("clicking")
@@ -73,12 +85,24 @@ const navigate = () => {
           {/* Tabs */}
           <View 
           style={styles.tabsContainer}>
-          {tabs.map(({name, active}) => (
-            <View>
-            <Text style={styles.tabsText}>{name}</Text>
-            {active && <View style={styles.indicator}/>}
-            </View>
-          ))}
+            <TouchableOpacity
+            onPress={getRecents}
+            >
+            <Text style={recents ? styles.tabsActive : styles.tabsText}>Recents</Text>
+            {/* {recents && <View style={styles.indicator}/>} */}
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={getToday}
+            >
+            <Text style={today ? styles.tabsActive : styles.tabsText}>Today</Text>
+            {/* {today && <View style={styles.indicator}/>} */}
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={getAll}
+            >
+            <Text style={all ? styles.tabsActive : styles.tabsText}>All</Text>
+            {/* {all && <View style={styles.indicator}/>} */}
+            </TouchableOpacity>
           </View>
         
         </View>
