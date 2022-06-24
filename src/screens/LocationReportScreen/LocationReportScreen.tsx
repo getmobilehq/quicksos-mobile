@@ -1,21 +1,50 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Box, Button, Image, Input, ScrollView, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 const Image1 = require("../../../assets/Image-2.png")
 const Image2 = require("../../../assets/Image-3.png")
 import { Ionicons } from '@expo/vector-icons';
 import App from '../../../App'
 import AppHeader from '../../components/AppHeader/AppHeader'
 import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
+import * as ImagePicker from 'expo-image-picker';
+
 
 const locationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
 
+  const [reports, setReports] = useState(["report",])
+
   const onClickButton = () => {
     setShowModal(false)
   }
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const onPressAddIcon = () => { 
+    setReports(prev => [...prev, "reports1"])
+  }
+
+
   return (
     <SafeAreaView style={styles.container}>
     <View style={{paddingVertical:10}}>
@@ -26,27 +55,39 @@ const locationReportScreen = (props: any) => {
   <Stack  space={4} w="100%" py={5}> 
   <View style={styles.headerStyle}>
          <Text style={styles.label}>Report</Text>
+        {reports.length !== 2 &&
+        <TouchableOpacity
+        onPress={onPressAddIcon}
+        >
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
+        </TouchableOpacity>
+        }
         </View>
-        <Input 
-        multiline
-        variant="underlined" color={primaryColors.white}
+       {reports.map(report =>(
+          <Input 
+          multiline
+        _focus={{borderColor: "white"}}
+          variant="underlined" color={primaryColors.white}
           placeholderTextColor={primaryColors.white}
-         
-         placeholder="Emergency has been calmed, casulties have been evacuated and injured persons have been attended to" 
-         size={"md"}
+        placeholder="Emergency has been calmed, casulties have been evacuated and injured persons have been attended to" 
+        size={"md"}
         />
+       )
+      
+       )}
     </Stack>
 
     <View>
         <View style={styles.headerStyle}> 
         <Text style={styles.label}>Multimedia</Text>
+        <TouchableOpacity onPress={pickImage}>
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
+        </TouchableOpacity>
         </View>
         <View style={{paddingTop: 10}}> 
         <Image 
         alt=""
-        source={Image1}
+        source={image ? {uri: image}: Image1}
         style={styles.stretch}
         />
         </View>

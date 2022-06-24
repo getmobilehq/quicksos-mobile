@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 modalText: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
 }
 })
 

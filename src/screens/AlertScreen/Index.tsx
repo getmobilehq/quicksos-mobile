@@ -1,6 +1,6 @@
-import { View, Text, SafeAreaView, Image, TouchableOpacity, ScrollView} from 'react-native'
+import { View, Text, SafeAreaView, Image, ScrollView} from 'react-native'
 import React, { PropsWithChildren } from 'react'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, Input,  Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"

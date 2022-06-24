@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         },
         dashboardHeaderText: {
             color: primaryColors.white,
-            fontFamily: 'Montserrat',
+            // fontFamily: 'Montserrat',
             fontWeight: "600",
             fontSize: 18,
             lineHeight: 22,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         },
         location: {
-            fontFamily: 'Montserrat',
+            // fontFamily: 'Montserrat',
             fontWeight: "400",
             fontSize: 14,
             color: primaryColors.white,

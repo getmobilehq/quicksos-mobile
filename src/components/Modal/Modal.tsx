@@ -1,4 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
 import React, { useState } from 'react'
 import { Box, Button, Center, FormControl, Input, Modal } from 'native-base';
 import styles from "./style"

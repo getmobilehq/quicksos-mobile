@@ -7,7 +7,9 @@ const InputComponent = (props: any) => {
   return (
     <Stack  space={4} w="100%"  py={5}> 
     <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>{props.title}</Text>
-    <Input variant="underlined" placeholder={props.placeholder}   accessibilityLabel='Unit' />
+    <Input size="lg" variant="underlined" placeholder={props.placeholder}   accessibilityLabel='Unit' type={props.type}
+    onChangeText={props.onChangeText}
+    />
 </Stack>
   )
 }
