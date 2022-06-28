@@ -10,7 +10,8 @@ const AvatarComponent = (props:any) => {
         fontFamily: 'Montserrat',
         fontWeight: "600",
         fontSize: 24,
-        lineHeight: 29
+        lineHeight: 29,
+        color: props.color ? props.color : "",
       }}>L</Text>
     </View>
   )

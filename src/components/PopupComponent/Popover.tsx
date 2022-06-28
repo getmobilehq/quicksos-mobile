@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './style';
 import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
+import AvatarComponent from '../Avatar';
+import { primaryColors } from '../../../constants';
 
 
 const PopoverComponent = (props: any) => {
@@ -29,11 +31,7 @@ const PopoverComponent = (props: any) => {
       {...triggerProps}
       onPress={() => props.setIsOpen(true)}
       >
-      <Avatar source={{
-        uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg"
-      }}>
-          L
-        </Avatar>
+      <AvatarComponent backgroundColor={primaryColors.naturalColor} color={primaryColors.white}/>
         </Button>
     }}>
         <Popover.Content width="56" >
@@ -41,10 +39,7 @@ const PopoverComponent = (props: any) => {
         <View style={{backgroundColor: "#fff", paddingVertical: 10,}}>
             <View style={styles.popoverHeader}> 
             <TouchableOpacity>
-            <Avatar source={{
-        uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg"
-            }}>
-           </Avatar> 
+            <AvatarComponent backgroundColor={primaryColors.naturalColor} color={primaryColors.white}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.setIsOpen(false)}>
             <AntDesign name="close" size={24} color="black" />

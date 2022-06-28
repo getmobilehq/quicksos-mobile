@@ -6,9 +6,12 @@ import { Avatar } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import styles from './style'
+import PopoverComponent from '../PopupComponent/Popover'
 
 const AppHeader = (props:any) => {
   const navigation = useNavigation()
+  const [isOpen, setIsOpen] = React.useState(false)
+
   return (
     <View style={styles.container}>
         <TouchableOpacity 
@@ -27,11 +30,7 @@ const AppHeader = (props:any) => {
         />
         </TouchableOpacity>
        
-        { props.avatar &&  <Avatar source={{
-      uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg"
-    }}>
-        L
-      </Avatar>}
+        { props.avatar && <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen} />}
     </View>
   )
 }

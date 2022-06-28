@@ -103,8 +103,8 @@ if (isError) {
             style={{marginRight: -10}}
             onPress={() =>setIsOpen(true)}
             >
-              <AvatarComponent/>
-           {/* <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen}/> */}
+              {/* <AvatarComponent/> */}
+           <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen}/>
       </TouchableOpacity>
       
           </View>
