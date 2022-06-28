@@ -25,8 +25,6 @@ const ChangePassword = async (body:ChangePasswordDetails) => {
             headers: {
                 'Content-Type': 'application/json',
                 accept: "application/json",
-                "Authorization": `Bearer ${token}`
-
             }
         })
         return result;

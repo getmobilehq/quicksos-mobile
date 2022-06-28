@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import { Alert } from 'react-native';
 import endpoints from './endpoints';
 import routes from './src/routes';
 
@@ -27,7 +28,8 @@ instance.interceptors.response.use(function (response) {
     console.log("from the interceptors error", error.message)
     if (error.response.status == 401) {
       // instance.post(endpoints.refresh, data: {token : ""})
-      console.log("it is 401")
+      // console.log("it is 401")
+      Alert.alert(error.message)
     }
 
     // console.log(error.response.data);

@@ -10,7 +10,7 @@ import routes from '../../routes'
 import AppHeader from '../../components/AppHeader/AppHeader'
 import { useMutation } from 'react-query'
 import ChangePassword from '../../requests/mutation/changePassword'
-const RessetPasswordSreen = (props) => {
+const RessetPasswordSreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -50,7 +50,7 @@ const RessetPasswordSreen = (props) => {
   }, [oldPassword, newPassword, confirmPassword,])
 
   return (
-    <SafeAreaView styles={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppHeader />
       <Text style={styles.headerText}>Password Reset</Text>
       <Text style={styles.headerTextLigher}>Please enter the details below to reset your password</Text>
@@ -58,17 +58,17 @@ const RessetPasswordSreen = (props) => {
 
       <View > 
         <InputComponent title="Old Password" placeholder=" Enter Old Password" type="password"
-        onChangeText={(text) => setOldPassword(text)}
+        onChangeText={(text: string) => setOldPassword(text)}
         />
       </View>
       <View> 
         <InputComponent title="New Password" placeholder=" Enter New Password" 
-        type="password" onChangeText={(text) => setNewPassword(text)} />
+        type="password" onChangeText={(text: string) => setNewPassword(text)} />
       
       </View>
       <View> 
         <InputComponent title="Confirm Password" placeholder="Confirm Password"
-        type="password" onChangeText={(text) => setConfirmPassword(text)} 
+        type="password" onChangeText={(text: string) => setConfirmPassword(text)} 
         />
       </View>
       </View>

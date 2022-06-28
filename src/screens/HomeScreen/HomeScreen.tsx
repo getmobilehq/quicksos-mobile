@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 import PopoverComponent from '../../components/PopupComponent/Popover';
+import AvatarComponent from '../../components/Avatar';
 const QuickSos = require('../../../assets/QuickSOS.png')
 
 export default function HomeScreen(props: any) {
@@ -20,6 +21,7 @@ export default function HomeScreen(props: any) {
   const [today, setToday] = useState(false)
   const [all, setAll] = useState(false)
   const {user, setUser} = useAuthContext()
+  const [isOpen, setIsOpen] = useState(false)
 
 
   const getRecents = () => {
@@ -99,10 +101,10 @@ if (isError) {
             <Text  style={styles.dashboardHeaderText}>Welcome {user.lastName}</Text>
             <TouchableOpacity
             style={{marginRight: -10}}
-            // onPress={logOut}
+            onPress={() =>setIsOpen(true)}
             >
-
-           <PopoverComponent />
+              <AvatarComponent/>
+           {/* <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen}/> */}
       </TouchableOpacity>
       
           </View>
@@ -158,11 +160,11 @@ if (isError) {
           </View>
            }
            {
-            isLoading && !data?.length && 
+            isLoading && !!data?.length && 
             <Text>No results found</Text>
            }
 
-           {!isLoading && !!data.length && data.map((props: Case) => (
+           {!isLoading && !!data?.length && data.map((props: Case) => (
                <NotificationComponent navigate={() => navigate()} {...props}/>
              )) }
         </ScrollView>

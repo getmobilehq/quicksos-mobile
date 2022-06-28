@@ -84,9 +84,7 @@ const ClickOnLogin = () => {
         <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Password</Text>
             <Input isRequired variant="underlined" value={password} size="lg" onChangeText={(value) => setPassword(value)}placeholder="Enter Password" type="password" accessibilityLabel='Enter Password' />
         </Stack>
-        <TouchableOpacity onPress={() => props.navigation.navigate(routes.ResetPassword)}>
-        <Text style={styles.changePassword}>Change Password</Text>
-        </TouchableOpacity>
+        
         </View>
         <TouchableOpacity onPress={ClickOnLogin}> 
             <Box alignItems="center" width="100%" py="20">
