@@ -4,7 +4,10 @@ import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UserDetails } from '../requests/mutation/loginMutation'
 
-export const AuthContext = createContext<| UserDetails | undefined | string>(undefined)
+export const AuthContext = createContext<{
+  user:UserDetails;
+  setUser: () => void;
+} | undefined>(undefined)
 
 export default function AuthContextProvider({
   children,
@@ -22,10 +25,13 @@ React.useEffect(() => {
     getDataFromStore()
 }, [])
 
-const value: any = "This is a value"
+const value = {
+  user,
+  setUser,
+}
 
   return (
-    <AuthContext.Provider value={user}>
+    <AuthContext.Provider value={value}>
         {children}
     </AuthContext.Provider>
   )

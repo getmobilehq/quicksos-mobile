@@ -40,10 +40,12 @@ const Stack = createNativeStackNavigator();
 const AppComponent = () => {
   SplashScreen.preventAutoHideAsync();
   setTimeout(SplashScreen.hideAsync, 1000);
-  const user = useAuthContext()
+  const {user} = useAuthContext()
 
   const theme = extendTheme(Theme);
   const queryClient = new QueryClient()
+
+  console.log(user)
 
   const screnOptions: NativeStackNavigationOptions = {
     headerShown: false,
@@ -54,10 +56,9 @@ const AppComponent = () => {
        <StatusBar style="auto" />
        <NativeBaseProvider theme={theme}>
         <Stack.Navigator screenOptions={screnOptions}>
-        {!user && 
+        {!user ? 
         <Stack.Screen name={routes.login} component={LoginScreen} /> 
-       }
-       {user &&
+       :
        <>
        <Stack.Screen name={routes.home} component={HomeScreen} />
         <Stack.Screen name={routes.Alert} component={AlertScreen} />

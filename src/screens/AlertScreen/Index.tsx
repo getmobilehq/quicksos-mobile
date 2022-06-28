@@ -9,6 +9,10 @@ const FireImage = require("../../../assets/Image.png")
 
 const AlertScreen = (props: any) => {
   const [buttonText, setButtonText] = React.useState("Respond")
+  const CaseDetails = props.route.params.data.case_detail
+
+
+
   // React.useEffect(() => {
   //   props.navigation.navigate("Location")
   // })
@@ -25,6 +29,7 @@ const AlertScreen = (props: any) => {
             <Input variant="underlined" color={primaryColors.white}
               placeholderTextColor={primaryColors.white}
              placeholder="Thomas Johson" 
+             value={CaseDetails.name}
              size={"lg"}
             />
         </Stack>
@@ -37,22 +42,23 @@ const AlertScreen = (props: any) => {
         </Stack>
 
         <Stack  space={4} w="100%" py={5}> 
-            <Text style={styles.label}>Name of Reporter</Text>
+            <Text style={styles.label}>Location</Text>
             <Input variant="underlined" color={primaryColors.white}
               placeholderTextColor={primaryColors.white}
              placeholder="Thomas Johson" 
+             value={CaseDetails.address}
              size={"lg"}
             />
         </Stack>
-        <View>
+       {CaseDetails?.image && <View>
             <Text style={styles.label}>Multimedia</Text>
             <View style={{paddingTop: 10}}> 
             <Image 
-            source={FireImage}
+            source={{uri: CaseDetails?.image}}
             style={styles.stretch}
             />
             </View>
-        </View>
+        </View>}
         <TouchableOpacity onPress={() =>  {
             // setButtonText("Arrived")  
     props.navigation.navigate("Location")

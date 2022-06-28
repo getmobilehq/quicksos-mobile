@@ -10,9 +10,12 @@ import axios from '../../../axios';
 import LoginUser from '../../requests/mutation/loginMutation';
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import routes from '../../routes';
+import useAuthContext from '../../checkUserIsVerified';
 
 const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
+  const {setUser} = useAuthContext()
+
 
   // const { isLoading, error, data } = useQuery('repoData', () =>
   //    axios.get('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
@@ -26,8 +29,12 @@ export default function HomeScreen(props: any) {
   const [disable, setDisable] = React.useState(true)
 
   React.useEffect(() => {
+    mutate({email, password})
+  },[])
+
+  React.useEffect(() => {
     if (email && password) {
-      setDisable(false)
+      setDisable(true)
     }
   }, [email, password])
 const ClickOnLogin = () => {
@@ -36,16 +43,20 @@ const ClickOnLogin = () => {
 
 // React.useEffect(() => {
   if (!isLoading && data?.message === "success") { 
-        props.navigation.navigate("Home")
+    setUser(data)
   } 
 
   if (isLoading && data?.message !== "success") {
-    Alert.alert(data)
+    console.log(data)
   }
+
+  // if (!isLoading) {
+  //   // console.log(data)
+  // }
 
 // }, [isLoading, data])
 
-console.log(data)
+// console.log(data)
 
 
 

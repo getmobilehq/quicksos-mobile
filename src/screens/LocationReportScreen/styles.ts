@@ -20,6 +20,12 @@ fontWeight: "400",
 fontSize: 14,
 color: primaryColors.white,
 },
+inputStyles: {
+  display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+},
 alertHeader: {
     fontFamily: 'Montserrat',
 fontStyle: "normal",
@@ -49,6 +55,14 @@ stretch: {
   requestText: {
     textAlign: 'center',
     color: primaryColors.white,
+  },
+
+  inputIcons: {
+    display: "flex",
+    flexDirection: "row",
+    // width: 50,
+    justifyContent: "space-between",
+    alignItems: "center",
   }
 })
 export default styles;

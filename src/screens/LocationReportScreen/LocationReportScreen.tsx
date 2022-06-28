@@ -9,6 +9,7 @@ const Image2 = require("../../../assets/Image-3.png")
 import { Ionicons } from '@expo/vector-icons';
 import App from '../../../App'
 import AppHeader from '../../components/AppHeader/AppHeader'
+import { AntDesign } from '@expo/vector-icons';
 import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
 import * as ImagePicker from 'expo-image-picker';
 
@@ -16,11 +17,16 @@ import * as ImagePicker from 'expo-image-picker';
 const locationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
 
-  const [reports, setReports] = useState(["report",])
+  const [reports, setReports] = useState([{
+    value: "yooo"
+  }])
+  const [text, setTexts] = useState("")
+  const [reportText, setReportText] = useState<string[]>([])
 
   const onClickButton = () => {
     setShowModal(false)
   }
+
 
   const [image, setImage] = useState(null);
 
@@ -41,8 +47,14 @@ const locationReportScreen = (props: any) => {
   };
 
   const onPressAddIcon = () => { 
-    setReports(prev => [...prev, "reports1"])
+    // setReports(prev => [...prev, "reports1"])
+    setReports((prev: any) => ([...prev, {value: "yoo"}]))
+  // console.log(reportText)
+
+
   }
+
+  console.log(reports)
 
 
   return (
@@ -55,23 +67,31 @@ const locationReportScreen = (props: any) => {
   <Stack  space={4} w="100%" py={5}> 
   <View style={styles.headerStyle}>
          <Text style={styles.label}>Report</Text>
-        {reports.length !== 2 &&
+        
         <TouchableOpacity
         onPress={onPressAddIcon}
         >
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
         </TouchableOpacity>
-        }
+        
         </View>
-       {reports.map(report =>(
+       {reports.map((value, index) =>(
+        <View style={styles.inputStyles}>
           <Input 
+          width={"85%"}
           multiline
+          onChangeText={(text: string) => setReportsText((prev) => [...prev, {value: text}])}
         _focus={{borderColor: "white"}}
           variant="underlined" color={primaryColors.white}
           placeholderTextColor={primaryColors.white}
         placeholder="Emergency has been calmed, casulties have been evacuated and injured persons have been attended to" 
         size={"md"}
         />
+        <View style={styles.inputIcons}> 
+        <AntDesign name="closecircleo" size={18} color="#fff" />
+        {/* <AntDesign name="check" size={18} color="#fff" /> */}
+        </View>
+          </View>
        )
       
        )}

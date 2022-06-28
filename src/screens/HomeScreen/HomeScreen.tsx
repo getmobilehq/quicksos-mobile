@@ -1,6 +1,6 @@
-import { Avatar, ScrollView,  } from 'native-base';
+import { Avatar, Image, ScrollView, Popover  } from 'native-base';
 import React, {PropsWithChildren, useState} from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -8,17 +8,18 @@ import { Octicons } from '@expo/vector-icons';
 import NotificationComponent from "../../components/NotificationComponent.tsx/index"
 import AppHeader from '../../components/AppHeader/AppHeader';
 import { useQuery } from 'react-query';
-import getIssues from '../../requests/query/getIssues';
+import getIssues, { Case } from '../../requests/query/getIssues';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
-
+import PopoverComponent from '../../components/PopupComponent/Popover';
+const QuickSos = require('../../../assets/QuickSOS.png')
 
 export default function HomeScreen(props: any) {
   const [recents, setRecents] = useState(true)
   const [today, setToday] = useState(false)
   const [all, setAll] = useState(false)
-  const user = useAuthContext()
+  const {user, setUser} = useAuthContext()
 
 
   const getRecents = () => {
@@ -44,13 +45,11 @@ export default function HomeScreen(props: any) {
 
 
 const navigate = () => {
-  props.navigation.navigate("Alert")
-  console.log("clicking")
-
+  props.navigation.navigate(props.alert)
 }
 
 // React.useEffect(() => {
-  const {isLoading, data} = useQuery("issues",getIssues, {enabled: true})
+  const {isLoading, data, isError, error} = useQuery("issues",getIssues, {enabled: true})
 
   if (!isLoading) {
     console.log(data)
@@ -60,7 +59,7 @@ const navigate = () => {
     try { 
       await AsyncStorage.removeItem("token")
       await AsyncStorage.removeItem("user")
-      props.navigation.navigate(routes.login)
+      setUser(null)
     } catch (err) {
       console.log("there is an error")
     }
@@ -68,6 +67,10 @@ const navigate = () => {
     
   }
 // }, [])
+
+if (isError) {
+  console.log(error)
+}
 
 
 // React.useEffect(() => {
@@ -77,7 +80,16 @@ const navigate = () => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={{paddingVertical: 10}}> 
-        <AppHeader />
+        <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
+        <Image
+        source={QuickSos}
+        style={{
+            width:60,
+            height:30,
+            resizeMode: "contain",
+        }}
+        />
+        </View>
         </View>
         <ScrollView>
 
@@ -86,13 +98,11 @@ const navigate = () => {
           <View style={styles.dashboardHeader}> 
             <Text  style={styles.dashboardHeaderText}>Welcome {user.lastName}</Text>
             <TouchableOpacity
-            onPress={logOut}>
+            style={{marginRight: -10}}
+            // onPress={logOut}
+            >
 
-            <Avatar source={{
-      uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg"
-    }}>
-        L
-      </Avatar>
+           <PopoverComponent />
       </TouchableOpacity>
       
           </View>
@@ -142,10 +152,19 @@ const navigate = () => {
         
         </View>
         <ScrollView>
-           {[1,2,3, 4].map(data => (
-               <NotificationComponent navigate={() => navigate()}/>
-           
-           )) }
+          {isLoading && 
+          <View style={{height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
+           <ActivityIndicator />
+          </View>
+           }
+           {
+            isLoading && !data?.length && 
+            <Text>No results found</Text>
+           }
+
+           {!isLoading && !!data.length && data.map((props: Case) => (
+               <NotificationComponent navigate={() => navigate()} {...props}/>
+             )) }
         </ScrollView>
 
 

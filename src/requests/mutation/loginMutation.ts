@@ -1,5 +1,6 @@
 import axios from "../../../axios"
 import endpoints from "../../../endpoints"
+import {request} from "../../utilitis/axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface LoginDetails {
@@ -16,12 +17,15 @@ export interface UserDetails {
     phoneNumber: string;
     accessToken: string;
     message: string;
+    refresh: string;
+    role: string;
 
 
 }
+// request({url: endpoints.login, method: "POST", data}).then(response => console.log(response)).catch(err => console.log(err));
 
-const LoginUser = async (body:LoginDetails) => {
-    const data ={
+const LoginUser = async (data:LoginDetails) => {
+    const body ={
         email: "Pelumiogundipe905@gmail.com",
         password: "4#7V9#PEpoe="
       }
@@ -41,12 +45,14 @@ const LoginUser = async (body:LoginDetails) => {
         lastName: result.data.data.last_name,
         phoneNumber: result.data.data.phone,
         accessToken: result.data.data.access,
+        refresh: result.data.data.refresh,
+        role: result.data.data.role,
         message:result.data.message,
         }
         await AsyncStorage.setItem('token', JSON.stringify(formatedData.accessToken))
         await AsyncStorage.setItem('user', JSON.stringify(formatedData))
 
-        console.log(formatedData.accessToken)
+        // console.log(formatedData.accessToken)
         return formatedData;
       } catch(error){
         return error?.message
