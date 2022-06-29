@@ -45,7 +45,7 @@ flex: 1,
 stretch: {
     width: "100%",
     height: 180,
-    // resizeMode: 'stretch',
+    // resizeMode: 'contain',
     paddingHorizontal: scale(10),
     paddingVertical: scale(10),
     paddingTop:10,

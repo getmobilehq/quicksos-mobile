@@ -12,6 +12,7 @@ import AppHeader from '../../components/AppHeader/AppHeader'
 import { AntDesign } from '@expo/vector-icons';
 import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
 import * as ImagePicker from 'expo-image-picker';
+import routes from '../../routes'
 
 
 const locationReportScreen = (props: any) => {
@@ -22,10 +23,13 @@ const locationReportScreen = (props: any) => {
   }])
   const [text, setTexts] = useState("")
   const [reportText, setReportText] = useState<string[]>([])
+  const [images, setImages] = useState([])
 
   const onClickButton = () => {
     setShowModal(false)
   }
+
+  console.log(images)
 
 
   const [image, setImage] = useState(null);
@@ -42,7 +46,7 @@ const locationReportScreen = (props: any) => {
     console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImages((prev: any) => [...prev, result.uri]);
     }
   };
 
@@ -104,26 +108,27 @@ const locationReportScreen = (props: any) => {
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
         </TouchableOpacity>
         </View>
-        <View style={{paddingTop: 10}}> 
+        {/* <View style={{paddingTop: 10}}> 
         <Image 
         alt=""
         source={image ? {uri: image}: Image1}
         style={styles.stretch}
         />
-        </View>
+        </View> */}
+       {images.reverse().map((image) => (
         <View
         style={{paddingTop: 20}}
         >
-
         <Image 
         alt=""
-        source={Image2}
+        source={{uri: image}}
         style={styles.stretch}
         />
         </View>
+       ) ) }
       
     </View>
-    <TouchableOpacity onPress={() => props.navigation.navigate("ResetPassword")} > 
+    <TouchableOpacity onPress={() => props.navigation.navigate(routes.profile)} > 
         <Box alignItems="center" width="100%" py="5">
           <Button isLoading={false} 
           bgColor={primaryColors.white} 

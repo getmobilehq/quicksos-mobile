@@ -160,7 +160,7 @@ if (isError) {
           </View>
            }
            {
-            isLoading && !!data?.length && 
+            isLoading && !data?.length && 
             <Text>No results found</Text>
            }
 
