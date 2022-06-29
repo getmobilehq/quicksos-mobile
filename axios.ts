@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import { Alert } from 'react-native';
 import endpoints from './endpoints';
+import refreshToken from './src/requests/mutation/refreshToken';
 import routes from './src/routes';
 
 const instance = axios.create({
@@ -23,12 +24,14 @@ instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
-  }, function (error) {
+  }, function async (error) {
     error.message
     console.log("from the interceptors error", error.message)
     if (error.response.status == 401) {
       // instance.post(endpoints.refresh, data: {token : ""})
       // console.log("it is 401")
+      //  refreshToken()
+
       Alert.alert(error.message)
     }
 

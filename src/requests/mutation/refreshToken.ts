@@ -2,25 +2,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "../../../axios"
 import endpoints from "../../../endpoints"
 
-interface ChangePasswordDetails {
-    old_password: string,
-    new_password: string,
-    confirm_password: string
-}
-
-// headers: {
 //     // "Authorization": `Bearer ${token}`
 // }
 
 
-const ChangePassword = async (body:ChangePasswordDetails) => {
-    const data ={
-        email: "Pelumiogundipe905@gmail.com",
-        password: "4#7V9#PEpoe="
-      }
+const refreshToken = async () => {
+    console.log("from refresh token")
       try {
         const token = await AsyncStorage.getItem("token")
-        const result = await axios.post(endpoints.changePassword, body, {
+        const result = await axios.post(endpoints.changePassword, {
+            refresh: `${token}`
+        }, {
             headers: {
                 'Content-Type': 'application/json',
                 accept: "application/json",
@@ -28,10 +20,10 @@ const ChangePassword = async (body:ChangePasswordDetails) => {
                 
             }
         })
-        return result;
+        console.log("from resfresh token",result)
       } catch(error){
         console.log(error.message)
       }
 }
 
-export default ChangePassword
+export default refreshToken

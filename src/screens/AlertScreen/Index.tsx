@@ -10,6 +10,9 @@ const FireImage = require("../../../assets/Image.png")
 const AlertScreen = (props: any) => {
   const [buttonText, setButtonText] = React.useState("Respond")
   const CaseDetails = props.route.params.data.case_detail
+  const MoreDetails = props.route.params.data
+
+  console.log(MoreDetails.img_url)
 
 
 
@@ -50,19 +53,18 @@ const AlertScreen = (props: any) => {
              size={"lg"}
             />
         </Stack>
-       {CaseDetails?.image && <View>
+       {MoreDetails?.img_url !== "" && <View>
             <Text style={styles.label}>Multimedia</Text>
             <View style={{paddingTop: 10}}> 
             <Image 
-            source={{uri: CaseDetails?.image}}
+            source={{uri: MoreDetails?.img_url}}
             style={styles.stretch}
             />
             </View>
         </View>}
         <TouchableOpacity onPress={() =>  {
             // setButtonText("Arrived")  
-    props.navigation.navigate("Location")
-
+        props.navigation.navigate("Location")
         } }> 
             <Box alignItems="center" width="100%" py="10">
               <Button isLoading={false} 

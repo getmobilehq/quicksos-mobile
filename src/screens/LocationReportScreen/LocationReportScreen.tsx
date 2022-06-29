@@ -17,23 +17,12 @@ import routes from '../../routes'
 
 const locationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
-
-  const [reports, setReports] = useState([{
-    value: "yooo"
-  }])
-  const [text, setTexts] = useState("")
-  const [reportText, setReportText] = useState<string[]>([])
+  const [reportText, setReportText] = useState<string>("")
   const [images, setImages] = useState([])
 
   const onClickButton = () => {
     setShowModal(false)
   }
-
-  console.log(images)
-
-
-  const [image, setImage] = useState(null);
-
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -42,11 +31,8 @@ const locationReportScreen = (props: any) => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
-
     if (!result.cancelled) {
-      setImages((prev: any) => [...prev, result.uri]);
+      setImages((prev: any) => ([...prev, result.uri]));
     }
   };
 
@@ -54,12 +40,7 @@ const locationReportScreen = (props: any) => {
     // setReports(prev => [...prev, "reports1"])
     setReports((prev: any) => ([...prev, {value: "yoo"}]))
   // console.log(reportText)
-
-
   }
-
-  console.log(reports)
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,51 +52,35 @@ const locationReportScreen = (props: any) => {
   <Stack  space={4} w="100%" py={5}> 
   <View style={styles.headerStyle}>
          <Text style={styles.label}>Report</Text>
-        
+{/*         
         <TouchableOpacity
         onPress={onPressAddIcon}
         >
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         
         </View>
-       {reports.map((value, index) =>(
         <View style={styles.inputStyles}>
           <Input 
           width={"85%"}
           multiline
-          onChangeText={(text: string) => setReportsText((prev) => [...prev, {value: text}])}
+          onChangeText={(text: string) => setReportText(text)}
         _focus={{borderColor: "white"}}
           variant="underlined" color={primaryColors.white}
           placeholderTextColor={primaryColors.white}
         placeholder="Emergency has been calmed, casulties have been evacuated and injured persons have been attended to" 
         size={"md"}
         />
-        <View style={styles.inputIcons}> 
-        <AntDesign name="closecircleo" size={18} color="#fff" />
-        {/* <AntDesign name="check" size={18} color="#fff" /> */}
-        </View>
           </View>
-       )
-      
-       )}
     </Stack>
-
     <View>
         <View style={styles.headerStyle}> 
         <Text style={styles.label}>Multimedia</Text>
-        <TouchableOpacity onPress={pickImage}>
+       {images.length !== 2 && <TouchableOpacity onPress={pickImage}>
         <Ionicons name="add-circle-outline" size={24} color={primaryColors.white} />
-        </TouchableOpacity>
+        </TouchableOpacity>}
         </View>
-        {/* <View style={{paddingTop: 10}}> 
-        <Image 
-        alt=""
-        source={image ? {uri: image}: Image1}
-        style={styles.stretch}
-        />
-        </View> */}
-       {images.reverse().map((image) => (
+       {images.map((image) => (
         <View
         style={{paddingTop: 20}}
         >
