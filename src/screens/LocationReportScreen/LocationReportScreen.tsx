@@ -36,11 +36,6 @@ const locationReportScreen = (props: any) => {
     }
   };
 
-  const onPressAddIcon = () => { 
-    // setReports(prev => [...prev, "reports1"])
-    setReports((prev: any) => ([...prev, {value: "yoo"}]))
-  // console.log(reportText)
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,7 +57,7 @@ const locationReportScreen = (props: any) => {
         </View>
         <View style={styles.inputStyles}>
           <Input 
-          width={"85%"}
+          // width={"85%"}
           multiline
           onChangeText={(text: string) => setReportText(text)}
         _focus={{borderColor: "white"}}

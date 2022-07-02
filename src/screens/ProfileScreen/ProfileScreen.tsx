@@ -7,11 +7,15 @@ import LabelComponnt from '../../components/LabeComponent/LabelComponnt'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, } from 'native-base'
 import { primaryColors } from '../../../constants'
+import useAuthContext from '../../checkUserIsVerified';
+
 
 const ProfileScreen = () => {
   const [disable, setDisable] = React.useState()
   const [editSuperVisorName, setEditSuperVisorName] = React.useState(false)
   const [editSuperVisorContact, setEditSuperVisorContact] = React.useState(false)
+  // const {user} = useAuthContext()
+  // console.log(user)
 
   const onClickButton = () => {
 

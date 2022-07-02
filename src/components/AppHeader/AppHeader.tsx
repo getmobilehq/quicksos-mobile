@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import styles from './style'
 import PopoverComponent from '../PopupComponent/Popover'
+import { primaryColors } from '../../../constants'
 
 const AppHeader = (props:any) => {
   const navigation = useNavigation()
@@ -30,7 +31,11 @@ const AppHeader = (props:any) => {
         />
         </TouchableOpacity>
        
-        { props.avatar && <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen} />}
+        { props.avatar && <PopoverComponent 
+        backgroundColor={primaryColors.naturalColor} 
+        color={primaryColors.white}
+        isOpen={isOpen} setIsOpen={setIsOpen} 
+        />}
     </View>
   )
 }

@@ -14,6 +14,7 @@ import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 import PopoverComponent from '../../components/PopupComponent/Popover';
 import AvatarComponent from '../../components/Avatar';
+import { primaryColors } from '../../../constants';
 const QuickSos = require('../../../assets/QuickSOS.png')
 
 export default function HomeScreen(props: any) {
@@ -65,8 +66,6 @@ const navigate = () => {
     } catch (err) {
       console.log("there is an error")
     }
-    
-    
   }
 // }, [])
 
@@ -104,7 +103,11 @@ if (isError) {
             onPress={() =>setIsOpen(true)}
             >
               {/* <AvatarComponent/> */}
-           <PopoverComponent isOpen={isOpen} setIsOpen={setIsOpen}/>
+           <PopoverComponent 
+           isOpen={isOpen} setIsOpen={setIsOpen}
+            backgroundColor={primaryColors.white} 
+      color={primaryColors.naturalColor}
+           />
       </TouchableOpacity>
       
           </View>

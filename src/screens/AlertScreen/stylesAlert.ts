@@ -16,7 +16,7 @@ color: primaryColors.white,
 alertHeader: {
     fontFamily: 'Montserrat',
 fontStyle: "normal",
-fontWight: "600",
+fontWeight: "600",
 fontSize: scale(24),
 color: primaryColors.white,
 paddingVertical:scale(10),

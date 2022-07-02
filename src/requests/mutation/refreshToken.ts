@@ -14,14 +14,11 @@ const refreshToken = async () => {
             refresh: `${token}`
         }, {
             headers: {
-                'Content-Type': 'application/json',
-                accept: "application/json",
                 "Authorization": `Bearer ${token}`
-                
             }
         })
         console.log("from resfresh token",result)
-      } catch(error){
+      } catch(error: any){
         console.log(error.message)
       }
 }

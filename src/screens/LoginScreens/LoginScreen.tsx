@@ -28,15 +28,16 @@ export default function HomeScreen(props: any) {
   const [password, setPassword] = React.useState("")
   const [disable, setDisable] = React.useState(true)
 
-  React.useEffect(() => {
-    mutate({email, password})
-  },[])
+  // React.useEffect(() => {
+  //   mutate({email, password})
+  // },[])
 
   React.useEffect(() => {
     if (email && password) {
-      setDisable(true)
+      setDisable(false)
     }
   }, [email, password])
+
 const ClickOnLogin = () => {
        mutate({email, password})
 }
@@ -77,8 +78,8 @@ const ClickOnLogin = () => {
 
         <View>
           <Stack  space={4} w="100%"  py={5}> 
-            <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Unit</Text>
-            <Input isRequired variant="underlined" value={email} size="lg" onChangeText={(value) => setEmail(value)} placeholder="Enter Organizational Unit" accessibilityLabel='Unit' />
+            <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Email</Text>
+            <Input isRequired variant="underlined" value={email} size="lg" onChangeText={(value) => setEmail(value)} placeholder="Enter Email Address" accessibilityLabel='Unit' />
         </Stack>
         <Stack space={4} w="100%"  py={5}>
         <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Password</Text>

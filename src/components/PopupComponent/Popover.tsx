@@ -9,12 +9,24 @@ import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 import AvatarComponent from '../Avatar';
 import { primaryColors } from '../../../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const PopoverComponent = (props: any) => {
     const initialFocusRef = React.useRef(null);
     // const [isOpen, setIsOpen] = React.useState(false)
   const {setUser} = useAuthContext()
+
+  const logOut = async () => {
+    try { 
+      props.setIsOpen(false)
+      await AsyncStorage.removeItem("token")
+      await AsyncStorage.removeItem("user")
+      setUser(null)
+    } catch (err) {
+      console.log("there is an error")
+    }
+  }
 
     const navigation = useNavigation()
   return (
@@ -31,7 +43,11 @@ const PopoverComponent = (props: any) => {
       {...triggerProps}
       onPress={() => props.setIsOpen(true)}
       >
-      <AvatarComponent backgroundColor={primaryColors.naturalColor} color={primaryColors.white}/>
+      <AvatarComponent 
+      backgroundColor={props.backgroundColor}
+      color={props.color}
+     
+      />
         </Button>
     }}>
         <Popover.Content width="56" >
@@ -63,10 +79,7 @@ const PopoverComponent = (props: any) => {
                 <Text style={styles.popoverText}>Change Password</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={() => {
-                    props.setIsOpen(false)
-                    setUser(null)
-                } }
+                onPress={logOut}
                 > 
                 <Text style={styles.popoverText}>Logout</Text>
                 </TouchableOpacity>

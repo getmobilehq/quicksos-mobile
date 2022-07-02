@@ -18,6 +18,7 @@ export default function AuthContextProvider({
 
 const getDataFromStore = async ()  => {
     const jsonValue: string | null =  await AsyncStorage.getItem('user')
+    console.log(jsonValue)
    setUser(JSON.parse(jsonValue))
 }   
 

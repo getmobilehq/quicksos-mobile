@@ -10,38 +10,43 @@ import routes from '../../routes'
 import AppHeader from '../../components/AppHeader/AppHeader'
 import { useMutation } from 'react-query'
 import ChangePassword from '../../requests/mutation/changePassword'
+import useAuthContext from '../../checkUserIsVerified';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+// import { AuthService } from '../../ 
 const RessetPasswordSreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [disable, setDisable] = useState(true)
+  const {setUser} = useAuthContext()
+
 
   const {mutate, data, isError, isSuccess, isLoading, error} = useMutation(ChangePassword)
 
-  const ModalButtonPressed = () => {
-    props.navigation.navigate(routes.login)
-
+  const ModalButtonPressed = async () => {
+    await AsyncStorage.removeItem("token")
+    await AsyncStorage.removeItem("user")
+    setUser(null)
   }
 
   const onClickButton = () => {
-    mutate({old_password: "4#7V9#PEpoe=", new_password: "Javascript98", confirm_password: "Javascript98"})
+    mutate({old_password: oldPassword, new_password: newPassword, confirm_password: confirmPassword})
   }
 
   useEffect(() => {
-    // if (!isLoading && isSuccess) {  
-    //   setShowModal(true)
-    //  }
+    if (!isLoading && isSuccess && data?.message == "Successfully saved password") {  
+      setShowModal(true)
+     }
 
-    //  if (!isLoading && isError) { 
-    //   Alert.alert(error)
-    // }
+     if (!isLoading && isSuccess && data?.message != "Successfully saved password") {  
+      // setShowModal(true)
+      Alert.alert("Something went wrong, please try again")
+     }
 
-    if (!isLoading && data) {
-      console.log(data)
-    }
 
-  }, [isSuccess, isError, data, isLoading])
+  }, [isLoading, isSuccess])
   
   React.useEffect(() => {
     if (oldPassword && newPassword && confirmPassword) {

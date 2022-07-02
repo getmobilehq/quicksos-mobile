@@ -57,16 +57,15 @@ export interface Case {
 
 const getIssues = async () => {
       try {
-        let token = await AsyncStorage.getItem("token")
+        let token: any = await AsyncStorage.getItem("token")
         token  = JSON.parse(token)
-        // console.log(token)
        const result = await axios.get(endpoints.issues, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         })
         return result.data.data;
-      } catch(error){
+      } catch(error: any){
         console.log(error.message)
       }
 }

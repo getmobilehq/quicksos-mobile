@@ -9,6 +9,7 @@ const instance = axios.create({
     baseURL: "https://quicksos-api.herokuapp.com/v1/"
 })
 
+
 // instance.interceptors.request.use(async function (config) {
 //     console.log("this is a request before it runs", config)
 //     const token = await AsyncStorage.getItem("token")

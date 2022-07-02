@@ -24,11 +24,11 @@ export interface UserDetails {
 }
 // request({url: endpoints.login, method: "POST", data}).then(response => console.log(response)).catch(err => console.log(err));
 
-const LoginUser = async (data:LoginDetails) => {
-    const body ={
-        email: "Pelumiogundipe905@gmail.com",
-        password: "4#7V9#PEpoe="
-      }
+const LoginUser = async (body:LoginDetails) => {
+    // const body ={
+    //     email: "Pelumiogundipe905@gmail.com",
+    //     password: "?"
+    //   }
       try {
        const result = await axios.post(endpoints.login, body, {
             headers: {
@@ -54,7 +54,7 @@ const LoginUser = async (data:LoginDetails) => {
 
         // console.log(formatedData.accessToken)
         return formatedData;
-      } catch(error){
+      } catch(error:any){
         return error?.message
       }
 }

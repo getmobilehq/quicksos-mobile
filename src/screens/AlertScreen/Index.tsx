@@ -5,17 +5,26 @@ import { Box, Button, Input,  Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"
 import AppHeader from '../../components/AppHeader/AppHeader'
+import { useQuery } from 'react-query'
+import getArrive from '../../requests/query/getArrive'
+import getRespond from '../../requests/query/getRespond'
 const FireImage = require("../../../assets/Image.png")
 
 const AlertScreen = (props: any) => {
   const [buttonText, setButtonText] = React.useState("Respond")
   const CaseDetails = props.route.params.data.case_detail
-  const MoreDetails = props.route.params.data
+  const MoreDetails:any = props.route.params.data
 
-  console.log(MoreDetails.img_url)
+  console.log(MoreDetails.id)
 
+  
+  const {isLoading, data, isError, error} = useQuery("arrive",
+  getArrive, 
+  {enabled: true})
+  console.log(data, error, isError)
+// const onClickButton = () => {
 
-
+// }
   // React.useEffect(() => {
   //   props.navigation.navigate("Location")
   // })
@@ -67,7 +76,7 @@ const AlertScreen = (props: any) => {
         props.navigation.navigate("Location")
         } }> 
             <Box alignItems="center" width="100%" py="10">
-              <Button isLoading={false} 
+              <Button isLoading={isLoading} 
               bgColor={primaryColors.white} 
                width="300" _text={{color: "black", fontWeight: "bold"}}>
             {buttonText}
