@@ -8,6 +8,7 @@ import AppHeader from '../../components/AppHeader/AppHeader'
 import { useQuery } from 'react-query'
 import getArrive from '../../requests/query/getArrive'
 import getRespond from '../../requests/query/getRespond'
+import routes from '../../routes'
 const FireImage = require("../../../assets/Image.png")
 
 const AlertScreen = (props: any) => {
@@ -73,7 +74,9 @@ const AlertScreen = (props: any) => {
         </View>}
         <TouchableOpacity onPress={() =>  {
             // setButtonText("Arrived")  
-        props.navigation.navigate("Location")
+        props.navigation.navigate(routes.Location, {
+          caseId: MoreDetails?.id
+        })
         } }> 
             <Box alignItems="center" width="100%" py="10">
               <Button isLoading={isLoading} 

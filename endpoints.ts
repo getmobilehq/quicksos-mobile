@@ -13,7 +13,7 @@ login: "account/users/auth/",
 changePassword: "/account/users/reset_password/",
 issues: "/messages/assigned/",
 refresh: "/account/users/auth/refresh/",
-report: "/messages/assigned",
+report: "/messages/assigned/",
 // arrive: "/messages/assigned/",
 // respond: "/messages/assigned/"
 

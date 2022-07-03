@@ -13,12 +13,17 @@ import { AntDesign } from '@expo/vector-icons';
 import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
 import * as ImagePicker from 'expo-image-picker';
 import routes from '../../routes'
+import { useMutation } from 'react-query'
+import ReportCases from '../../requests/mutation/reportCases'
 
 
-const locationReportScreen = (props: any) => {
+const LocationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
-  const [reportText, setReportText] = useState<string>("")
+  const [reportText, setReportText] = useState<string>("There has been a report")
   const [images, setImages] = useState([])
+  const {mutate: reportCase, data, isLoading} = useMutation(ReportCases)
+  console.log(props.route.params?.caseId, "yoo")
+
 
   const onClickButton = () => {
     setShowModal(false)
@@ -31,11 +36,41 @@ const locationReportScreen = (props: any) => {
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.cancelled) {
-      setImages((prev: any) => ([...prev, result.uri]));
+    if (result.cancelled) {
+      return;
     }
-  };
 
+    let localUri = result.uri;
+    let filename = localUri.split('/').pop();
+
+    //infering the type of the image
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+
+
+
+    setImages((prev: any) => [...prev, {localUri:result.uri, filename, type}]);
+
+  };
+  const submitProject = () => {
+    let formData = new FormData();
+    images.forEach((item, i) => {
+      formData.append(`image_url${i + 1}`, {
+        uri: item.localUri,
+        type: item.type || "image/jpeg",
+        name: item.filename || `filename${i + 1}.jpg`,
+      });
+    });
+
+    formData.append("situation_report", reportText)
+
+    reportCase({
+      formData,
+      assigned_case_id: props.route.params?.caseId
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,16 +116,19 @@ const locationReportScreen = (props: any) => {
         >
         <Image 
         alt=""
-        source={{uri: image}}
+        source={{uri: image.localUri}}
         style={styles.stretch}
         />
         </View>
        ) ) }
       
     </View>
-    <TouchableOpacity onPress={() => props.navigation.navigate(routes.profile)} > 
+    <TouchableOpacity onPress={() => {
+      submitProject()
+      // props.navigation.navigate(routes.profile)
+    }} > 
         <Box alignItems="center" width="100%" py="5">
-          <Button isLoading={false} 
+          <Button isLoading={isLoading} 
           bgColor={primaryColors.white} 
            width="300" _text={{color: "black", fontWeight: "bold"}}>
         {"Solved"}
@@ -114,4 +152,4 @@ const locationReportScreen = (props: any) => {
   )
 }
 
-export default locationReportScreen
+export default LocationReportScreen

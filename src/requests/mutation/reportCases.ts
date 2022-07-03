@@ -4,15 +4,12 @@ import {request} from "../../utilitis/axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ReportDetails {
-    // mark_complete: boolean;
-    situation_report: string;
-    imageUrl1: string;
-    imageUrl2: string;
-    // isActive: boolean;
-    assigned_case: string;
+    formData: {
+      situation_report: string[];
+      imageUrl1: any;
+      imageUrl2: any;
+    }
     assigned_case_id: string;
-
-
 }
 
 // {
@@ -41,17 +38,18 @@ interface ReportDetails {
 const ReportCases = async (body:ReportDetails) => {
     let token:any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
+    // console.log("formdata", body.formData)
+    // console.log("body.id", body.assigned_case_id)
       try {
-       const result = await axios.post(`${endpoints.report}/${body.assigned_case_id}/add_report/`, body, {
+       const result = await axios.post(`${endpoints.report}${body.assigned_case_id}/add_report/`, body.formData, {
             headers: {
-                'Content-Type': 'application/json',
-                accept: "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
         })
         console.log(result)
       } catch(error:any){
-        return error?.message
+        console.log(error?.message)
       }
 }
 
