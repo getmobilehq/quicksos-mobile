@@ -4,7 +4,6 @@ import { primaryColors } from "../../../constants";
 const styles = StyleSheet.create({
 container: {
     width: "100%",
-    borderBottomColor: primaryColors.naturalColorDark,
     borderBottomWidth: 1,
     borderStyle: "solid",
     height: 50,

@@ -1,4 +1,5 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import React, { useState } from 'react'
 import { Box, Button, Center,Modal, Checkbox } from 'native-base';
 import styles from "./styles"
@@ -57,17 +58,13 @@ const RequestResponder = (props:Modalprops) => {
       {/* <Checkbox value="two">Software Development</Checkbox> */}
     </Checkbox.Group>
     </View>
-
-
-        {/* //Button */}
-        <TouchableOpacity onPress={() => props.onClickButton()}>
+        <TouchableOpacity onPress={props.onClickButton}>
         <Box alignItems="center" width="100%" py="5" mt="2.5">
               <Button isLoading={false} variant="solid" width="250">
             {props.buttonText}
               </Button>
           </Box>      
         </TouchableOpacity>
-
       </Modal.Content>
     </Modal>
   </Center>

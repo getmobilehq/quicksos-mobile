@@ -7,6 +7,12 @@ container: {
     backgroundColor: primaryColors.white,
     marginHorizontal: scale(10),
 },
+contentStyle: {
+    color: primaryColors.white,
+    fontSize: 18,
+    lineHeight: 30,
+    paddingTop: scale(5)
+  },
 label: {
     fontFamily: 'Montserrat',
 fontWeight: "400",

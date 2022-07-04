@@ -15,10 +15,14 @@ import { useMutation } from 'react-query'
 import ReportCases from '../../requests/mutation/reportCases'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import ModalComponent from '../../components/Modal/Modal'
 
 
 const LocationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
+  const [showSuccesfulModal, setShowSuccesfulModal] = useState(false)
+  const [modalText,setModalText] = useState("")
+
   const [reportText, setReportText] = useState<string>("There has been a report")
   const [images, setImages] = useState([])
   const {mutate: reportCase, data, isLoading} = useMutation(ReportCases)
@@ -27,6 +31,8 @@ const LocationReportScreen = (props: any) => {
 
   const onClickButton = () => {
     setShowModal(false)
+    setShowSuccesfulModal(true)
+    setModalText("You have successfully requested for other responders")
   }
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -45,17 +51,21 @@ const LocationReportScreen = (props: any) => {
 
   };
 
+  const ModalButtonPressed = async () => {
+      props.navigation.navigate(routes.home)
+  }
+
   const submitProject = async () => {
     let token: any = await AsyncStorage.getItem("token")
         token  = JSON.parse(token)
         let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Accept", "application/json");
-      var formdata = new FormData();
+        myHeaders.append("Accept", "multipart/form-data");
+      var formData = new FormData();
       // formdata.append("situation_report", reportText)
       images.map((image, index) => {
       
-        formdata.append(`img${index + 1}`, {
+        formData.append(`img${index + 1}`, {
           uri: image.uri,
           name: image.name,
           type: image.type,
@@ -64,12 +74,18 @@ const LocationReportScreen = (props: any) => {
 
 
     // formdata.append("id", userId);
-    var requestOptions = {
-      body: formdata,
-      headers: myHeaders,
-    };
+    // var requestOptions = {
+    //   body: formdata,
+    //   headers: myHeaders,
+    // };
 
-     axios.post("https://quicksos-api.herokuapp.com/v1/messages/assigned/e80f89bb-9551-4bda-a413-03f21427dca9/add_report/", requestOptions)
+     axios.post("https://quicksos-api.herokuapp.com/v1/messages/assigned/e80f89bb-9551-4bda-a413-03f21427dca9/add_report/", formData, {
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    })
       .then((response) => console.log(response))
       .then((res) => {
         console.log(res)
@@ -78,7 +94,25 @@ const LocationReportScreen = (props: any) => {
         // setLoading(false)
 
       })
-      .catch((error) => console.log(error));
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          // console.log(error.response)
+          console.log(error.response.data);
+          console.log(error.response.status);
+          // console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      })
 
 
   }
@@ -139,6 +173,7 @@ const LocationReportScreen = (props: any) => {
     </View>
     <TouchableOpacity onPress={() => {
       submitProject()
+      setShowSuccesfulModal(true)
       // props.navigation.navigate(routes.profile)
     }} > 
         <Box alignItems="center" width="100%" py="5">
@@ -162,6 +197,13 @@ const LocationReportScreen = (props: any) => {
     buttonText='Send Request'
     onClickButton={onClickButton}
     />
+       <ModalComponent 
+        showModal={showSuccesfulModal} 
+        setShowModal={setShowSuccesfulModal}
+        text={modalText !== "" ? modalText : "You have successfully responded to this emergency"}
+        buttonText='Done'
+        onClickButton={ModalButtonPressed}
+        />
 </SafeAreaView>
   )
 }
