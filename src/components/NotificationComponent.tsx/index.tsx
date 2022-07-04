@@ -9,15 +9,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Index = (props: any) => {
   const navigation = useNavigation()
+  console.log(props)
   return (
     <TouchableOpacity 
   
     style={styles.container}> 
-        <Text style={styles.text}>
+        {/* <Text style={styles.text}>
             01
-        </Text>
+        </Text> */}
         <View style={styles.content}> 
-            <Text style={styles.boldText}>Gas Explosion</Text>
+            <Text style={styles.boldText}>{props.issue}</Text>
             <Text style={styles.text}>{props.case_detail.address}</Text>
         </View>
         <TouchableOpacity

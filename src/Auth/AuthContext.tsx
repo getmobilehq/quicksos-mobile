@@ -20,6 +20,8 @@ const getDataFromStore = async ()  => {
     const jsonValue: string | null =  await AsyncStorage.getItem('user')
     console.log(jsonValue)
    setUser(JSON.parse(jsonValue))
+   const token: string | null =  await AsyncStorage.getItem('token')
+  //  console.log()
 }   
 
 React.useEffect(() => {

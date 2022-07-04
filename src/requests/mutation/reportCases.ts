@@ -38,6 +38,8 @@ interface ReportDetails {
 const ReportCases = async (body:ReportDetails) => {
     let token:any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
+    console.log(body.formData)
+
     // console.log("formdata", body.formData)
     // console.log("body.id", body.assigned_case_id)
       try {

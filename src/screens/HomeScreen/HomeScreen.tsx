@@ -8,27 +8,32 @@ import { Octicons } from '@expo/vector-icons';
 import NotificationComponent from "../../components/NotificationComponent.tsx/index"
 import AppHeader from '../../components/AppHeader/AppHeader';
 import { useQuery } from 'react-query';
-import getIssues, { Case } from '../../requests/query/getIssues';
+import  { getIssues,Case } from '../../requests/query/getIssues';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 import PopoverComponent from '../../components/PopupComponent/Popover';
 import AvatarComponent from '../../components/Avatar';
-import { primaryColors } from '../../../constants';
+import { GET_ISSUE_KEY, primaryColors } from '../../../constants';
+import getProfile from '../../requests/query/getProfile';
+import formatParams from '../../../utils/formatParams';
 const QuickSos = require('../../../assets/QuickSOS.png')
 
 export default function HomeScreen(props: any) {
-  const [recents, setRecents] = useState(true)
+  const [recents, setRecents] = useState(false)
+  const [params, setParams] = useState("")
   const [today, setToday] = useState(false)
-  const [all, setAll] = useState(false)
+  const [all, setAll] = useState(true)
   const {user, setUser} = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
+  console.log(user)
 
 
   const getRecents = () => {
     setToday(false)
     setAll(false)
     setRecents(true)
+    setParams("recent")
 
   }
 
@@ -36,6 +41,8 @@ export default function HomeScreen(props: any) {
     setAll(false)
     setRecents(false)
     setToday(true)
+    setParams("today")
+
 
   }
 
@@ -43,6 +50,8 @@ export default function HomeScreen(props: any) {
     setRecents(false)
     setToday(false)
     setAll(true)
+    setParams("")
+
 
   }
 
@@ -52,10 +61,14 @@ const navigate = () => {
 }
 
 // React.useEffect(() => {
-  const {isLoading, data, isError, error} = useQuery("issues",getIssues, {enabled: true})
+  const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params), {enabled: true})
+
+  const {isLoading: profileLoading, data: profileData} = useQuery("profile",getProfile, {enabled: true})
+
+  console.log("profile DATA ====>",profileData)
 
   if (!isLoading) {
-    console.log(data)
+    // console.log(data)
   }
 
   const logOut = async () => {
@@ -84,6 +97,7 @@ if (isError) {
         <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
         <Image
         source={QuickSos}
+        alt=""
         style={{
             width:60,
             height:30,
@@ -97,7 +111,7 @@ if (isError) {
         {/* DashBoard */}
         <View style={styles.dashboard}>
           <View style={styles.dashboardHeader}> 
-            <Text  style={styles.dashboardHeaderText}>Welcome {user.lastName}</Text>
+            <Text  style={styles.dashboardHeaderText}>Welcome {user.firstName}</Text>
             <TouchableOpacity
             style={{marginRight: -10}}
             onPress={() =>setIsOpen(true)}
@@ -113,11 +127,11 @@ if (isError) {
           </View>
           <View style={styles.locationWrapper}> 
           <Octicons name="location" size={20} color="#fff" />
-          <Text style={styles.location}>Agege Branch</Text>
+          <Text style={styles.location}>{profileData?.local_gov} Branch</Text>
           </View>
           <View style={styles.locationWrapper}> 
           <FontAwesome5 name="calendar-day" size={20} color="#fff" />
-          <Text style={styles.location}>{new Date().toUTCString()}</Text>
+          <Text style={styles.time}>{new Date().toUTCString()}</Text>
           </View>
 
         </View>
@@ -142,17 +156,18 @@ if (isError) {
             {/* {recents && <View style={styles.indicator}/>} */}
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={getToday}
-            >
-            <Text style={today ? styles.tabsActive : styles.tabsText}>Today</Text>
-            {/* {today && <View style={styles.indicator}/>} */}
-            </TouchableOpacity>
-            <TouchableOpacity
             onPress={getAll}
             >
             <Text style={all ? styles.tabsActive : styles.tabsText}>All</Text>
             {/* {all && <View style={styles.indicator}/>} */}
             </TouchableOpacity>
+            <TouchableOpacity
+            onPress={getToday}
+            >
+            <Text style={today ? styles.tabsActive : styles.tabsText}>Today</Text>
+            {/* {today && <View style={styles.indicator}/>} */}
+            </TouchableOpacity>
+            
           </View>
         
         </View>
@@ -163,12 +178,12 @@ if (isError) {
           </View>
            }
            {
-            isLoading && !data?.length && 
-            <Text>No results found</Text>
+            !isLoading && !data?.length && 
+            <Text style={{color: primaryColors.white, textAlign:"center", marginTop: 50 }}>No results found</Text>
            }
 
-           {!isLoading && !!data?.length && data.map((props: Case) => (
-               <NotificationComponent navigate={() => navigate()} {...props}/>
+           {!isLoading && !!data?.length > 0 && data.map((props: Case) => (
+               <NotificationComponent key={props.id} navigate={() => navigate()} {...props}/>
              )) }
         </ScrollView>
 

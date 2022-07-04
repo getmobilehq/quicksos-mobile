@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     loginIntro: {
-        // fontFamily: 'Montserrat',
+        fontFamily: 'Montserrat',
         color: primaryColors.black,
         fontWeight: "700",
         fontSize: 24,
@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     smallText: {
         textAlign: "center",
         color: primaryColors.primaryGray,
-        // fontFamily: 'Open Sans',
+        fontFamily: 'OpenSans',
         fontWeight: "400",
         fontSize: 14,
         lineHeight: 19,
     }   ,
     changePassword: {
-    // fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat',
     marginBottom: 10,
     fontWeight: "400",
     fontSize: 14,

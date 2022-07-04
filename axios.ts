@@ -21,7 +21,7 @@ const instance = axios.create({
 //   });
 
 instance.interceptors.response.use(function (response) {
-    console.log("from the interceptors response", response.data, response.headers)
+    // console.log("from the interceptors response", response.data, response.headers)
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;

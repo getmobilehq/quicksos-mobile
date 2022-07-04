@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Input, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
-
+      
 const InputComponent = (props: any) => {
   return (
     <Stack  space={4} w="100%"  py={5}> 

@@ -22,6 +22,7 @@ const AppHeader = (props:any) => {
         </TouchableOpacity>
         <TouchableOpacity style={{display: "flex",flex: 1,  width: "100%", }}> 
         <Image
+        alt=""
         source={QuickSos}
         style={{
             width:60,

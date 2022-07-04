@@ -1,6 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useQuery } from "react-query"
 import axios from "../../../axios"
+import { GET_ISSUE_KEY } from "../../../constants"
 import endpoints from "../../../endpoints"
+import ResponseError from "../../../utils/ResponseError"
 
 interface ChangePasswordDetails {
     old_password: string,
@@ -55,11 +58,11 @@ export interface Case {
   status: string,
 }
 
-const getIssues = async () => {
+ export const getIssues = async (params: any) => {
       try {
         let token: any = await AsyncStorage.getItem("token")
         token  = JSON.parse(token)
-       const result = await axios.get(endpoints.issues, {
+       const result = await axios.get(`${endpoints.issues}?filterBy=${params}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -70,4 +73,7 @@ const getIssues = async () => {
       }
 }
 
-export default getIssues
+
+export default async function useGetIssues(params:Record<string, any>){
+  return useQuery(GET_ISSUE_KEY, () =>  getIssues(params))
+}

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         fontWeight: "700",
     },
     headerTextLigher: {
-    fontFamily: 'Open Sans',
+    fontFamily: 'OpenSans',
     fontWeight: "400",
     fontSize: 12,
     lineHeight: 19,

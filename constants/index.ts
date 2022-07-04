@@ -6,3 +6,5 @@ export const primaryColors = {
     white: "#fff",
 }
 
+export const GET_ISSUE_KEY = "get_issue_key"
+

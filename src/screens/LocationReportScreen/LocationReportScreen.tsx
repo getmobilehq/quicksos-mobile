@@ -1,11 +1,9 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, Platform } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Box, Button, Image, Input, ScrollView, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-const Image1 = require("../../../assets/Image-2.png")
-const Image2 = require("../../../assets/Image-3.png")
 import { Ionicons } from '@expo/vector-icons';
 import App from '../../../App'
 import AppHeader from '../../components/AppHeader/AppHeader'
@@ -15,6 +13,8 @@ import * as ImagePicker from 'expo-image-picker';
 import routes from '../../routes'
 import { useMutation } from 'react-query'
 import ReportCases from '../../requests/mutation/reportCases'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const LocationReportScreen = (props: any) => {
@@ -31,46 +31,60 @@ const LocationReportScreen = (props: any) => {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [3, 3],
       quality: 1,
     });
     if (result.cancelled) {
       return;
     }
 
-    let localUri = result.uri;
-    let filename = localUri.split('/').pop();
 
-    //infering the type of the image
-
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
-
-
-
-    setImages((prev: any) => [...prev, {localUri:result.uri, filename, type}]);
+    setImages((prev: any) => [...prev, {uri:result.uri, name:result.uri.split("/").pop(), type: "image/jpg",}]);
 
   };
-  const submitProject = () => {
-    let formData = new FormData();
-    images.forEach((item, i) => {
-      formData.append(`image_url${i + 1}`, {
-        uri: item.localUri,
-        type: item.type || "image/jpeg",
-        name: item.filename || `filename${i + 1}.jpg`,
-      });
-    });
 
-    formData.append("situation_report", reportText)
+  const submitProject = async () => {
+    let token: any = await AsyncStorage.getItem("token")
+        token  = JSON.parse(token)
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Accept", "application/json");
+      var formdata = new FormData();
+      // formdata.append("situation_report", reportText)
+      images.map((image, index) => {
+      
+        formdata.append(`img${index + 1}`, {
+          uri: image.uri,
+          name: image.name,
+          type: image.type,
+        });
+      })
 
-    reportCase({
-      formData,
-      assigned_case_id: props.route.params?.caseId
-    })
+
+    // formdata.append("id", userId);
+    var requestOptions = {
+      body: formdata,
+      headers: myHeaders,
+    };
+
+     axios.post("https://quicksos-api.herokuapp.com/v1/messages/assigned/e80f89bb-9551-4bda-a413-03f21427dca9/add_report/", requestOptions)
+      .then((response) => console.log(response))
+      .then((res) => {
+        console.log(res)
+        // AsyncStorage.setItem("@image", result.uri) 
+        // setImageChanged(true)
+        // setLoading(false)
+
+      })
+      .catch((error) => console.log(error));
+
+
   }
+
+
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -116,7 +130,7 @@ const LocationReportScreen = (props: any) => {
         >
         <Image 
         alt=""
-        source={{uri: image.localUri}}
+        source={{uri: image.uri}}
         style={styles.stretch}
         />
         </View>

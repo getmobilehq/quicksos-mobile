@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         },
         dashboardHeaderText: {
             color: primaryColors.white,
-            // fontFamily: 'Montserrat',
+            fontFamily: 'Montserrat',
             fontWeight: "600",
             fontSize: 18,
             lineHeight: 22,
@@ -37,11 +37,20 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         },
         location: {
-            // fontFamily: 'Montserrat',
+            fontFamily: 'Montserrat',
             fontWeight: "400",
             fontSize: 14,
             color: primaryColors.white,
             marginLeft: 5,
+            textTransform: "capitalize",
+        },
+        time: {
+            fontFamily: 'Montserrat',
+            fontWeight: "400",
+            fontSize: 14,
+            color: primaryColors.white,
+            marginLeft: 5,
+            // textTransform: "",
         },
 
         mainContent: {
@@ -58,7 +67,7 @@ const styles = StyleSheet.create({
           paddingVertical: 10,
         },
         notificationText: {
-            // fontFamily: 'Montserrat';
+            fontFamily: 'Montserrat',
         fontWeight: "600",
         fontSize: 24,
         lineHeight: 22,

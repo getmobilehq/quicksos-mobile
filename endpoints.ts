@@ -4,8 +4,7 @@ changePassword: string;
 issues: string
 refresh: string;
 report: string;
-// arrive: string;
-// respond: string
+profile: string;
 }
 
 const endpoints :Endpoints = {
@@ -14,6 +13,7 @@ changePassword: "/account/users/reset_password/",
 issues: "/messages/assigned/",
 refresh: "/account/users/auth/refresh/",
 report: "/messages/assigned/",
+profile: "/account/users/profile/"
 // arrive: "/messages/assigned/",
 // respond: "/messages/assigned/"
 

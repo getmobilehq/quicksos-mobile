@@ -1,8 +1,9 @@
 import React ,{useContext} from "react"
 import * as SplashScreen from "expo-splash-screen";
-
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen"
@@ -75,6 +76,16 @@ const AppComponent = () => {
 }
 
 export default function App() {
+
+  const [loaded] = useFonts({
+    Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
+    OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+
+  
+});
+if (!loaded) {
+  return <AppLoading />;
+}
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>

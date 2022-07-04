@@ -49,7 +49,7 @@ stretch: {
     paddingHorizontal: scale(10),
     paddingVertical: scale(10),
     paddingTop:10,
-    margibTop:20,
+    marginTop:20,
     borderRadius: 10,
   },
   requestText: {

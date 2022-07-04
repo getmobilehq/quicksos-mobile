@@ -31,7 +31,7 @@ flex: 1,
 stretch: {
     width: "100%",
     height: 180,
-    // resizeMode: 'stretch',
+    resizeMode: 'stretch',
     paddingTop:10,
     borderRadius: 10,
   },

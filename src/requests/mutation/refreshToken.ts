@@ -10,7 +10,7 @@ const refreshToken = async () => {
     console.log("from refresh token")
       try {
         const token = await AsyncStorage.getItem("token")
-        const result = await axios.post(endpoints.changePassword, {
+        const result = await axios.post(endpoints.refresh, {
             refresh: `${token}`
         }, {
             headers: {

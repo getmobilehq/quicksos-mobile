@@ -15,12 +15,8 @@ const AlertScreen = (props: any) => {
   const [buttonText, setButtonText] = React.useState("Respond")
   const CaseDetails = props.route.params.data.case_detail
   const MoreDetails:any = props.route.params.data
-
-  console.log(MoreDetails.id)
-
-  
   const {isLoading, data, isError, error} = useQuery("arrive",
-  getArrive, 
+  () => getArrive(MoreDetails.id), 
   {enabled: true})
   console.log(data, error, isError)
 // const onClickButton = () => {
@@ -67,6 +63,7 @@ const AlertScreen = (props: any) => {
             <Text style={styles.label}>Multimedia</Text>
             <View style={{paddingTop: 10}}> 
             <Image 
+            alt=""
             source={{uri: MoreDetails?.img_url}}
             style={styles.stretch}
             />

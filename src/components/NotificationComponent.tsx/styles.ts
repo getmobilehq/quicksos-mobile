@@ -42,7 +42,7 @@ underlineText: {
     fontWeight: "700",
     fontSize: scale(14),
     color: primaryColors.white,
-    textDecoration: "underline", 
+    // textDecoration: "underline", 
     textDecorationStyle: "solid", 
     textDecorationColor: "white",
     textDecorationLine: "underline"
