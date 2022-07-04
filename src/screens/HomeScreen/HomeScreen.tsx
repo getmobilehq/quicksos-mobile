@@ -26,7 +26,6 @@ export default function HomeScreen(props: any) {
   const [all, setAll] = useState(true)
   const {user, setUser} = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
-  console.log(user)
 
 
   const getRecents = () => {
@@ -65,39 +64,19 @@ const navigate = () => {
 
   const {isLoading: profileLoading, data: profileData} = useQuery("profile",getProfile, {enabled: true})
 
-  console.log("profile DATA ====>",profileData)
+  // console.log("profile DATA ====>",profileData)
 
   if (!isLoading) {
     // console.log(data)
   }
 
-  const logOut = async () => {
-    try { 
-      await AsyncStorage.removeItem("token")
-      await AsyncStorage.removeItem("user")
-      setUser(null)
-    } catch (err) {
-      console.log("there is an error")
-    }
-  }
-// }, [])
-
-if (isError) {
-  console.log(error)
-}
-
-
-// React.useEffect(() => {
-//   props.navigation.navigate("Alert")
-
-// })
     return (
       <SafeAreaView style={styles.container}>
         <View style={{paddingVertical: 10}}> 
         <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
         <Image
         source={QuickSos}
-        alt=""
+        alt="Icon"
         style={{
             width:60,
             height:30,

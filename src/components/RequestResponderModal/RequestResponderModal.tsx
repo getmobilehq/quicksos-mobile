@@ -44,7 +44,7 @@ const RequestResponder = (props:Modalprops) => {
   return (
     <Center>
     <Modal isOpen={props.showModal} onClose={() => props.setShowModal(false)}>
-      <Modal.Content maxWidth="450px" height={500} style={styles.modalContent}>
+      <Modal.Content maxWidth="450px" height={"200px"} style={styles.modalContent}>
         {/* <Modal.CloseButton /> */}
         <Text style={styles.headerText}>Select desired responders</Text>
         <View style={styles.listOfCheckBoxs}>

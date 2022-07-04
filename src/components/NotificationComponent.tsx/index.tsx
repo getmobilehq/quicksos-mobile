@@ -9,7 +9,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Index = (props: any) => {
   const navigation = useNavigation()
-  console.log(props)
   return (
     <TouchableOpacity 
   

@@ -8,14 +8,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, } from 'native-base'
 import { primaryColors } from '../../../constants'
 import useAuthContext from '../../checkUserIsVerified';
+import { useQuery } from 'react-query'
+import getProfile from '../../requests/query/getProfile'
 
 
 const ProfileScreen = () => {
   const [disable, setDisable] = React.useState()
   const [editSuperVisorName, setEditSuperVisorName] = React.useState(false)
   const [editSuperVisorContact, setEditSuperVisorContact] = React.useState(false)
-  // const {user} = useAuthContext()
-  // console.log(user)
+  const {isLoading: profileLoading, data: profileData} = useQuery("profile",getProfile, {enabled: true})
+
+  console.log(profileData)
 
   const onClickButton = () => {
 
@@ -40,13 +43,13 @@ const ProfileScreen = () => {
         <View style={styles.componentContainer}>
           <LabelComponnt
           title="Unit"
-          content="LASAMBUS"
+          content={!!profileData?.agency_detail?.acronym && profileData?.agency_detail?.acronym}
           />
         </View>
         <View style={styles.componentContainer}>
           <LabelComponnt
           title="Branch"
-          content="Agege"
+          content={!!profileData?.local_gov && profileData?.local_gov}
           />
         </View>
         <View style={styles.componentContainer}>
@@ -61,10 +64,9 @@ const ProfileScreen = () => {
         
          <LabelComponnt
           title="Supervisor-in-charge"
-          content="Mr Obanikoro Sanwo-Olu"
+          content={`${profileData.gender == 'male' ? 'Mr' : 'Mrs'} ${profileData.first_name} ${profileData.last_name}`}
           edit
           onClickEdit={() => onClickEditButton("name")}
-
           />
             :
           <InputComponent
@@ -80,7 +82,7 @@ const ProfileScreen = () => {
           !editSuperVisorContact ? 
         <LabelComponnt
         title="Contact of Supervisor"
-        content="+234-9012345678"
+        content={!!profileData?.phone && profileData?.phone}
         edit
         onClickEdit={() => onClickEditButton("contact")}
         />

@@ -16,12 +16,13 @@ export default function AuthContextProvider({
 }) {
     const [user, setUser] = React.useState()
 
-const getDataFromStore = async ()  => {
-    const jsonValue: string | null =  await AsyncStorage.getItem('user')
-    console.log(jsonValue)
+ const getDataFromStore = async ()  => {
+    const jsonValue:any =  await AsyncStorage.getItem('user')
    setUser(JSON.parse(jsonValue))
    const token: string | null =  await AsyncStorage.getItem('token')
-  //  console.log()
+    if (!JSON.parse(jsonValue) && !token ){
+      setUser(null)
+    }
 }   
 
 React.useEffect(() => {

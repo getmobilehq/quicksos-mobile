@@ -129,7 +129,7 @@ const LocationReportScreen = (props: any) => {
         style={{paddingTop: 20}}
         >
         <Image 
-        alt=""
+        alt="report Picture"
         source={{uri: image.uri}}
         style={styles.stretch}
         />

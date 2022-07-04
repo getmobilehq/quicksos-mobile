@@ -7,19 +7,16 @@ import endpoints from "../../../endpoints"
 
 
 const refreshToken = async () => {
-    console.log("from refresh token")
       try {
-        const token = await AsyncStorage.getItem("token")
+        let token:any = await AsyncStorage.getItem("token")
+          token = JSON.parse(token)
         const result = await axios.post(endpoints.refresh, {
-            refresh: `${token}`
-        }, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        console.log("from resfresh token",result)
+            refresh: token
+        },)
+
+        console.log("from refresh token",result)
       } catch(error: any){
-        console.log(error.message)
+        console.log("from refreshToken",error.message)
       }
 }
 

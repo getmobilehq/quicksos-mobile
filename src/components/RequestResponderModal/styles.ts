@@ -5,9 +5,10 @@ const styles = StyleSheet.create({
     modalContent: {
         width: "90%",
         flex: 1,
+        justifyContent: "center",
+        alignContent: "center",
         display: "flex",
-        paddingVertical:scale(20),
-        paddingHorizontal: scale(20)
+        paddingHorizontal: scale(20),
     },
     headerText: {
         fontFamily: 'Montserrat',
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         paddingVertical: scale(10)
     },
     listOfCheckBoxs: {
-        paddingHorizontal: scale(20)
+        paddingHorizontal: scale(20),
     }
 })
 

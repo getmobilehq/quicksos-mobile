@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuthContext from "./src/checkUserIsVerified"
 import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { isJwtExpired } from 'jwt-check-expiration';
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -41,12 +42,27 @@ const Stack = createNativeStackNavigator();
 const AppComponent = () => {
   SplashScreen.preventAutoHideAsync();
   setTimeout(SplashScreen.hideAsync, 1000);
-  const {user} = useAuthContext()
+  const {user, setUser} = useAuthContext()
+
+const userExpirefuction = async () => {
+  if (user) {
+    if(isJwtExpired(user?.accessToken)) {
+      setUser(null)
+      await AsyncStorage.removeItem("token")
+    await AsyncStorage.removeItem("user")
+    }
+}
+}
+
+React.useEffect(()=> {
+  userExpirefuction()
+},[user])
+
+
+
 
   const theme = extendTheme(Theme);
   const queryClient = new QueryClient()
-
-  console.log(user)
 
   const screnOptions: NativeStackNavigationOptions = {
     headerShown: false,
@@ -81,7 +97,6 @@ export default function App() {
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
 
-  
 });
 if (!loaded) {
   return <AppLoading />;

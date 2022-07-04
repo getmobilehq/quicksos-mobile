@@ -1,8 +1,8 @@
-import { View, Text , Image, TouchableOpacity} from 'react-native'
+import { View, Text , TouchableOpacity} from 'react-native'
 import React from 'react'
 import Applogo from '../../Vectors/AppLogo'
 const QuickSos = require('../../../assets/QuickSOS.png')
-import { Avatar } from 'native-base'
+import { Avatar, Image } from 'native-base'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import styles from './style'
@@ -22,7 +22,7 @@ const AppHeader = (props:any) => {
         </TouchableOpacity>
         <TouchableOpacity style={{display: "flex",flex: 1,  width: "100%", }}> 
         <Image
-        alt=""
+        alt="Icon"
         source={QuickSos}
         style={{
             width:60,

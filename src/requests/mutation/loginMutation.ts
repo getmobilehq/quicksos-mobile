@@ -22,7 +22,7 @@ export interface UserDetails {
 
 
 }
-// request({url: endpoints.login, method: "POST", data}).then(response => console.log(response)).catch(err => console.log(err));
+
 
 const LoginUser = async (body:LoginDetails) => {
     // const body ={
@@ -36,7 +36,7 @@ const LoginUser = async (body:LoginDetails) => {
                 accept: "application/json",
             }
         })
-        console.log(result)
+        // console.log(result)
         const formatedData: UserDetails = {
         userId: result.data.data.id,
         email: result.data.data.email,

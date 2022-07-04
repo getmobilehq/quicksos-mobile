@@ -20,20 +20,20 @@ const instance = axios.create({
 //     return Promise.reject(error);
 //   });
 
-instance.interceptors.response.use(function (response) {
+instance.interceptors.response.use(async function (response) {
     // console.log("from the interceptors response", response.data, response.headers)
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
-  }, function async (error) {
-    error.message
-    console.log("from the interceptors error", error.message)
+  }, async function  (error) {
     if (error.response.status == 401) {
       // instance.post(endpoints.refresh, data: {token : ""})
-      // console.log("it is 401")
+      console.log("it is 401")
       //  refreshToken()
+      // await AsyncStorage.removeItem("token")
+      // await AsyncStorage.removeItem("user")
 
-      Alert.alert(error.message)
+      // Alert.alert(error.message)
     }
 
     // console.log(error.response.data);

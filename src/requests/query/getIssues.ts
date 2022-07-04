@@ -74,6 +74,6 @@ export interface Case {
 }
 
 
-export default async function useGetIssues(params:Record<string, any>){
-  return useQuery(GET_ISSUE_KEY, () =>  getIssues(params))
-}
+// export default async function useGetIssues(params:Record<string, any>){
+//   return useQuery(GET_ISSUE_KEY, () =>  getIssues(params))
+// }

@@ -65,7 +65,7 @@ const ClickOnLogin = () => {
       <SafeAreaView style={styles.container}>
         <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
         <Image
-        alt=""
+        alt="Icon"
         source={QuickSos}
         style={{
             width:60,

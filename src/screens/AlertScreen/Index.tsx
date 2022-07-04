@@ -1,7 +1,7 @@
-import { View, Text, SafeAreaView, Image, ScrollView} from 'react-native'
-import React, { PropsWithChildren } from 'react'
+import { View, Text, SafeAreaView, ScrollView} from 'react-native'
+import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Box, Button, Input,  Stack } from 'native-base'
+import { Box, Button, Input,  Stack, Image } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"
 import AppHeader from '../../components/AppHeader/AppHeader'
@@ -9,6 +9,7 @@ import { useQuery } from 'react-query'
 import getArrive from '../../requests/query/getArrive'
 import getRespond from '../../requests/query/getRespond'
 import routes from '../../routes'
+import axios from "axios"
 const FireImage = require("../../../assets/Image.png")
 
 const AlertScreen = (props: any) => {
@@ -19,6 +20,14 @@ const AlertScreen = (props: any) => {
   () => getArrive(MoreDetails.id), 
   {enabled: true})
   console.log(data, error, isError)
+
+  // React.useEffect(() => {
+    const fetchData = () => {
+      axios.get(`https://quicksos-api.herokuapp.com/v1//messages/assigned/${MoreDetails.id}/arrive/`).then(res => console.log(res)).catch(e => console.log(e));
+
+    }
+    fetchData()
+  // }, [])
 // const onClickButton = () => {
 
 // }
@@ -63,14 +72,15 @@ const AlertScreen = (props: any) => {
             <Text style={styles.label}>Multimedia</Text>
             <View style={{paddingTop: 10}}> 
             <Image 
-            alt=""
+            alt="Images"
             source={{uri: MoreDetails?.img_url}}
             style={styles.stretch}
             />
             </View>
         </View>}
         <TouchableOpacity onPress={() =>  {
-            // setButtonText("Arrived")  
+            // setButtonText("Arrived") 
+            fetchData()
         props.navigation.navigate(routes.Location, {
           caseId: MoreDetails?.id
         })
