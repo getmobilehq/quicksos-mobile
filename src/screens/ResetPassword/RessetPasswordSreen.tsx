@@ -21,6 +21,11 @@ const RessetPasswordSreen = (props: any) => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [disable, setDisable] = useState(true)
   const {setUser} = useAuthContext()
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [showNewPassword, setShowNewPassword] = React.useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
+
+
 
 
   const {mutate, data, isError, isSuccess, isLoading, error} = useMutation(ChangePassword)
@@ -63,18 +68,31 @@ const RessetPasswordSreen = (props: any) => {
 
       <View style={styles.inputComponentWrapper}> 
       <View > 
-        <InputComponent title="Old Password" placeholder=" Enter Old Password" type="password"
+        <InputComponent title="Old Password" placeholder=" Enter Old Password" type={!showPassword ? "password" : "text"}
         onChangeText={(text: string) => setOldPassword(text)}
+        showEye
+        showPassword={showPassword}
+        setShowPassword={setShowPassword}
         />
       </View>
       <View> 
         <InputComponent title="New Password" placeholder=" Enter New Password" 
-        type="password" onChangeText={(text: string) => setNewPassword(text)} />
+       onChangeText={(text: string) => setNewPassword(text)}
+        type={!showNewPassword ? "password" : "text"}
+        showEye
+        showPassword={showNewPassword}
+        setShowPassword={setShowNewPassword}
+        
+        />
       
       </View>
       <View> 
         <InputComponent title="Confirm Password" placeholder="Confirm Password"
-        type="password" onChangeText={(text: string) => setConfirmPassword(text)} 
+       onChangeText={(text: string) => setConfirmPassword(text)} 
+        type={!showConfirmPassword ? "password" : "text"}
+        showEye
+        setShowPassword={setShowConfirmPassword}
+        showPassword={showConfirmPassword}
         />
       </View>
       </View>
