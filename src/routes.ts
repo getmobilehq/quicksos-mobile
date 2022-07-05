@@ -1,10 +1,10 @@
-const routes = {
+const routes:any = {
     home: "Home",
     login: "Login",
     Alert: "Alert",
     Location: "Location",
     ResetPassword: "ResetPassword",
-profile: "Profile"
+    profile: "Profile"
 
 }
 

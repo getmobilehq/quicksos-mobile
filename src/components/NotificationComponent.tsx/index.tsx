@@ -10,6 +10,24 @@ import routes from '../../routes'
 const Index = (props: any) => {
   const navigation = useNavigation()
   console.log(props)
+
+  const navigate = () => {
+    // case: MoreDetails
+    if (props.responded && props.arrived) {
+      navigation.navigate(routes?.Location, {
+      case: props
+    })
+    } else {
+       navigation.navigate(routes.Alert, {
+      data: {
+        ...props
+      }
+    })
+    }
+
+
+   
+  }
   return (
     <View 
   
@@ -22,11 +40,7 @@ const Index = (props: any) => {
             <Text style={styles.text}>{props.case_detail.address}</Text>
         </View>
         <TouchableOpacity
-          onPress={() =>  navigation.navigate(routes.Alert, {
-            data: {
-              ...props
-            }
-          })}
+          onPress={navigate}
         > 
         <Text style={styles.underlineText}>Open</Text>
         </TouchableOpacity>

@@ -1,5 +1,4 @@
 import React ,{useContext} from "react"
-import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
@@ -82,7 +81,7 @@ React.useEffect(()=> {
     <SafeAreaView style={{flex: 1, backgroundColor: primaryColors.primaryBackground}}> 
     <NavigationContainer>
        <NativeBaseProvider theme={theme}>
-       <StatusBar style="dark" />
+       <StatusBar style="auto" />
         <Stack.Navigator screenOptions={screnOptions}>
         {!user ? 
         <Stack.Screen name={routes.login} component={LoginScreen} /> 

@@ -17,13 +17,15 @@ import endpoints from '../../../endpoints'
 import Toast from 'react-native-toast-message';
 
 const AlertScreen = (props: any) => {
-  const [buttonText, setButtonText] = React.useState("Respond")
   const [loading, setLoading] = React.useState(false)
   const CaseDetails = props.route.params.data.case_detail
   const MoreDetails:any = props.route.params.data
+  const [buttonText, setButtonText] = React.useState(!MoreDetails.arrived ? "Arrived":"Respond")
+  console.log(MoreDetails.responded, MoreDetails.arrived)
 
 
   const getRespond = async (caseId: string) => {
+    setLoading(true)
     let token: any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
    axios.get(`${endpoints.report}${caseId}/respond/`, {
@@ -46,10 +48,13 @@ const AlertScreen = (props: any) => {
         text1: 'Failed to respond to case',
         text2: error.response.data.errors
       });
+    }).finally(() => {
+      setLoading(false)
     })
   }
 
   const getArrive = async (caseId: string) => {
+    setLoading(true)
     let token: any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
    axios.get(`${endpoints.report}${caseId}/arrive/`, {
@@ -72,6 +77,9 @@ const AlertScreen = (props: any) => {
         text1: 'Failed',
         text2: error.response.data.errors
       });
+    }).finally(() => {
+      setLoading(false)
+
     })
   }
 
@@ -128,7 +136,7 @@ const AlertScreen = (props: any) => {
               onPress={async () =>  {
                     // fetchData()
                     // refetch()
-                  // await getRespond(MoreDetails.id)
+                  await getRespond(MoreDetails.id)
       setButtonText("Arrived") 
 
                  
@@ -143,12 +151,12 @@ const AlertScreen = (props: any) => {
           <Box alignItems="center" width="100%" py="10">
             <Button 
            onPress={async () =>  {
-         
-        // await getArrive(MoreDetails.id)
-        props.navigation.navigate(routes.Location, {
-          case: MoreDetails
-        })
-        } }
+            await getArrive(MoreDetails.id)
+
+          // props.navigation.navigate(routes.Location, {
+          // case: MoreDetails
+          //  })
+          }}
             isLoading={false} 
             bgColor={primaryColors.white} 
              width="300" _text={{color: "black", fontWeight: "bold"}}>

@@ -197,7 +197,7 @@ const navigate = () => {
             <Text style={{color: primaryColors.white, textAlign:"center", marginTop: 50 }}>No results found</Text>
            }
 
-           {!isLoading && !!data?.length > 0 && data.map((props: Case) => (
+           {!isLoading && data?.length > 0 && data.map((props: Case) => (
                <NotificationComponent key={props.id} navigate={() => navigate()} {...props}/>
              )) }
         </ScrollView>
