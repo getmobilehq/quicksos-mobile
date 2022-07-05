@@ -9,6 +9,7 @@ import routes from '../../routes'
 
 const Index = (props: any) => {
   const navigation = useNavigation()
+  console.log(props)
   return (
     <View 
   

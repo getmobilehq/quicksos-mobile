@@ -48,7 +48,7 @@ const AlertScreen = (props: any) => {
       });
     })
   }
-  
+
   const getArrive = async (caseId: string) => {
     let token: any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
@@ -64,10 +64,9 @@ const AlertScreen = (props: any) => {
         text2: "Admin will be notified"
       });
       props.navigation.navigate(routes.Location, {
-        caseId: MoreDetails?.id
+        case: MoreDetails
       })
     } ).catch(function (error) {
-      // console.log(error.response.data)
       Toast.show({
         type: 'error',
         text1: 'Failed',
@@ -129,7 +128,9 @@ const AlertScreen = (props: any) => {
               onPress={async () =>  {
                     // fetchData()
                     // refetch()
-                  await getRespond(MoreDetails.id)
+                  // await getRespond(MoreDetails.id)
+      setButtonText("Arrived") 
+
                  
               }}
               isLoading={loading} 
@@ -143,7 +144,10 @@ const AlertScreen = (props: any) => {
             <Button 
            onPress={async () =>  {
          
-        await getArrive(MoreDetails.id)
+        // await getArrive(MoreDetails.id)
+        props.navigation.navigate(routes.Location, {
+          case: MoreDetails
+        })
         } }
             isLoading={false} 
             bgColor={primaryColors.white} 

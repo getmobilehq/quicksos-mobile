@@ -1,47 +1,53 @@
 import { View, Text , TouchableOpacity} from 'react-native'
 // import { TouchableOpacity } from 'react-native-gesture-handler'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, Center,Modal, Checkbox } from 'native-base';
 import styles from "./styles"
+import axios from '../../../axios';
+import endpoints from '../../../endpoints';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 interface Modalprops {
     showModal: boolean;
     setShowModal: (value: boolean) => void;
     buttonText?: string;
     onClickButton: () => void;
+    Responders: []
+    case: {
+        case: string
+        id: string
+    }
 }
 
 const RequestResponder = (props:Modalprops) => {
-    const data = [
-        {
-            id: 1,
-            name: "LASEMA"
-        },
-        {
-            id: 2,
-            name: "LASMA"
-        },
-        {
-            id: 3,
-            name: "FIRE SERVICE"
-        },
-        {
-            id: 4,
-            name: "LASAMBUS"
-        },
-        {
-            id: 5,
-            name: "NPF"
-        },
-        {
-            id: 6,
-            name: "LASERA"
-        },
-        {
-            id: 7,
-            name: "LASMIRA"
-        },
-    ]
-   
+    const [groupValues, setGroupValues] = React.useState([]);
+    const [loading, setLoading] = React.useState(false)
+
+    const sendRequest = async () => {
+      setLoading(true)
+        let token: any = await AsyncStorage.getItem("token")
+        token  = JSON.parse(token)
+        const body = {
+            case: props.case.case,
+            assignment: props.case.id,
+            agencies: groupValues,
+        }
+        axios.post(endpoints.backup, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res => {
+      console.log(res.data.message)
+      if (!!res.data.message && res.data.message === "success") {
+          props.onClickButton()
+      }
+        } ).catch(error => {
+            console.log(error.response.data);
+        }).finally(() => {  
+          setLoading(false)
+        })
+    }
   return (
     <Center>
     <Modal isOpen={props.showModal} onClose={() => props.setShowModal(false)}>
@@ -49,19 +55,22 @@ const RequestResponder = (props:Modalprops) => {
         {/* <Modal.CloseButton /> */}
         <Text style={styles.headerText}>Select desired responders</Text>
         <View style={styles.listOfCheckBoxs}>
-        <Checkbox.Group accessibilityLabel="choose values">
-            {data.map(data => (
-                <Checkbox value={data.name} my={2}>
-                {data.name}
+        <Checkbox.Group accessibilityLabel="choose values"
+        onChange={setGroupValues} value={groupValues} 
+        >
+            {props.Responders?.map((data: {acronym: string, id: string}) => (
+                <Checkbox value={data.id} my={2}>
+                {data.acronym}
                 </Checkbox>
             ))}
-      {/* <Checkbox value="two">Software Development</Checkbox> */}
     </Checkbox.Group>
     </View>
         <Box alignItems="center" width="100%" py="5" mt="2.5">
               <Button 
-              onPress={props.onClickButton}
-              isLoading={false} variant="solid" width="250">
+              onPress={ () => {
+                sendRequest()
+              }}
+              isLoading={loading} variant="solid" width="250">
             {props.buttonText}
               </Button>
           </Box>      

@@ -11,11 +11,12 @@ import { AntDesign } from '@expo/vector-icons';
 import RequestResponder from '../../components/RequestResponderModal/RequestResponderModal'
 import * as ImagePicker from 'expo-image-picker';
 import routes from '../../routes'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import ReportCases from '../../requests/mutation/reportCases'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ModalComponent from '../../components/Modal/Modal'
+import { getResponders } from '../../requests/query/getResponders'
 
 
 const LocationReportScreen = (props: any) => {
@@ -26,6 +27,10 @@ const LocationReportScreen = (props: any) => {
   const [reportText, setReportText] = useState<string>("There has been a report")
   const [images, setImages] = useState([])
   const {mutate: reportCase, data, isLoading} = useMutation(ReportCases)
+
+const {data: Responders} = useQuery("agencies", getResponders)
+console.log(Responders)
+console.log(props.route.params.case)
 
 
   const onClickButton = () => {
@@ -45,7 +50,6 @@ const LocationReportScreen = (props: any) => {
       return;
     }
 
-
     setImages((prev: any) => [...prev, {uri:result.uri, name:result.uri.split("/").pop(), type: "image/jpg",}]);
 
   };
@@ -60,16 +64,30 @@ const LocationReportScreen = (props: any) => {
         let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Accept", "multipart/form-data");
-      var formData = new FormData();
-      // formdata.append("situation_report", reportText)
-      images.map((image, index) => {
-      
-        formData.append(`img${index + 1}`, {
-          uri: image.uri,
-          name: image.name,
-          type: image.type,
-        });
-      })
+      // var formData = new FormData();
+      // formData.append("situation_report", reportText)
+
+      // images.map((image, index) => {
+        
+      //   // formData.append(`img${index + 1}`, {
+      //   //   uri: image.uri,
+      //   //   name: image.name,
+      //   //   type: image.type,
+      //   // });
+      // })
+      const body: any = {
+        situation_report: reportText,
+        img1: images[0],
+        img2: images[1],
+      }
+
+      const formData = new FormData();
+
+      for (const key in body) {
+        if (body[key]) {
+          formData.append(key, body[key]);
+        }
+      }
 
 
     // formdata.append("id", userId);
@@ -79,40 +97,18 @@ const LocationReportScreen = (props: any) => {
     // };
 
      axios.post("https://quicksos-api.herokuapp.com/v1/messages/assigned/e80f89bb-9551-4bda-a413-03f21427dca9/add_report/", formData, {
+
       headers: {
-        "Content-type": "application/x-www-form-urlencoded",
+        "Content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
     })
       .then((response) => console.log(response))
-      .then((res) => {
-        console.log(res)
-        // AsyncStorage.setItem("@image", result.uri) 
-        // setImageChanged(true)
-        // setLoading(false)
-
-      })
       .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          // console.log(error.response)
-          console.log(error.response.data);
-          console.log(error.response.status);
-          // console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      })
-
+        console.log(error.response.data);
+  })
+      
 
   }
 
@@ -175,7 +171,7 @@ const LocationReportScreen = (props: any) => {
           <Button 
           onPress={() => {
             submitProject()
-            setShowSuccesfulModal(true)
+            // setShowSuccesfulModal(true)
             // props.navigation.navigate(routes.profile)
           }}
           isLoading={isLoading} 
@@ -196,6 +192,8 @@ const LocationReportScreen = (props: any) => {
     setShowModal={setShowModal}
     buttonText='Send Request'
     onClickButton={onClickButton}
+    Responders={Responders}
+    case={props.route.params.case}
     />
        <ModalComponent 
         showModal={showSuccesfulModal} 
