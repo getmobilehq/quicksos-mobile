@@ -22,6 +22,7 @@ import useAuthContext from "./src/checkUserIsVerified"
 import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { isJwtExpired } from 'jwt-check-expiration';
+import { primaryColors } from "./constants";
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -40,8 +41,8 @@ const queryClient = new QueryClient()
 const Stack = createNativeStackNavigator();
 
 const AppComponent = () => {
-  SplashScreen.preventAutoHideAsync();
-  setTimeout(SplashScreen.hideAsync, 1000);
+  // SplashScreen.preventAutoHideAsync();
+  // setTimeout(SplashScreen.hideAsync, 1000);
   const {user, setUser} = useAuthContext()
 
 const userExpirefuction = async () => {
@@ -68,10 +69,19 @@ React.useEffect(()=> {
     headerShown: false,
   };
 
+  const [loaded] = useFonts({
+    Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
+    OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+});
+    if (!loaded) {
+      return null;
+    }
+
   return (
+    <SafeAreaView style={{flex: 1, backgroundColor: primaryColors.primaryBackground}}> 
     <NavigationContainer>
-       <StatusBar style="auto" />
        <NativeBaseProvider theme={theme}>
+       <StatusBar style="dark" />
         <Stack.Navigator screenOptions={screnOptions}>
         {!user ? 
         <Stack.Screen name={routes.login} component={LoginScreen} /> 
@@ -87,20 +97,15 @@ React.useEffect(()=> {
       </Stack.Navigator>
       </NativeBaseProvider>
       </NavigationContainer>
+    </SafeAreaView>
+
   )
 
 }
 
 export default function App() {
 
-  const [loaded] = useFonts({
-    Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
-    OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
 
-});
-if (!loaded) {
-  return <AppLoading />;
-}
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>

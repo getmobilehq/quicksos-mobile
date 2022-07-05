@@ -1,6 +1,6 @@
-import { View, Text, SafeAreaView, ScrollView} from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Pressable} from 'react-native'
 import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, Input,  Stack, Image } from 'native-base'
 import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"
@@ -106,36 +106,34 @@ const AlertScreen = (props: any) => {
             />
             </View>
         </View>}
-        {buttonText === "Respond" ? <TouchableOpacity onPress={() =>  {
-            setButtonText("Arrived") 
-            fetchData()
-        // props.navigation.navigate(routes.Location, {
-        //   caseId: MoreDetails?.id
-        // })
-        } }> 
+        {buttonText === "Respond" ? 
             <Box alignItems="center" width="100%" py="10">
-              <Button isLoading={loading} 
+              <Button 
+              onPress={() =>  {
+                    setButtonText("Arrived") 
+                    fetchData()
+              }}
+              isLoading={loading} 
               bgColor={primaryColors.white} 
                width="300" _text={{color: "black", fontWeight: "bold"}}>
             Respond
               </Button>
-          </Box>
-        </TouchableOpacity> : 
-        <TouchableOpacity onPress={() =>  {
-          setButtonText("Arrived") 
-          // fetchData()
-      props.navigation.navigate(routes.Location, {
-        caseId: MoreDetails?.id
-      })
-      } }> 
+              </Box>
+              :
           <Box alignItems="center" width="100%" py="10">
-            <Button isLoading={false} 
+            <Button 
+           onPress={() =>  {
+            setButtonText("Arrived") 
+        props.navigation.navigate(routes.Location, {
+          caseId: MoreDetails?.id
+        })
+        } }
+            isLoading={false} 
             bgColor={primaryColors.white} 
              width="300" _text={{color: "black", fontWeight: "bold"}}>
           Arrived
             </Button>
         </Box>
-      </TouchableOpacity>
         }
         </ScrollView>
         {/* </ScrollView> */}

@@ -1,9 +1,9 @@
-import { View, Text, SafeAreaView, Platform } from 'react-native'
+import { View, Text, SafeAreaView, Platform, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Box, Button, Image, Input, ScrollView, Stack } from 'native-base'
 import { primaryColors } from '../../../constants'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
 import App from '../../../App'
 import AppHeader from '../../components/AppHeader/AppHeader'
@@ -26,7 +26,6 @@ const LocationReportScreen = (props: any) => {
   const [reportText, setReportText] = useState<string>("There has been a report")
   const [images, setImages] = useState([])
   const {mutate: reportCase, data, isLoading} = useMutation(ReportCases)
-  console.log(props.route.params?.caseId, "yoo")
 
 
   const onClickButton = () => {
@@ -171,19 +170,20 @@ const LocationReportScreen = (props: any) => {
        ) ) }
       
     </View>
-    <TouchableOpacity onPress={() => {
-      submitProject()
-      setShowSuccesfulModal(true)
-      // props.navigation.navigate(routes.profile)
-    }} > 
-        <Box alignItems="center" width="100%" py="5">
-          <Button isLoading={isLoading} 
+        <Box
+        alignItems="center" width="100%" py="5">
+          <Button 
+          onPress={() => {
+            submitProject()
+            setShowSuccesfulModal(true)
+            // props.navigation.navigate(routes.profile)
+          }}
+          isLoading={isLoading} 
           bgColor={primaryColors.white} 
            width="300" _text={{color: "black", fontWeight: "bold"}}>
         {"Solved"}
           </Button>
       </Box>
-    </TouchableOpacity>
     <TouchableOpacity onPress={() => setShowModal(true)}>
     <Text style={styles.requestText}>Request for other responders</Text>
     </TouchableOpacity>

@@ -1,5 +1,5 @@
-import { View, Text, } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, TouchableOpacity} from 'react-native'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import React, { useState } from 'react'
 import { Box, Button, Center, FormControl, Input, Modal } from 'native-base';
@@ -18,16 +18,14 @@ const ModalComponent = (props:Modalprops) => {
     <Center>
     <Modal isOpen={props.showModal} onClose={() => props.setShowModal(false)}>
       <Modal.Content maxWidth="450px" height={300} style={styles.modalContent}>
-        {/* <Modal.CloseButton /> */}
         <Text style={styles.modalText}> {props.text}</Text>
-        <TouchableOpacity onPress={() => props.onClickButton()}>
         <Box alignItems="center" width="90%" py="5" mt="2.5">
-              <Button isLoading={false} variant="solid" width="250">
+              <Button 
+              onPress={() => props.onClickButton()}
+              isLoading={false} variant="solid" width="250">
             {props.buttonText}
               </Button>
           </Box>      
-        </TouchableOpacity>
-
       </Modal.Content>
     </Modal>
   </Center>

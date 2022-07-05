@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColors.naturalColor,
         borderRadius: 10,
         paddingHorizontal: 20,
+        position: "relative"
         },
         dashboardHeader: {
         display: "flex",
@@ -35,6 +36,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         // paddingVertical:10,
         marginBottom: 10,
+        },
+        textContainer: {
+        borderBottomColor: primaryColors.white,
+        borderBottomWidth: 1,
+        paddingBottom: 2,
         },
         location: {
             fontFamily: 'Montserrat',

@@ -1,10 +1,10 @@
-import { View, Text, SafeAreaView, Alert } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, SafeAreaView, Alert, TouchableOpacity } from 'react-native'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
 import styles from "./styles"
 import InputComponent from '../../components/InputComponent/InputComponent'
-import { TouchableOpacityBase } from 'react-native'
-import { Box, Button } from 'native-base'
+// import { TouchableOpacityBase } from 'react-native'
+import { Box, Button, ScrollView } from 'native-base'
 import ModalComponent from '../../components/Modal/Modal'
 import routes from '../../routes'
 import AppHeader from '../../components/AppHeader/AppHeader'
@@ -59,8 +59,9 @@ const RessetPasswordSreen = (props: any) => {
       <AppHeader />
       <Text style={styles.headerText}>Password Reset</Text>
       <Text style={styles.headerTextLigher}>Please enter the details below to reset your password</Text>
-      <View style={styles.inputComponentWrapper}> 
+      <ScrollView>
 
+      <View style={styles.inputComponentWrapper}> 
       <View > 
         <InputComponent title="Old Password" placeholder=" Enter Old Password" type="password"
         onChangeText={(text: string) => setOldPassword(text)}
@@ -78,14 +79,13 @@ const RessetPasswordSreen = (props: any) => {
       </View>
       </View>
 
-      <TouchableOpacity onPress={onClickButton}> 
-            <Box alignItems="center" width="100%" py="5">
+      <Box alignItems="center" width="100%" py="20">
               <Button isLoading={isLoading} 
+              onPress={onClickButton}
               isDisabled={disable} variant="solid" width="300">
             Ok
               </Button>
-          </Box>
-        </TouchableOpacity>
+        </Box>
         <ModalComponent 
         showModal={showModal} 
         setShowModal={setShowModal}
@@ -93,6 +93,8 @@ const RessetPasswordSreen = (props: any) => {
         buttonText='Log In'
         onClickButton={ModalButtonPressed}
         />
+      </ScrollView>
+
     
     </SafeAreaView>
   )

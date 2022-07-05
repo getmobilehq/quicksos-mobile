@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Alert, TouchableOpacity, KeyboardAvoidingViewBase } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {primaryColors} from "../../../constants/index"
-import {Input, Stack, Button, Box, Image} from "native-base"
+import {Input, Stack, Button, Box, Image, KeyboardAvoidingView} from "native-base"
 import styles from './styles';
 import AppHeader from '../../components/AppHeader/AppHeader';
 import { useMutation } from 'react-query';
 import axios from '../../../axios';
 import LoginUser from '../../requests/mutation/loginMutation';
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 
@@ -23,6 +23,7 @@ export default function HomeScreen(props: any) {
   //   ), 
   //  )
   const {mutate, data, isLoading,} = useMutation(LoginUser)
+  console.log(data)
 
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
@@ -74,6 +75,7 @@ const ClickOnLogin = () => {
         }}
         />
         </View>
+        
         <Text style={styles.loginIntro}>Log in into your account</Text>
         <Text style={styles.smallText}>Please enter the details below to log into your account.</Text>
 
@@ -86,16 +88,14 @@ const ClickOnLogin = () => {
         <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Password</Text>
             <Input isRequired variant="underlined" value={password} size="lg" onChangeText={(value) => setPassword(value)}placeholder="Enter Password" type="password" accessibilityLabel='Enter Password' />
         </Stack>
-        
         </View>
-        <TouchableOpacity onPress={ClickOnLogin}> 
             <Box alignItems="center" width="100%" py="20">
-              <Button isLoading={isLoading} variant="solid"  width="300" isDisabled={disable}>
+              <Button 
+              onPress={ClickOnLogin}
+              isLoading={isLoading} variant="solid"  width="300" isDisabled={disable}>
             Login
               </Button>
           </Box>
-        </TouchableOpacity>
-        
       </SafeAreaView>
     );
   }

@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import styles from './style'
 import { AntDesign } from '@expo/vector-icons';
 import { primaryColors } from '../../../constants';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const LabelComponnt = (props: any) => {
   return (

@@ -1,6 +1,6 @@
-import { Avatar, Image, ScrollView, Popover  } from 'native-base';
+import { Avatar, Image, Popover  } from 'native-base';
 import React, {PropsWithChildren, useState} from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -17,7 +17,12 @@ import AvatarComponent from '../../components/Avatar';
 import { GET_ISSUE_KEY, primaryColors } from '../../../constants';
 import getProfile from '../../requests/query/getProfile';
 import formatParams from '../../../utils/formatParams';
+import { scale } from 'react-native-size-matters';
 const QuickSos = require('../../../assets/QuickSOS.png')
+const Ellipse = require('../../../assets/Ellipse1.png')
+const Ellipse2 = require('../../../assets/Ellipse2.png')
+
+
 
 export default function HomeScreen(props: any) {
   const [recents, setRecents] = useState(false)
@@ -102,7 +107,7 @@ const navigate = () => {
       color={primaryColors.naturalColor}
            />
       </TouchableOpacity>
-      
+    
           </View>
           <View style={styles.locationWrapper}> 
           <Octicons name="location" size={20} color="#fff" />
@@ -112,6 +117,30 @@ const navigate = () => {
           <FontAwesome5 name="calendar-day" size={20} color="#fff" />
           <Text style={styles.time}>{new Date().toUTCString()}</Text>
           </View>
+          <Image
+        source={Ellipse2}
+        alt="elipse2"
+        style={{
+            width:scale(100),
+            height:scale(50),
+            resizeMode: "contain",
+            position: "absolute",
+            bottom: scale(15),
+            right: scale(-40),
+        }}
+        />
+          <Image
+        source={Ellipse}
+        alt="elipse1"
+        style={{
+            width:scale(60),
+            height:scale(40),
+            resizeMode: "contain",
+            position: "absolute",
+            bottom: scale(0),
+            right: scale(-25),
+        }}
+        />
 
         </View>
         {/* Main screen */}
@@ -119,7 +148,7 @@ const navigate = () => {
         <View style={styles.mainContent}> 
         {/* Alert */}
         <View style={styles.notifications}> 
-          <Text style={styles.notificationText}>Alert</Text>
+          <Text style={styles.notificationText}>Alerts</Text>
           <Ionicons name="notifications-outline" size={28} color="#fff" />
         </View>
 
@@ -130,27 +159,34 @@ const navigate = () => {
           style={styles.tabsContainer}>
             <TouchableOpacity
             onPress={getRecents}
+            style={!!recents && styles.textContainer}
             >
-            <Text style={recents ? styles.tabsActive : styles.tabsText}>Recents</Text>
+            <Text style={styles.tabsText}>Recents</Text>
             {/* {recents && <View style={styles.indicator}/>} */}
             </TouchableOpacity>
             <TouchableOpacity
+            style={!!all && styles.textContainer}
             onPress={getAll}
             >
-            <Text style={all ? styles.tabsActive : styles.tabsText}>All</Text>
+            <Text style={styles.tabsText}>All</Text>
             {/* {all && <View style={styles.indicator}/>} */}
             </TouchableOpacity>
             <TouchableOpacity
+            style={!!today && styles.textContainer}
+
+
             onPress={getToday}
             >
-            <Text style={today ? styles.tabsActive : styles.tabsText}>Today</Text>
+            <Text style={styles.tabsText}>Today</Text>
             {/* {today && <View style={styles.indicator}/>} */}
             </TouchableOpacity>
             
           </View>
         
         </View>
-        <ScrollView>
+        <ScrollView 
+        // style={{marginVertical: 20,}}
+        >
           {isLoading && 
           <View style={{height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
            <ActivityIndicator />

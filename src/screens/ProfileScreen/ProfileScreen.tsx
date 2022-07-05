@@ -1,10 +1,10 @@
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import styles from "./styles"
 import AppHeader from '../../components/AppHeader/AppHeader'
 import InputComponent from '../../components/InputComponent/InputComponent'
 import LabelComponnt from '../../components/LabeComponent/LabelComponnt'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, } from 'native-base'
 import { primaryColors } from '../../../constants'
 import useAuthContext from '../../checkUserIsVerified';
@@ -64,7 +64,7 @@ const ProfileScreen = () => {
         
          <LabelComponnt
           title="Supervisor-in-charge"
-          content={`${profileData.gender == 'male' ? 'Mr' : 'Mrs'} ${profileData.first_name} ${profileData.last_name}`}
+          content={`${!!profileData?.gender && profileData?.gender == 'male' ? 'Mr' : 'Mrs'} ${!!profileData?.first_name && profileData?.first_name} ${!!profileData?.last_name && profileData?.last_name}`}
           edit
           onClickEdit={() => onClickEditButton("name")}
           />
@@ -99,18 +99,14 @@ const ProfileScreen = () => {
         }
         
         </View>
-
-
-      <TouchableOpacity onPress={onClickButton}> 
-            <Box alignItems="center" width="100%" py="5">
+           <Box alignItems="center" width="100%" py="5">
               <Button isLoading={isLoading} 
+              onPress={onClickButton}
               isDisabled={disable} variant="solid" width="300">
             Done
               </Button>
           </Box>
-        </TouchableOpacity>
         </ScrollView>
-
     </SafeAreaView>
   )
 }

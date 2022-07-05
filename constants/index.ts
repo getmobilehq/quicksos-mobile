@@ -4,6 +4,7 @@ export const primaryColors = {
     naturalColor: "#1D2671",
     naturalColorDark: "#0F084E",
     white: "#fff",
+    primaryBackground: "#E5E5E5"
 }
 
 export const GET_ISSUE_KEY = "get_issue_key"
