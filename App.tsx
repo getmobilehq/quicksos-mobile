@@ -23,6 +23,7 @@ import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { isJwtExpired } from 'jwt-check-expiration';
 import { primaryColors } from "./constants";
+import Toast from 'react-native-toast-message';
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -97,6 +98,8 @@ React.useEffect(()=> {
       </Stack.Navigator>
       </NativeBaseProvider>
       </NavigationContainer>
+      <Toast onPress={() => Toast.hide()} visibilityTime={10000} type="info" />
+
     </SafeAreaView>
 
   )

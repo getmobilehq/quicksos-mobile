@@ -13,6 +13,7 @@ import routes from '../../routes';
 import useAuthContext from '../../checkUserIsVerified';
 import { Feather } from '@expo/vector-icons';
 import { scale } from 'react-native-size-matters';
+import validator from 'validator';
 
 const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
@@ -37,7 +38,7 @@ export default function HomeScreen(props: any) {
   // },[])
 
   React.useEffect(() => {
-    if (email && password) {
+    if (validator.isEmail(email) && password) {
       setDisable(false)
     }
   }, [email, password])
@@ -85,11 +86,7 @@ const ClickOnLogin = () => {
         <View>
           <Stack  space={4} w="100%"  py={5}> 
             <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Email</Text>
-           
             <Input isRequired variant="underlined" width={"full"} value={email} size="lg" onChangeText={(value) => setEmail(value)} placeholder="Enter Email Address" accessibilityLabel='Unit' />
-          
-          
-          
         </Stack>
         <Stack space={4} w="100%"  py={5}>
         <Text style={{color: primaryColors.primaryGray, fontWeight: "400" }}>Password</Text>

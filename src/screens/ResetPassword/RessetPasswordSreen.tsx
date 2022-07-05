@@ -82,7 +82,6 @@ const RessetPasswordSreen = (props: any) => {
         showEye
         showPassword={showNewPassword}
         setShowPassword={setShowNewPassword}
-        
         />
       
       </View>

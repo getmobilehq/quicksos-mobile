@@ -69,7 +69,7 @@ export interface Case {
         })
         return result.data.data;
       } catch(error: any){
-        console.log(error.message)
+        console.log(error.response.data)
       }
 }
 
