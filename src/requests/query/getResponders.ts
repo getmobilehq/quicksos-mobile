@@ -10,11 +10,7 @@ import ResponseError from "../../../utils/ResponseError"
       try {
         let token: any = await AsyncStorage.getItem("token")
         token  = JSON.parse(token)
-       const result = await axios.get(`${endpoints.agencies}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
+       const result = await axios.get(`${endpoints.agencies}`,)
         return result.data.data;
       } catch(error: any){
         console.log(error.response.data)

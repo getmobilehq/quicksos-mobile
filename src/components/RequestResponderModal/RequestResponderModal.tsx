@@ -26,18 +26,12 @@ const RequestResponder = (props:Modalprops) => {
 
     const sendRequest = async () => {
       setLoading(true)
-        let token: any = await AsyncStorage.getItem("token")
-        token  = JSON.parse(token)
         const body = {
             case: props.case.case,
             assignment: props.case.id,
             agencies: groupValues,
         }
-        axios.post(endpoints.backup, body, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
+        axios.post(endpoints.backup, body).then(res => {
       console.log(res.data.message)
       if (!!res.data.message && res.data.message === "success") {
           props.onClickButton()
@@ -59,7 +53,7 @@ const RequestResponder = (props:Modalprops) => {
         onChange={setGroupValues} value={groupValues} 
         >
             {props.Responders?.map((data: {acronym: string, id: string}) => (
-                <Checkbox value={data.id} my={2}>
+                <Checkbox key={data.id} value={data.id} my={2}>
                 {data.acronym}
                 </Checkbox>
             ))}

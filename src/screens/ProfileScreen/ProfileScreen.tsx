@@ -36,6 +36,11 @@ const ProfileScreen = (props: any) => {
     props.navigation.navigate(routes.home)
   }
 
+  // React.useEffect(() => {
+  // }, [
+  // console.log("true")
+
+
   // console.log(NaijaStates.lgas("Lagos").lgas)
   React.useEffect(() => {
     if ((!!supreVisorIncharge && supreVisorIncharge !== "") 
@@ -48,8 +53,6 @@ const ProfileScreen = (props: any) => {
 
   const EditUser = async () => {
     setLoading(true)
-      let token: any = await AsyncStorage.getItem("token")
-      token  = JSON.parse(token)
       const splitedName = supreVisorIncharge.split(" ")
       let body: any = {
         // first_name:splitedName[0],
@@ -72,13 +75,7 @@ const ProfileScreen = (props: any) => {
       body["local_gov"] = selectedLocalGovt
    }
 
-   console.log(body)
-
-      axios.put(endpoints.edit, body, {
-          headers: {
-              "Authorization": `Bearer ${token}`
-          }
-      }).then(res => {
+      axios.put(endpoints.edit, body).then(res => {
     // console.log(res.data)
     setShowModal(true)
   
@@ -146,6 +143,7 @@ const ProfileScreen = (props: any) => {
             }>
             {NaijaStates.lgas("Lagos").lgas.map((data: string) => (
               <Picker.Item 
+              key={data}
           fontFamily="Montserrat"
               label={data}value={data} />
             ))}
@@ -174,7 +172,9 @@ const ProfileScreen = (props: any) => {
           placeholderTextColor={primaryColors.naturalColorDark}
           size="xl"
           headerText={{fontSize: 16,}} 
-          title="Supervisor-in-charge" placeholder={`${!!profileData?.first_name && profileData?.first_name} ${!!profileData?.last_name && profileData?.last_name}`} type="text"
+          // title="Supervisor-in-charge" placeholder={`${!!profileData?.first_name && profileData?.first_name} ${!!profileData?.last_name && profileData?.last_name}`} 
+          placeholder="Full Name"
+          type="text"
           onChangeText={(text: string) => setSuperVisorInCharge(text)}
           />}
         </View>

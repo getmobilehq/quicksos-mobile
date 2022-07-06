@@ -4,21 +4,44 @@ import { Alert } from 'react-native';
 import endpoints from './endpoints';
 import refreshToken from './src/requests/mutation/refreshToken';
 import routes from './src/routes';
+import jwt_decode from "jwt-decode";
+import dayjs from 'dayjs';
+
+const authToken = async () => {
+  return await AsyncStorage.getItem("token") ? await AsyncStorage.getItem("token") : null
+} 
+
+
 
 const instance = axios.create({
-    baseURL: "https://quicksos-api.herokuapp.com/v1/"
+    baseURL: "https://quicksos-api.herokuapp.com/v1/",
 })
 
 
-// instance.interceptors.request.use(async function (config) {
-//     console.log("this is a request before it runs", config)
-//     const token = await AsyncStorage.getItem("token")
-//     // Do something before request is sent
-//     return config;
-//   }, function (error) {
-//     // Do something with request error
-//     return Promise.reject(error);
-//   });
+instance.interceptors.request.use(async function (req: any) {
+  let token:any = await authToken()
+  token = JSON.parse(token)
+  console.log(token)
+  if (!token) {
+   token = await authToken()
+   req.headers.Authorization = "Bearer " + token.token
+  }
+  req.headers.Authorization = "Bearer " + token.token
+
+  const user:any = jwt_decode(token.token)
+  const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
+  if(!isExpired) return req
+  console.log("token expired")
+
+  const body = {
+    refresh: token.refresh
+  }
+  const response  = await axios.post("https://quicksos-api.herokuapp.com/v1/account/users/auth/refresh/", body).then((data) => data).catch((error) => {
+  })
+  await AsyncStorage.setItem('token', JSON.stringify(response?.data))
+  req.headers.Authorization = "Bearer " + response?.data.token
+  return req
+  });
 
 instance.interceptors.response.use(async function (response) {
     // console.log("from the interceptors response", response.data, response.headers)

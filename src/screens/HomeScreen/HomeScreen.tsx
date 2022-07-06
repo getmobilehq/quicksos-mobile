@@ -29,8 +29,11 @@ export default function HomeScreen(props: any) {
   const [params, setParams] = useState("")
   const [today, setToday] = useState(false)
   const [all, setAll] = useState(true)
-  const {user, setUser} = useAuthContext()
+  const {user} = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
+
+  // setTimeout(() => {console.log("true")}, 20000)
+
 
 
   const getRecents = () => {
@@ -55,8 +58,6 @@ export default function HomeScreen(props: any) {
     setToday(false)
     setAll(true)
     setParams("")
-
-
   }
 
 

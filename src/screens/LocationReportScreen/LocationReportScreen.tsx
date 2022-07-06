@@ -155,6 +155,7 @@ console.log(props.route.params.case)
         </View>
        {images.map((image) => (
         <View
+        key={image}
         style={{paddingTop: 20}}
         >
         <Image 

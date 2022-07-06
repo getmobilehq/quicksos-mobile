@@ -45,11 +45,10 @@ const RessetPasswordSreen = (props: any) => {
       setShowModal(true)
      }
 
-     if (!isLoading && isSuccess && data?.message != "Successfully saved password") {  
-      // setShowModal(true)
-      Alert.alert("Something went wrong, please try again")
-     }
-
+    //  if (!isLoading && isSuccess && data?.message != "Successfully saved password") {  
+    //   // setShowModal(true)
+    //   Alert.alert("Something went wrong, please try again")
+    //  }
 
   }, [isLoading, isSuccess])
   

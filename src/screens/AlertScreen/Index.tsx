@@ -26,13 +26,7 @@ const AlertScreen = (props: any) => {
 
   const getRespond = async (caseId: string) => {
     setLoading(true)
-    let token: any = await AsyncStorage.getItem("token")
-    token  = JSON.parse(token)
-   axios.get(`${endpoints.report}${caseId}/respond/`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
+   axios.get(`${endpoints.report}${caseId}/respond/`,)
     .then(res =>  {
       setButtonText("Arrived") 
       console.log(res.data)
@@ -57,11 +51,7 @@ const AlertScreen = (props: any) => {
     setLoading(true)
     let token: any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
-   axios.get(`${endpoints.report}${caseId}/arrive/`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
+   axios.get(`${endpoints.report}${caseId}/arrive/`,)
     .then(res =>  {
       Toast.show({
         type: 'success',

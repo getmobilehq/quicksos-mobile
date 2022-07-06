@@ -1,4 +1,4 @@
-import axios from "../../../axios"
+import axios from "axios"
 import endpoints from "../../../endpoints"
 import {request} from "../../utilitis/axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,7 +28,7 @@ export interface UserDetails {
 const LoginUser = async (body:LoginDetails) => {
 
       try {
-       const result = await axios.post(endpoints.login, body, {
+       const result = await axios.post("https://quicksos-api.herokuapp.com/v1/account/users/auth/", body, {
             headers: {
                 'Content-Type': 'application/json',
                 accept: "application/json",
@@ -52,7 +52,11 @@ const LoginUser = async (body:LoginDetails) => {
         role: result.data.data.role,
         message:result.data.message,
         }
-        await AsyncStorage.setItem('token', JSON.stringify(formatedData.accessToken))
+        const tokens = {
+          token: formatedData.accessToken,
+          refresh: formatedData.refresh
+        }
+        await AsyncStorage.setItem('token', JSON.stringify(tokens))
         await AsyncStorage.setItem('user', JSON.stringify(formatedData))
 
         // console.log(formatedData.accessToken)
