@@ -7,6 +7,7 @@ report: string;
 profile: string;
 agencies: string
 backup: string;
+edit: string;
 }
 
 const endpoints :Endpoints = {
@@ -17,7 +18,8 @@ refresh: "/account/users/auth/refresh/",
 report: "/messages/assigned/",
 profile: "/account/users/profile/",
 agencies:"/agencies/",
-backup: "/request-backups/"
+backup: "/request-backups/",
+edit: "/account/users/profile/"
 // arrive: "/messages/assigned/",
 // respond: "/messages/assigned/"
 

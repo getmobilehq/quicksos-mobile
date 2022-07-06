@@ -2305,6 +2305,11 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-picker/picker@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.2.tgz#2925eb8e76ff6b584c80529adc251df963be9141"
+  integrity sha512-0nY8638h1J3wKz6P3IJMpOoxJDdOj7Dk/K2hP/xpqP3KnIY0lmoqYlhyNihuyVPocDGajf6SA7LFFsFepQ56ag==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -6218,6 +6223,11 @@ mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+naija-state-local-government@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/naija-state-local-government/-/naija-state-local-government-1.1.2.tgz#c88194155d62a147e6b3efb2438558b4ff22e717"
+  integrity sha512-6ZHWKQ5FuKzphGs1axmKte33s9smipIpTa4q3crNYM8nLjiOjMpZhd0XCeGq8S2z0vJ3y+JdU0FXYNay0aSUJA==
 
 nano-time@1.0.0:
   version "1.0.0"

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add @type-validator
+  /usr/local/bin/node /usr/local/bin/yarn add @types/naija-state-local-government
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
@@ -14,8 +14,8 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type-validator: Request "https://registry.yarnpkg.com/@type-validator" returned a 405
-      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66154:18)
+  Error: https://registry.yarnpkg.com/@types%2fnaija-state-local-government: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:527:28)
       at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
@@ -45,6 +45,7 @@ npm manifest:
       "@react-navigation/native": "6.0.6",
       "@react-navigation/native-stack": "^6.6.2",
       "@types/react-native-svg-charts": "^5.0.12",
+      "@types/validator": "^13.7.4",
       "axios": "^0.27.2",
       "expo": "~45.0.0",
       "expo-app-loading": "^2.0.0",
@@ -54,6 +55,7 @@ npm manifest:
       "expo-updates": "~0.13.2",
       "jwt-check-expiration": "^1.0.5",
       "metro-react-native-babel-preset": "^0.71.2",
+      "naija-state-local-government": "^1.1.2",
       "native-base": "^3.4.6",
       "react": "17.0.2",
       "react-dom": "17.0.2",
@@ -2890,6 +2892,11 @@ Lockfile:
     version "0.16.2"
     resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
     integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+  
+  "@types/validator@^13.7.4":
+    version "13.7.4"
+    resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.7.4.tgz#33cc949ee87dd47c63e35ba4ad94f6888852be04"
+    integrity sha512-uAaSWegu2lymY18l+s5nmcXu3sFeeTOl1zhSGoYzcr6T3wz1M+3OcW4UjfPhIhHGd13tIMRDsEpR+d8w/MexwQ==
   
   "@types/yargs-parser@*":
     version "21.0.0"
@@ -6296,6 +6303,11 @@ Lockfile:
       any-promise "^1.0.0"
       object-assign "^4.0.1"
       thenify-all "^1.0.0"
+  
+  naija-state-local-government@^1.1.2:
+    version "1.1.2"
+    resolved "https://registry.yarnpkg.com/naija-state-local-government/-/naija-state-local-government-1.1.2.tgz#c88194155d62a147e6b3efb2438558b4ff22e717"
+    integrity sha512-6ZHWKQ5FuKzphGs1axmKte33s9smipIpTa4q3crNYM8nLjiOjMpZhd0XCeGq8S2z0vJ3y+JdU0FXYNay0aSUJA==
   
   nano-time@1.0.0:
     version "1.0.0"
