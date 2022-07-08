@@ -16,13 +16,15 @@ const Index = (props: any) => {
       navigation.navigate(routes?.Location, {
       case: props
     })
-    } else {
-       navigation.navigate(routes.Alert, {
-      data: {
-        ...props
-      }
-    })
     }
+    if(!props.responded || !props.arrived){
+       navigation.navigate(routes.Alert, {
+        data: {
+          ...props
+        }
+      })
+    }
+  
 
 
    

@@ -14,7 +14,7 @@ export default function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-    const [user, setUser] = React.useState()
+    const [user, setUser] = React.useState<UserDetails>()
 
  const getDataFromStore = async ()  => {
     const jsonValue:any =  await AsyncStorage.getItem('user')

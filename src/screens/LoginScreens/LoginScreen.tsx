@@ -19,12 +19,6 @@ const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
   const {setUser} = useAuthContext()
 
-
-  // const { isLoading, error, data } = useQuery('repoData', () =>
-  //    axios.get('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
-  //      console.log(res.data)
-  //   ), 
-  //  )
   const {mutate, data, isLoading,} = useMutation(LoginUser)
   console.log(data)
 
@@ -33,9 +27,6 @@ export default function HomeScreen(props: any) {
   const [disable, setDisable] = React.useState(true)
   const [showPassword, setShowPassword] = React.useState(false)
 
-  // React.useEffect(() => {
-  //   mutate({email, password})
-  // },[])
 
   React.useEffect(() => {
     if (validator.isEmail(email) && password) {
@@ -47,7 +38,6 @@ const ClickOnLogin = () => {
        mutate({email, password})
 }
 
-// React.useEffect(() => {
   if (!isLoading && data?.message === "success") { 
     setUser(data)
   } 
@@ -56,13 +46,7 @@ const ClickOnLogin = () => {
     console.log(data)
   }
 
-  // if (!isLoading) {
-  //   // console.log(data)
-  // }
 
-// }, [isLoading, data])
-
-// console.log(data)
 
 
 

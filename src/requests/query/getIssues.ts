@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useQuery } from "react-query"
-import axios from "../../../axios"
+import useAxios from "../../API/useAxios"
 import { GET_ISSUE_KEY } from "../../../constants"
 import endpoints from "../../../endpoints"
 import ResponseError from "../../../utils/ResponseError"
@@ -58,12 +58,12 @@ export interface Case {
   status: string,
 }
 
- export const getIssues = async (params: any) => {
+ export const getIssues = async (params: any, API: any) => {
       try {
-       const result = await axios.get(`${endpoints.issues}?filterBy=${params}`,)
+       const result = await API.get(`${endpoints.issues}?filterBy=${params}`,)
         return result.data.data;
       } catch(error: any){
-        console.log(error.response.data)
+        console.log(error.response)
       }
 }
 

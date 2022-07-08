@@ -1,6 +1,5 @@
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Pressable} from 'react-native'
 import React from 'react'
-import axios from "../../../axios"
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Button, Input,  Stack, Image } from 'native-base'
 import { primaryColors } from '../../../constants'
@@ -15,18 +14,20 @@ import { scale } from 'react-native-size-matters'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import endpoints from '../../../endpoints'
 import Toast from 'react-native-toast-message';
+import useAxios from '../../API/useAxios'
 
 const AlertScreen = (props: any) => {
   const [loading, setLoading] = React.useState(false)
   const CaseDetails = props.route.params.data.case_detail
   const MoreDetails:any = props.route.params.data
-  const [buttonText, setButtonText] = React.useState(!MoreDetails.arrived ? "Arrived":"Respond")
+  const [buttonText, setButtonText] = React.useState(!MoreDetails.respond ? "Respond":"Arrived")
   console.log(MoreDetails.responded, MoreDetails.arrived)
+  const API = useAxios()
 
 
   const getRespond = async (caseId: string) => {
     setLoading(true)
-   axios.get(`${endpoints.report}${caseId}/respond/`,)
+    API.get(`${endpoints.report}${caseId}/respond/`,)
     .then(res =>  {
       setButtonText("Arrived") 
       console.log(res.data)
@@ -51,7 +52,7 @@ const AlertScreen = (props: any) => {
     setLoading(true)
     let token: any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
-   axios.get(`${endpoints.report}${caseId}/arrive/`,)
+    API.get(`${endpoints.report}${caseId}/arrive/`,)
     .then(res =>  {
       Toast.show({
         type: 'success',

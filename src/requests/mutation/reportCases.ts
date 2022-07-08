@@ -1,4 +1,4 @@
-import axios from "../../../axios"
+import axios from "../../API/useAxios"
 import endpoints from "../../../endpoints"
 import {request} from "../../utilitis/axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,7 +35,7 @@ interface ReportDetails {
 //     }
 // request({url: endpoints.login, method: "POST", data}).then(response => console.log(response)).catch(err => console.log(err));
 
-const ReportCases = async (body:ReportDetails) => {
+const ReportCases = async (body:ReportDetails, API:any) => {
     let token:any = await AsyncStorage.getItem("token")
     token  = JSON.parse(token)
     console.log(body.formData)
@@ -43,7 +43,7 @@ const ReportCases = async (body:ReportDetails) => {
     // console.log("formdata", body.formData)
     // console.log("body.id", body.assigned_case_id)
       try {
-       const result = await axios.post(`${endpoints.report}${body.assigned_case_id}/add_report/`, body.formData, {
+       const result = await API.post(`${endpoints.report}${body.assigned_case_id}/add_report/`, body.formData, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,

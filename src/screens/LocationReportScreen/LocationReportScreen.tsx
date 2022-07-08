@@ -13,24 +13,26 @@ import * as ImagePicker from 'expo-image-picker';
 import routes from '../../routes'
 import { useMutation, useQuery } from 'react-query'
 import ReportCases from '../../requests/mutation/reportCases'
-import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ModalComponent from '../../components/Modal/Modal'
 import { getResponders } from '../../requests/query/getResponders'
+import endpoints from '../../../endpoints'
+import useAxios from '../../API/useAxios'
 
 
 const LocationReportScreen = (props: any) => {
   const [showModal, setShowModal] = useState(false)
   const [showSuccesfulModal, setShowSuccesfulModal] = useState(false)
   const [modalText,setModalText] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const cases:any = props.route.params.case
+  const API = useAxios()
 
   const [reportText, setReportText] = useState<string>("There has been a report")
   const [images, setImages] = useState([])
-  const {mutate: reportCase, data, isLoading} = useMutation(ReportCases)
+  // const {mutate: reportCase, data} = useMutation(ReportCases)
 
-const {data: Responders} = useQuery("agencies", getResponders)
-console.log(Responders)
-console.log(props.route.params.case)
+const {data: Responders} = useQuery("agencies", () => getResponders(API))
 
 
   const onClickButton = () => {
@@ -59,11 +61,9 @@ console.log(props.route.params.case)
   }
 
   const submitProject = async () => {
+    setIsLoading(true)
     let token: any = await AsyncStorage.getItem("token")
         token  = JSON.parse(token)
-        let myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Accept", "multipart/form-data");
       // var formData = new FormData();
       // formData.append("situation_report", reportText)
 
@@ -81,13 +81,21 @@ console.log(props.route.params.case)
         img2: images[1],
       }
 
-      const formData = new FormData();
-
-      for (const key in body) {
-        if (body[key]) {
-          formData.append(key, body[key]);
-        }
+      let formData = new FormData();
+      formData.append("situation_report", reportText)
+      formData.append("img1", images[0])
+      if (images[1]){
+        formData.append("img2", images[1])
       }
+
+      // formData.append("img2", images[1])
+
+     
+      // for (const key in body) {
+      //   if (body[key]) {
+      //     formData.append(key, body[key]);
+      //   }
+      // }
 
 
     // formdata.append("id", userId);
@@ -96,17 +104,23 @@ console.log(props.route.params.case)
     //   headers: myHeaders,
     // };
 
-     axios.post("https://quicksos-api.herokuapp.com/v1/messages/assigned/e80f89bb-9551-4bda-a413-03f21427dca9/add_report/", formData, {
+     API.post(`${endpoints.report}${cases.id}/add_report/`, formData, {
 
       headers: {
         "Content-type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
+        Authorization: `Bearer ${token.token}`,
       },
     })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        setIsLoading(false)
+       if(response.data.message) {
+            setShowSuccesfulModal(true)
+       }
+      } )
       .catch(function (error) {
-        console.log(error.response.data);
+        setIsLoading(false)
+        console.log(error.response);
   })
       
 
@@ -178,7 +192,7 @@ console.log(props.route.params.case)
           isLoading={isLoading} 
           bgColor={primaryColors.white} 
            width="300" _text={{color: "black", fontWeight: "bold"}}>
-        {"Solved"}
+        Solved
           </Button>
       </Box>
     <TouchableOpacity onPress={() => setShowModal(true)}>

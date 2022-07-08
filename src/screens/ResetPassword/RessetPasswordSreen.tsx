@@ -9,12 +9,17 @@ import ModalComponent from '../../components/Modal/Modal'
 import routes from '../../routes'
 import AppHeader from '../../components/AppHeader/AppHeader'
 import { useMutation } from 'react-query'
-import ChangePassword from '../../requests/mutation/changePassword'
+import ChangePassword, { ChangePasswordDetails } from '../../requests/mutation/changePassword'
 import useAuthContext from '../../checkUserIsVerified';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import useAxios from '../../API/useAxios'
+import endpoints from '../../../endpoints'
+import Toast from 'react-native-toast-message';
+
 
 // import { AuthService } from '../../ 
 const RessetPasswordSreen = (props: any) => {
+  const API = useAxios()
   const [showModal, setShowModal] = useState(false)
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -24,11 +29,12 @@ const RessetPasswordSreen = (props: any) => {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showNewPassword, setShowNewPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
+  const [isLoading, setIsloading] = React.useState(false)
 
 
 
 
-  const {mutate, data, isError, isSuccess, isLoading, error} = useMutation(ChangePassword)
+  // const {mutate: ResetPassword, data, isError, isSuccess, isLoading, error} = useMutation(ChangePassword)
 
   const ModalButtonPressed = async () => {
     await AsyncStorage.removeItem("token")
@@ -36,21 +42,41 @@ const RessetPasswordSreen = (props: any) => {
     setUser(null)
   }
 
-  const onClickButton = () => {
-    mutate({old_password: oldPassword, new_password: newPassword, confirm_password: confirmPassword})
-  }
+  const ChangePassword = async () => {
+    setIsloading(true)
+    const body: ChangePasswordDetails =      {
+            old_password: oldPassword,
+             new_password: newPassword, 
+            confirm_password: confirmPassword
+          }
 
-  useEffect(() => {
-    if (!isLoading && isSuccess && data?.message == "Successfully saved password") {  
+    try {
+      const result = await API.post(endpoints.changePassword, body)
+       setIsloading(false)
       setShowModal(true)
-     }
 
-    //  if (!isLoading && isSuccess && data?.message != "Successfully saved password") {  
-    //   // setShowModal(true)
-    //   Alert.alert("Something went wrong, please try again")
-    //  }
+      return result.data;
+    } catch(error: any){
+      // console.log(error.response.data)
+      setIsloading(false)
+      Toast.show({
+        type: 'error',
+        text1: 'An error occured',
+        text2: error.response.data.error
+      });
+    }
+}
 
-  }, [isLoading, isSuccess])
+  // const onClickButton = () => {
+  //   ResetPassword(
+  //     {
+  //       old_password: oldPassword,
+  //       new_password: newPassword, 
+  //       confirm_password: confirmPassword
+  //     }, 
+  //     API)
+  // }
+
   
   React.useEffect(() => {
     if (oldPassword && newPassword && confirmPassword) {
@@ -97,7 +123,7 @@ const RessetPasswordSreen = (props: any) => {
 
       <Box alignItems="center" width="100%" py="20">
               <Button isLoading={isLoading} 
-              onPress={onClickButton}
+              onPress={ChangePassword}
               isDisabled={disable} variant="solid" width="300">
             Ok
               </Button>

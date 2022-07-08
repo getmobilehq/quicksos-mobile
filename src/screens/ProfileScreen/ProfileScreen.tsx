@@ -13,22 +13,24 @@ import getProfile from '../../requests/query/getProfile'
 import NaijaStates from 'naija-state-local-government';
 import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import axios from "../../../axios"
+import axios from "../../API/useAxios"
 import endpoints from '../../../endpoints'
 import Toast from 'react-native-toast-message';
 import ModalComponent from '../../components/Modal/Modal'
 import routes from '../../routes'
+import useAxios from '../../API/useAxios'
 
 
 
 const ProfileScreen = (props: any) => {
+  const API = useAxios()
   const [disable, setDisable] = React.useState(true)
   const [loading, setLoading] = React.useState(false) 
   const [supreVisorIncharge, setSuperVisorInCharge] = React.useState("")
   const [contactSupervisor, setContactSupervisor] = React.useState("")
   const [editSuperVisorName, setEditSuperVisorName] = React.useState(false)
   const [editSuperVisorContact, setEditSuperVisorContact] = React.useState(false)
-  const {isLoading: profileLoading, data: profileData} = useQuery("profile",getProfile, {enabled: true})
+  const {isLoading: profileLoading, data: profileData} = useQuery("profile",() => getProfile(API), {enabled: true})
   const [selectedLocalGovt, setSelectedLocalGovt] = React.useState(!!profileData?.local_gov && profileData?.local_gov);
   const  [showModal, setShowModal] = React.useState(false)
 
@@ -75,7 +77,7 @@ const ProfileScreen = (props: any) => {
       body["local_gov"] = selectedLocalGovt
    }
 
-      axios.put(endpoints.edit, body).then(res => {
+   API.put(endpoints.edit, body).then(res => {
     // console.log(res.data)
     setShowModal(true)
   

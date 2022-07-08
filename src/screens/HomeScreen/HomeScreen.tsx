@@ -21,6 +21,7 @@ import { scale } from 'react-native-size-matters';
 const QuickSos = require('../../../assets/QuickSOS.png')
 const Ellipse = require('../../../assets/Ellipse1.png')
 const Ellipse2 = require('../../../assets/Ellipse2.png')
+import useAxios from '../../API/useAxios';
 
 
 
@@ -31,6 +32,7 @@ export default function HomeScreen(props: any) {
   const [all, setAll] = useState(true)
   const {user} = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
+  let API = useAxios()
 
   // setTimeout(() => {console.log("true")}, 20000)
 
@@ -66,10 +68,13 @@ const navigate = () => {
 }
 
 // React.useEffect(() => {
-  const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params), {enabled: true})
+  const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params, API), {enabled: true})
+  console.log(data)
 
-  const {isLoading: profileLoading, data: profileData} = useQuery("profile",getProfile, {enabled: true})
+  const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
 
+  const filteredData = !isLoading && data?.filter((data:any) => data.status !== "complete")
+  console.log(filteredData)
   // console.log("profile DATA ====>",profileData)
 
   if (!isLoading) {
@@ -198,7 +203,7 @@ const navigate = () => {
             <Text style={{color: primaryColors.white, textAlign:"center", marginTop: 50 }}>No results found</Text>
            }
 
-           {!isLoading && data?.length > 0 && data.map((props: Case) => (
+           {!isLoading && filteredData?.length > 0 && filteredData.map((props: Case) => (
                <NotificationComponent key={props.id} navigate={() => navigate()} {...props}/>
              )) }
         </ScrollView>

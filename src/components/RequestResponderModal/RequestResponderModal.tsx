@@ -3,7 +3,7 @@ import { View, Text , TouchableOpacity} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Center,Modal, Checkbox } from 'native-base';
 import styles from "./styles"
-import axios from '../../../axios';
+import useAxios from '../../API/useAxios';
 import endpoints from '../../../endpoints';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
@@ -21,6 +21,7 @@ interface Modalprops {
 }
 
 const RequestResponder = (props:Modalprops) => {
+  let API = useAxios()
     const [groupValues, setGroupValues] = React.useState([]);
     const [loading, setLoading] = React.useState(false)
 
@@ -31,7 +32,7 @@ const RequestResponder = (props:Modalprops) => {
             assignment: props.case.id,
             agencies: groupValues,
         }
-        axios.post(endpoints.backup, body).then(res => {
+        API.post(endpoints.backup, body).then(res => {
       console.log(res.data.message)
       if (!!res.data.message && res.data.message === "success") {
           props.onClickButton()

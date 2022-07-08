@@ -21,7 +21,6 @@ const instance = axios.create({
 instance.interceptors.request.use(async function (req: any) {
   let token:any = await authToken()
   token = JSON.parse(token)
-  console.log(token)
   if (!token) {
    token = await authToken()
    req.headers.Authorization = "Bearer " + token.token
@@ -31,7 +30,6 @@ instance.interceptors.request.use(async function (req: any) {
   const user:any = jwt_decode(token.token)
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
   if(!isExpired) return req
-  console.log("token expired")
 
   const body = {
     refresh: token.refresh
