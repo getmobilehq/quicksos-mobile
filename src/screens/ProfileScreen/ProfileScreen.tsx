@@ -30,8 +30,10 @@ const ProfileScreen = (props: any) => {
   const [contactSupervisor, setContactSupervisor] = React.useState("")
   const [editSuperVisorName, setEditSuperVisorName] = React.useState(false)
   const [editSuperVisorContact, setEditSuperVisorContact] = React.useState(false)
+  const {profile, setProfile } = useAuthContext()
+
   const {isLoading: profileLoading, data: profileData} = useQuery("profile",() => getProfile(API), {enabled: true})
-  const [selectedLocalGovt, setSelectedLocalGovt] = React.useState(!!profileData?.local_gov && profileData?.local_gov);
+  const [selectedLocalGovt, setSelectedLocalGovt] = React.useState(!!profile?.localGovt && profile?.localGovt)
   const  [showModal, setShowModal] = React.useState(false)
 
   const ModalButtonPressed =() => {
@@ -78,7 +80,16 @@ const ProfileScreen = (props: any) => {
    }
 
    API.put(endpoints.edit, body).then(res => {
-    // console.log(res.data)
+    const data = res.data.data
+    setProfile({
+      firstName: data.first_name,
+      lastName: data.last_name,
+      localGovt: data.local_gov,
+      Phone: data.phone,
+      Acronym: data.agency_detail.acronym,
+      gender: data.gender
+    })
+    console.log(res.data.data)
     setShowModal(true)
   
       } ).catch(error => {
@@ -112,7 +123,7 @@ const ProfileScreen = (props: any) => {
         <View style={styles.componentContainer}>
           <LabelComponnt
           title="Unit"
-          content={!!profileData?.agency_detail?.acronym && profileData?.agency_detail?.acronym}
+          content={!!profile?.Acronym && profile?.Acronym }
           />
         </View>
         <View style={styles.componentContainer}>
@@ -165,7 +176,7 @@ const ProfileScreen = (props: any) => {
         
          <LabelComponnt
           title="Supervisor-in-charge"
-          content={`${!!profileData?.gender && profileData?.gender == 'male' ? 'Mr' : 'Mrs'} ${!!profileData?.first_name && profileData?.first_name} ${!!profileData?.last_name && profileData?.last_name}`}
+          content={`${!!profile?.gender && profile?.gender == 'male' ? 'Mr' : 'Mrs'} ${!!profile?.firstName && profile?.firstName} ${!!profile?.lastName && profile?.lastName}`}
           edit
           onClickEdit={() => onClickEditButton("name")}
           />
@@ -185,7 +196,7 @@ const ProfileScreen = (props: any) => {
           !editSuperVisorContact ? 
         <LabelComponnt
         title="Contact of Supervisor"
-        content={!!profileData?.phone && profileData?.phone}
+        content={!!profile?.Phone && profile?.Phone}
         edit
         onClickEdit={() => onClickEditButton("contact")}
         />
@@ -195,7 +206,7 @@ const ProfileScreen = (props: any) => {
         placeholderTextColor={primaryColors.naturalColorDark}
         size="xl"
         headerText={{fontSize: 16,}} 
-        title="Contact of Supervisor" placeholder={!!profileData?.phone && profileData?.phone} type="text"
+        title="Contact of Supervisor" placeholder={!!profile?.Phone && profile?.Phone} type="text"
         onChangeText={(text: string) => setContactSupervisor(text)}
         />
 

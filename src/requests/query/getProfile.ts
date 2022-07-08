@@ -7,6 +7,7 @@ import endpoints from "../../../endpoints"
 const getProfile = async (API:any) => {
       try {
        const result = await API.get(endpoints.profile,)
+       
         return result.data.data;
       } catch(error: any){
         console.log(error.message)

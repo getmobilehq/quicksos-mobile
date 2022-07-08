@@ -1,5 +1,5 @@
 import { Avatar, Image, Popover  } from 'native-base';
-import React, {PropsWithChildren, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useState} from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,7 +30,7 @@ export default function HomeScreen(props: any) {
   const [params, setParams] = useState("")
   const [today, setToday] = useState(false)
   const [all, setAll] = useState(true)
-  const {user} = useAuthContext()
+  const {user, setProfile,profile } = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
   let API = useAxios()
 
@@ -72,6 +72,21 @@ const navigate = () => {
   console.log(data)
 
   const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
+  console.log(profile)
+
+  React.useEffect(() => {
+    if (!profileLoading && profileData) {
+    setProfile({
+      firstName: profileData.first_name,
+      lastName: profileData.last_name,
+      localGovt: profileData.local_gov,
+      Phone: profileData.phone,
+      Acronym: profileData.agency_detail.acronym,
+      gender: profileData.gender
+    })
+  }
+
+  }, [profileData])
 
   const filteredData = !isLoading && data?.filter((data:any) => data.status !== "complete")
   console.log(filteredData)
@@ -101,7 +116,7 @@ const navigate = () => {
         {/* DashBoard */}
         <View style={styles.dashboard}>
           <View style={styles.dashboardHeader}> 
-            <Text  style={styles.dashboardHeaderText}>Welcome {user.firstName}</Text>
+            <Text  style={styles.dashboardHeaderText}>Welcome {profile?.firstName}</Text>
             <TouchableOpacity
             style={{marginRight: -10}}
             onPress={() =>setIsOpen(true)}
