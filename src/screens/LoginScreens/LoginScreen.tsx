@@ -64,7 +64,7 @@ const ClickOnLogin = () => {
         />
         </View>
         
-        <Text style={styles.loginIntro}>Log in into your account</Text>
+        <Text style={styles.loginIntro}>Login into your account</Text>
         <Text style={styles.smallText}>Please enter the details below to log into your account.</Text>
 
         <View>

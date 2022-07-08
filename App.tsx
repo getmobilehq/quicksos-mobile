@@ -30,13 +30,6 @@ const screnOptions: NativeStackNavigationOptions = {
 
 const theme = extendTheme(Theme);
 const queryClient = new QueryClient()
-// const user = useContext(AuthContext)
-
-// console.log(user)
-
-// const auth =  userAuth()
-
-// console.log(auth)
 
 const Stack = createNativeStackNavigator();
 
