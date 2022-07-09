@@ -18,6 +18,7 @@ import ModalComponent from '../../components/Modal/Modal'
 import { getResponders } from '../../requests/query/getResponders'
 import endpoints from '../../../endpoints'
 import useAxios from '../../API/useAxios'
+import Toast from 'react-native-toast-message';
 
 
 const LocationReportScreen = (props: any) => {
@@ -114,13 +115,18 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
       .then((response) => {
         console.log(response);
         setIsLoading(false)
-       if(response.data.message) {
+       if(response.data.message === "success") {
             setShowSuccesfulModal(true)
        }
       } )
       .catch(function (error) {
         setIsLoading(false)
         console.log(error.response);
+        Toast.show({
+          type: 'error',
+          text1: 'Report not succesful',
+          text2: "something went wrong"
+        });
   })
       
 
