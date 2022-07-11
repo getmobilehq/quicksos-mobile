@@ -170,7 +170,10 @@ const navigate = () => {
         {/* Alert */}
         <View style={styles.notifications}> 
           <Text style={styles.notificationText}>Alerts</Text>
+          <View style={{position: "relative"}}> 
           <Ionicons name="notifications-outline" size={28} color="#fff" />
+         {!!filteredData && filteredData.length > 0 && <View style={{backgroundColor:"red", width: 10, height: 10, borderRadius: 5, position: "absolute", top: scale(-2), right: scale(4)}}/>}
+          </View>
         </View>
 
         {/* Updates on happenings */}
