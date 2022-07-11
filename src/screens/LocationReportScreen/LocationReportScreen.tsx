@@ -29,7 +29,7 @@ const LocationReportScreen = (props: any) => {
   const cases:any = props.route.params.case
   const API = useAxios()
 
-  const [reportText, setReportText] = useState<string>("There has been a report")
+  const [reportText, setReportText] = useState<string>("")
   const [images, setImages] = useState([])
   // const {mutate: reportCase, data} = useMutation(ReportCases)
 
@@ -115,7 +115,7 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
       .then((response) => {
         console.log(response);
         setIsLoading(false)
-       if(response.data.message === "success") {
+       if(response.data.message === "successful") {
             setShowSuccesfulModal(true)
        }
       } )
