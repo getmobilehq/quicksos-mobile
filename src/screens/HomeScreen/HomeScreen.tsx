@@ -34,8 +34,6 @@ export default function HomeScreen(props: any) {
   const [isOpen, setIsOpen] = useState(false)
   let API = useAxios()
 
-  // setTimeout(() => {console.log("true")}, 20000)
-
 
 
   const getRecents = () => {
@@ -69,7 +67,6 @@ const navigate = () => {
 
 // React.useEffect(() => {
   const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params, API), {enabled: true})
-  console.log(data)
 
   const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
   console.log(profile)
@@ -89,12 +86,6 @@ const navigate = () => {
   }, [profileData])
 
   const filteredData = !isLoading && data?.filter((data:any) => data.status !== "complete")
-  console.log(filteredData)
-  // console.log("profile DATA ====>",profileData)
-
-  if (!isLoading) {
-    // console.log(data)
-  }
 
     return (
       <SafeAreaView style={styles.container}>

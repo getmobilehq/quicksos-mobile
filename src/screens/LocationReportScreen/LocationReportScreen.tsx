@@ -113,7 +113,6 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
       },
     })
       .then((response) => {
-        console.log(response);
         setIsLoading(false)
        if(response.data.message === "successful") {
             setShowSuccesfulModal(true)

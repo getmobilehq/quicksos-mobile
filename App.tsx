@@ -21,8 +21,10 @@ import useAuthContext from "./src/checkUserIsVerified"
 import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { isJwtExpired } from 'jwt-check-expiration';
-import { primaryColors } from "./constants";
+import { APP_ID, APP_TOKEN, primaryColors } from "./constants";
 import Toast from 'react-native-toast-message';
+
+import registerNNPushToken from 'native-notify';
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -99,7 +101,7 @@ React.useEffect(()=> {
 }
 
 export default function App() {
-
+  registerNNPushToken(APP_ID, APP_TOKEN);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -21,7 +21,6 @@ const AlertScreen = (props: any) => {
   const CaseDetails = props.route.params.data.case_detail
   const MoreDetails:any = props.route.params.data
   const [buttonText, setButtonText] = React.useState(!MoreDetails.respond ? "Respond":"Arrived")
-  console.log(MoreDetails.responded, MoreDetails.arrived)
   const API = useAxios()
 
 
@@ -30,14 +29,12 @@ const AlertScreen = (props: any) => {
     API.get(`${endpoints.report}${caseId}/respond/`,)
     .then(res =>  {
       setButtonText("Arrived") 
-      console.log(res.data)
       Toast.show({
         type: 'success',
         text1: 'Successfully responded to case',
         text2: "Admin will be notified"
       });
     } ).catch(function (error) {
-      // console.log(error.response.data)
       Toast.show({
         type: 'error',
         text1: 'Failed to respond to case',

@@ -13,7 +13,6 @@ import getProfile from '../../requests/query/getProfile'
 import NaijaStates from 'naija-state-local-government';
 import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import axios from "../../API/useAxios"
 import endpoints from '../../../endpoints'
 import Toast from 'react-native-toast-message';
 import ModalComponent from '../../components/Modal/Modal'
@@ -40,12 +39,7 @@ const ProfileScreen = (props: any) => {
     props.navigation.navigate(routes.home)
   }
 
-  // React.useEffect(() => {
-  // }, [
-  // console.log("true")
 
-
-  // console.log(NaijaStates.lgas("Lagos").lgas)
   React.useEffect(() => {
     if ((!!supreVisorIncharge && supreVisorIncharge !== "") 
     || 
@@ -89,7 +83,6 @@ const ProfileScreen = (props: any) => {
       Acronym: data.agency_detail.acronym,
       gender: data.gender
     })
-    console.log(res.data.data)
     setShowModal(true)
   
       } ).catch(error => {

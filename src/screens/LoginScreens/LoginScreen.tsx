@@ -20,7 +20,6 @@ export default function HomeScreen(props: any) {
   const {setUser} = useAuthContext()
 
   const {mutate, data, isLoading,} = useMutation(LoginUser)
-  console.log(data)
 
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
@@ -41,11 +40,6 @@ const ClickOnLogin = () => {
   if (!isLoading && data?.message === "success") { 
     setUser(data)
   } 
-
-  if (isLoading && data?.message !== "success") {
-    console.log(data)
-  }
-
 
 
 
