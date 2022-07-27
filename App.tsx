@@ -40,7 +40,7 @@ const AppComponent = () => {
   // setTimeout(SplashScreen.hideAsync, 1000);
   const {user, setUser} = useAuthContext()
 
-const userExpirefuction = async () => {
+const userExpirefuction = async () => { 
   if (user) {
     if(isJwtExpired(user?.accessToken)) {
       setUser(null)

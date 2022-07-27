@@ -12,11 +12,15 @@ export interface UserProfile {
   gender: string;
   }
 
+interface userInterface {
+  
+}
+
 export const AuthContext = createContext<{
-  user:UserDetails;
-  setUser: () => void;
-  profile: UserProfile;
-  setProfile: () => void;
+  user: UserDetails | null;
+  // setUser: (p: null | userInterface) =>void
+  profile: UserProfile | string;
+  setProfile: React.Dispatch<React.SetStateAction<string>>;
 } | undefined>(undefined)
 
 
@@ -25,8 +29,8 @@ export default function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-    const [user, setUser] = React.useState<UserDetails>()
-    const [profile, setProfile] = React.useState<UserProfile>()
+    const [user, setUser] = React.useState<UserDetails | null>(null)
+    const [profile, setProfile] = React.useState<UserProfile | string>("")
 
 
  const getDataFromStore = async ()  => {
