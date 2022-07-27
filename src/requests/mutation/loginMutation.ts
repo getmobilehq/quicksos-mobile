@@ -1,6 +1,5 @@
 import axios from "axios"
 import endpoints from "../../../endpoints"
-import {request} from "../../utilitis/axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 

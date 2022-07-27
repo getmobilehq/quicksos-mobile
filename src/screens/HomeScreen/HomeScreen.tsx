@@ -208,7 +208,7 @@ const navigate = () => {
           </View>
            }
            {
-            !isLoading && !data?.length && 
+            !isLoading && !filteredData?.length && 
             <Text style={{color: primaryColors.white, textAlign:"center", marginTop: 50 }}>No results found</Text>
            }
 

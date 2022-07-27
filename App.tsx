@@ -23,6 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { isJwtExpired } from 'jwt-check-expiration';
 import { APP_ID, APP_TOKEN, primaryColors } from "./constants";
 import Toast from 'react-native-toast-message';
+// import {Permissions, Notifivations} from "expo"user
 
 import registerNNPushToken from 'native-notify';
 
@@ -38,21 +39,21 @@ const Stack = createNativeStackNavigator();
 const AppComponent = () => {
   // SplashScreen.preventAutoHideAsync();
   // setTimeout(SplashScreen.hideAsync, 1000);
-  const {user, setUser} = useAuthContext()
+  const {user} = useAuthContext()
 
-const userExpirefuction = async () => { 
-  if (user) {
-    if(isJwtExpired(user?.accessToken)) {
-      setUser(null)
-      await AsyncStorage.removeItem("token")
-    await AsyncStorage.removeItem("user")
-    }
-}
-}
+// const userExpirefuction = async () => { 
+//   if (user) {
+//     if(isJwtExpired(user?.accessToken)) {
+//       setUser(null)
+//       await AsyncStorage.removeItem("token")
+//     await AsyncStorage.removeItem("user")
+//     }
+// }
+// }
 
-React.useEffect(()=> {
-  userExpirefuction()
-},[user])
+// React.useEffect(()=> {
+//   userExpirefuction()
+// },[user])
 
 
 

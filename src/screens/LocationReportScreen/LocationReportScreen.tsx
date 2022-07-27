@@ -30,7 +30,7 @@ const LocationReportScreen = (props: any) => {
   const API = useAxios()
 
   const [reportText, setReportText] = useState<string>("")
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState<any[]>([])
   // const {mutate: reportCase, data} = useMutation(ReportCases)
 
 const {data: Responders} = useQuery("agencies", () => getResponders(API))
@@ -43,7 +43,7 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
   }
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let result: any = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [3, 3],
@@ -174,7 +174,7 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
         </View>
        {images.map((image) => (
         <View
-        key={image}
+        key={image.uri}
         style={{paddingTop: 20}}
         >
         <Image 
