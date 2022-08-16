@@ -6,7 +6,6 @@ import {Input, Stack, Button, Box, Image, KeyboardAvoidingView} from "native-bas
 import styles from './styles';
 import AppHeader from '../../components/AppHeader/AppHeader';
 import { useMutation } from 'react-query';
-import axios from '../../../axios';
 import LoginUser from '../../requests/mutation/loginMutation';
 // import { TouchableOpacity } from 'react-native-gesture-handler'
 import routes from '../../routes';
