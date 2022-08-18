@@ -7,15 +7,10 @@ import endpoints from "../../../endpoints"
 
 const refreshToken = async (API:any) => {
       try {
-        // let token:any = await AsyncStorage.getItem("token")
-        //   token = JSON.parse(token)
         const result = await API.post(endpoints.refresh, {
-            // refresh: token
         },)
-
-        console.log("from refresh token",result)
       } catch(error: any){
-        console.log("from refreshToken",error.message)
+        console.error(error.message)
       }
 }
 

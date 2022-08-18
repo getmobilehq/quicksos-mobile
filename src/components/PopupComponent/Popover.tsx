@@ -24,7 +24,7 @@ const PopoverComponent = (props: any) => {
       await AsyncStorage.removeItem("user")
       setUser(null)
     } catch (err) {
-      console.log("there is an error")
+      console.error("there is an error")
     }
   }
 

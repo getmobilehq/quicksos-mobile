@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "757586796375",
+    "project_id": "quicksos-be16b",
+    "storage_bucket": "quicksos-be16b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757586796375:android:da9f245d6a8a23d8876812",
+        "android_client_info": {
+          "package_name": "com.pelumidev.Quicksos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757586796375-9aiahaob23cvk23se8nc84a8fef6qmkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjOsVGeeZqZMgmsH1lrFWhMWfwpwuYNB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757586796375-9aiahaob23cvk23se8nc84a8fef6qmkv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

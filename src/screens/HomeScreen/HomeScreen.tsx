@@ -69,8 +69,6 @@ const navigate = () => {
   const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params, API), {enabled: true})
 
   const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
-  console.log(profile)
-
   React.useEffect(() => {
     if (!profileLoading && profileData) {
     setProfile({

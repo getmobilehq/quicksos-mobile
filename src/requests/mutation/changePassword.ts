@@ -15,7 +15,6 @@ const ChangePassword = async (body:ChangePasswordDetails, API: any) => {
         const result = await API.post(endpoints.changePassword, body)
         return result.data;
       } catch(error: any){
-        // console.log(error.response.data)
         Toast.show({
           type: 'error',
           text1: 'An error occured',

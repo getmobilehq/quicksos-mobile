@@ -24,8 +24,12 @@ import { isJwtExpired } from 'jwt-check-expiration';
 import { APP_ID, APP_TOKEN, primaryColors } from "./constants";
 import Toast from 'react-native-toast-message';
 // import {Permissions, Notifivations} from "expo"user
+import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
 import registerNNPushToken from 'native-notify';
+import { registerIndieID } from 'native-notify';
+import axios from 'axios';
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -37,23 +41,18 @@ const queryClient = new QueryClient()
 const Stack = createNativeStackNavigator();
 
 const AppComponent = () => {
-  // SplashScreen.preventAutoHideAsync();
-  // setTimeout(SplashScreen.hideAsync, 1000);
   const {user} = useAuthContext()
+  React.useEffect(() => {
+    const fetchData  = async () => {
+     database().ref(`notifications/${user?.userId}`)
+          .on('value', snapshot => {
+        console.log('User data: ', snapshot.val());
+      });
+    }
+    fetchData()
+  }, [user])
 
-// const userExpirefuction = async () => { 
-//   if (user) {
-//     if(isJwtExpired(user?.accessToken)) {
-//       setUser(null)
-//       await AsyncStorage.removeItem("token")
-//     await AsyncStorage.removeItem("user")
-//     }
-// }
-// }
 
-// React.useEffect(()=> {
-//   userExpirefuction()
-// },[user])
 
 
 

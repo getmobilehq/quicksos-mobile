@@ -10,8 +10,6 @@ import { AuthContext } from '../Auth/AuthContext';
 
 const useAxios = () => {
   const {user, setUser} = useAuthContext()
-  console.log(user.accessToken)
-
   const instance = axios.create({
     baseURL: "https://quicksos-api.herokuapp.com/v1/",
     headers: { Authorization : "Bearer " + user.accessToken },  
@@ -50,22 +48,9 @@ const useAxios = () => {
     return response;
   }, async function  (error) {
     if (error.response.status == 401) {
-      // instance.post(endpoints.refresh, data: {token : ""})
       console.log("it is 401")
       setUser(null)
-
-      //  refreshToken()
-      // await AsyncStorage.removeItem("token")
-      // await AsyncStorage.removeItem("user")
-
-      // Alert.alert(error.message)
     }
-
-    // console.log(error.response.data);
-    // console.log(error.response.status);
-    // console.log(error.response.headers);
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return Promise.reject(error);
   });
 
