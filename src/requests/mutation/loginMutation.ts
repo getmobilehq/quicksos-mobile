@@ -55,6 +55,7 @@ const LoginUser = async (body:LoginDetails) => {
           token: formatedData.accessToken,
           refresh: formatedData.refresh
         }
+        console.log(`${formatedData.userId}`)
         await AsyncStorage.setItem('token', JSON.stringify(tokens))
         await AsyncStorage.setItem('user', JSON.stringify(formatedData))
        await  registerIndieID(`${formatedData.userId}`, 3242, 'lgbXFD7du7UwUNgzXPC7ic');
