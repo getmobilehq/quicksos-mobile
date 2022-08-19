@@ -62,6 +62,7 @@ const AppComponent = () => {
     fetchData()
   }, [user])
 
+<<<<<<< HEAD
 //   React.useEffect(() => {
 //     console.log("yooor")
 //   const PostNotification = async () => {
@@ -82,6 +83,21 @@ const AppComponent = () => {
 //   PostNotification()
 // }, [user])
 
+=======
+  // const PostNotification = async () => {
+  //   console.log("push notification",`${user?.userId}`)
+  //    await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+  //     subID: `${user?.userId}`,
+  //     appId: 3242,
+  //     appToken: 'lgbXFD7du7UwUNgzXPC7ic',
+  //     title: 'Testing Title',
+  //     message: 'This is the message'
+  //  }).then(res => {
+  //   console.log(res)
+  //   console.log("notification has been sent")
+  //  }). catch(e => e.response)
+  // }
+>>>>>>> bda7af89c8b70565fef09ab90fee0a11632156fc
 
   const theme = extendTheme(Theme);
   const queryClient = new QueryClient()
