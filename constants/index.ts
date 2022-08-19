@@ -9,6 +9,6 @@ export const primaryColors = {
 
 export const GET_ISSUE_KEY = "get_issue_key"
 
-export const APP_ID = 3242
-export const APP_TOKEN = "lgbXFD7du7UwUNgzXPC7ic"
+export const NATIVE_PUSH_TOKEN = 3242
+export const NATIVE_PUSH_TOKEN_LONG = "lgbXFD7du7UwUNgzXPC7ic"
 

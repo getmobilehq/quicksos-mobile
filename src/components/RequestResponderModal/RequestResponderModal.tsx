@@ -38,7 +38,7 @@ const RequestResponder = (props:Modalprops) => {
           props.onClickButton()
       }
         } ).catch(error => {
-            console.log(error.response.data);
+            console.error(error.response.data);
         }).finally(() => {  
           setLoading(false)
         })

@@ -1,4 +1,3 @@
-import React ,{useContext} from "react"
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
@@ -20,12 +19,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuthContext from "./src/checkUserIsVerified"
 import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { isJwtExpired } from 'jwt-check-expiration';
 import { APP_ID, APP_TOKEN, primaryColors } from "./constants";
 import Toast from 'react-native-toast-message';
-// import {Permissions, Notifivations} from "expo"user
+import database from '@react-native-firebase/database';
 
 import registerNNPushToken from 'native-notify';
+import React, { useState, useEffect } from 'react';
+import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-notify';
+import axios from 'axios';
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -37,25 +38,49 @@ const queryClient = new QueryClient()
 const Stack = createNativeStackNavigator();
 
 const AppComponent = () => {
-  // SplashScreen.preventAutoHideAsync();
-  // setTimeout(SplashScreen.hideAsync, 1000);
+  const [data, setData] = useState([]);
   const {user} = useAuthContext()
 
-// const userExpirefuction = async () => { 
-//   if (user) {
-//     if(isJwtExpired(user?.accessToken)) {
-//       setUser(null)
-//       await AsyncStorage.removeItem("token")
-//     await AsyncStorage.removeItem("user")
-//     }
-// }
-// }
+  useEffect(() => {
+    const fetchData = async () => {
+      let notifications = await getIndieNotificationInbox(`${user?.userId}`, 3242, 'lgbXFD7du7UwUNgzXPC7ic');
+      console.log("notifications: ", notifications);
+      setData(notifications);
+    }
+    fetchData()
+    
+}, []);
 
-// React.useEffect(()=> {
-//   userExpirefuction()
-// },[user])
+  React.useEffect(() => {
+    const fetchData  = async () => {
+     database().ref(`notifications/${user?.userId}`)
+          .on('value', snapshot => {
+        console.log('User data: ', snapshot.val());
+        // PostNotification()
+      });
+    }
+    fetchData()
+  }, [user])
 
-
+//   React.useEffect(() => {
+//     console.log("yooor")
+//   const PostNotification = async () => {
+//     console.log("push notification",`${user?.userId}`)
+//     if(user?.userId) {
+//      await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+//       subID: `${user?.userId}`,
+//       appId: 3242,
+//       appToken: 'lgbXFD7du7UwUNgzXPC7ic',
+//       title: 'Testing Title',
+//       message: 'This is the message'
+//    }).then(res => {
+//     console.log(res)
+//     console.log("notification has been sent")
+//    }).catch(e => e.response)
+//   }
+//   }
+//   PostNotification()
+// }, [user])
 
 
   const theme = extendTheme(Theme);
@@ -94,11 +119,8 @@ const AppComponent = () => {
       </NativeBaseProvider>
       </NavigationContainer>
       <Toast onPress={() => Toast.hide()} visibilityTime={10000} type="info" />
-
     </SafeAreaView>
-
   )
-
 }
 
 export default function App() {
