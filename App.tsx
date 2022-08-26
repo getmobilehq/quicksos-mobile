@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuthContext from "./src/checkUserIsVerified"
 import AuthContextProvider from './src/Auth';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { APP_ID, APP_TOKEN, primaryColors } from "./constants";
+import { NATIVE_PUSH_TOKEN, NATIVE_PUSH_TOKEN_LONG, primaryColors } from "./constants";
 import Toast from 'react-native-toast-message';
 import database from '@react-native-firebase/database';
 
@@ -40,6 +40,7 @@ const Stack = createNativeStackNavigator();
 const AppComponent = () => {
   const [data, setData] = useState([]);
   const {user} = useAuthContext()
+  const [notification, setNotitfication] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +48,7 @@ const AppComponent = () => {
       console.log("notifications: ", notifications);
       setData(notifications);
     }
-    fetchData()
+    // fetchData()
     
 }, []);
 
@@ -55,49 +56,30 @@ const AppComponent = () => {
     const fetchData  = async () => {
      database().ref(`notifications/${user?.userId}`)
           .on('value', snapshot => {
-        console.log('User data: ', snapshot.val());
-        // PostNotification()
+        const data = snapshot.val()
+        PostNotification(data)
+        
       });
     }
     fetchData()
   }, [user])
 
-<<<<<<< HEAD
-//   React.useEffect(() => {
-//     console.log("yooor")
-//   const PostNotification = async () => {
-//     console.log("push notification",`${user?.userId}`)
-//     if(user?.userId) {
-//      await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-//       subID: `${user?.userId}`,
-//       appId: 3242,
-//       appToken: 'lgbXFD7du7UwUNgzXPC7ic',
-//       title: 'Testing Title',
-//       message: 'This is the message'
-//    }).then(res => {
-//     console.log(res)
-//     console.log("notification has been sent")
-//    }).catch(e => e.response)
-//   }
-//   }
-//   PostNotification()
-// }, [user])
+  const PostNotification = async (data: {
+    body: string,
+    title: string,
+  }) => {
+    console.log(data)
+     await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+      subID: `${user?.userId}`,
+      appId: 3242,
+      appToken: "lgbXFD7du7UwUNgzXPC7ic",
+      title: data.title,
+      message: data.body
+   }).then(res => {
+    console.log("notification has been sent")
+   }).catch(e => console.error("Something went wrong"))
+  }
 
-=======
-  // const PostNotification = async () => {
-  //   console.log("push notification",`${user?.userId}`)
-  //    await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-  //     subID: `${user?.userId}`,
-  //     appId: 3242,
-  //     appToken: 'lgbXFD7du7UwUNgzXPC7ic',
-  //     title: 'Testing Title',
-  //     message: 'This is the message'
-  //  }).then(res => {
-  //   console.log(res)
-  //   console.log("notification has been sent")
-  //  }). catch(e => e.response)
-  // }
->>>>>>> bda7af89c8b70565fef09ab90fee0a11632156fc
 
   const theme = extendTheme(Theme);
   const queryClient = new QueryClient()
@@ -140,7 +122,7 @@ const AppComponent = () => {
 }
 
 export default function App() {
-  registerNNPushToken(APP_ID, APP_TOKEN);
+  registerNNPushToken(NATIVE_PUSH_TOKEN, NATIVE_PUSH_TOKEN_LONG);
 
   return (
     <QueryClientProvider client={queryClient}>

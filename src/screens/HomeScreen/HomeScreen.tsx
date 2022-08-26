@@ -47,15 +47,15 @@ export default function HomeScreen(props: any) {
   try {
     console.log(user?.userId)
    const res =  await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-         subID: `${user.userId}`,
-         appId: NATIVE_PUSH_TOKEN,
-         appToken: `${NATIVE_PUSH_TOKEN_LONG}`,
+         subID: "lgbXFD7du7UwUNgzXPC7ic",
+         appId: 3242,
+         appToken: "lgbXFD7du7UwUNgzXPC7ic",
          title: `${projects.title}`,
          message: `${projects.content}`,
          });
          console.log(res.data)
      } catch(e) {
-       console.log(e)
+      //  console.log("response",e)
       //  Alert.alert("Something went wrong. Please try again, and make sure you are connected to the internet.")
      }
   }
