@@ -34,7 +34,7 @@ boldText: {
 text: {
 fontFamily: 'Montserrat',
 fontWeight: "400",
-fontSize: scale(14),
+fontSize: scale(12),
 color: primaryColors.white,
 },
 underlineText: {

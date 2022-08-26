@@ -27,6 +27,9 @@ import registerNNPushToken from 'native-notify';
 import React, { useState, useEffect } from 'react';
 import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-notify';
 import axios from 'axios';
+import {getPushDataObject} from 'native-notify';
+
+
 
 const screnOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -37,32 +40,37 @@ const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
 
-const AppComponent = () => {
+const AppComponent = (props) => {
   const [data, setData] = useState([]);
   const {user} = useAuthContext()
   const [notification, setNotitfication] = useState(null)
+  let pushDataObject = getPushDataObject()
+  // const navigation = useNavigation()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      let notifications = await getIndieNotificationInbox(`${user?.userId}`, 3242, 'lgbXFD7du7UwUNgzXPC7ic');
-      console.log("notifications: ", notifications);
-      setData(notifications);
-    }
-    // fetchData()
+  // useEffect(() => {
+  //   // if (pushDataObject.screenName) {
+  //     navigation.navigate(routes.ResetPassword)
+  //   // }
+  // }) 
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       let notifications = await getIndieNotificationInbox(`${user?.userId}`, 3242, 'lgbXFD7du7UwUNgzXPC7ic');
+//       console.log("notifications: ", notifications);
+//       setData(notifications);
+//     }
+//     // fetchData()
     
-}, []);
+// }, []);
 
-  React.useEffect(() => {
-    const fetchData  = async () => {
-     database().ref(`notifications/${user?.userId}`)
+React.useEffect(() => {
+    const onValueChange =  database().ref(`notifications/${user?.userId}`)
           .on('value', snapshot => {
         const data = snapshot.val()
         PostNotification(data)
-        
-      });
-    }
-    fetchData()
-  }, [user])
+      })
+      return () => database().ref(`/users/${user.userId}`).off('value', onValueChange)
+  }, [])
 
   const PostNotification = async (data: {
     body: string,
@@ -74,7 +82,8 @@ const AppComponent = () => {
       appId: 3242,
       appToken: "lgbXFD7du7UwUNgzXPC7ic",
       title: data.title,
-      message: data.body
+      message: data.body,
+      pushData: {"screenName": `${routes.home}`}
    }).then(res => {
     console.log("notification has been sent")
    }).catch(e => console.error("Something went wrong"))

@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native'
 import styles from './style'
 import PopoverComponent from '../PopupComponent/Popover'
 import { primaryColors } from '../../../constants'
+const LagosLogo = require('../../../assets/lagos_logo.png')
+
 
 const AppHeader = (props:any) => {
   const navigation = useNavigation()
@@ -20,16 +22,21 @@ const AppHeader = (props:any) => {
         style={{width: "40%"}}>
         <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={{display: "flex",flex: 1,  width: "100%", }}> 
+        <TouchableOpacity style={{display: "flex",}}> 
+      <View 
+      style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}
+      > 
         <Image
         alt="Icon"
-        source={QuickSos}
+        source={LagosLogo}
         style={{
-            width:60,
+            width:30,
             height:30,
             resizeMode: "contain",
         }}
         />
+        <Text style={{fontWeight: "bold"}}>Ekobot</Text>
+      </View>
         </TouchableOpacity>
        
         { props.avatar && <PopoverComponent 
@@ -38,6 +45,7 @@ const AppHeader = (props:any) => {
         isOpen={isOpen} setIsOpen={setIsOpen} 
         />}
     </View>
+
   )
 }
 

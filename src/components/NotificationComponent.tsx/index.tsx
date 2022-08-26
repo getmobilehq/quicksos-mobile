@@ -21,7 +21,7 @@ const Index = (props: any) => {
        navigation.navigate(routes.Alert, {
         data: {
           ...props
-        }
+        } 
       })
     }
   

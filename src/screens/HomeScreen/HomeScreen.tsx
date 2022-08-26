@@ -19,11 +19,15 @@ import getProfile from '../../requests/query/getProfile';
 import formatParams from '../../../utils/formatParams';
 import { scale } from 'react-native-size-matters';
 const QuickSos = require('../../../assets/QuickSOS.png')
+const LagosLogo = require('../../../assets/lagos_logo.png')
 const Ellipse = require('../../../assets/Ellipse1.png')
 const Ellipse2 = require('../../../assets/Ellipse2.png')
 import useAxios from '../../API/useAxios';
 import axios from 'axios';
 import {NATIVE_PUSH_TOKEN, NATIVE_PUSH_TOKEN_LONG,} from "../../../constants/index"
+import {getPushDataObject} from 'native-notify';
+
+
 
 
 
@@ -34,32 +38,15 @@ export default function HomeScreen(props: any) {
   const [all, setAll] = useState(true)
   const {user, setProfile,profile } = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
+  let pushDataObject = getPushDataObject()
+
   let API = useAxios()
 
-  React.useEffect(() => {
-    const project = {title: "Project", content: "Testing the data"}
-    sendPushNotification(user?.id, project, routes)
-    console.log("Sending push notifications")
-  }, [])
-
-  const sendPushNotification = async(userId: string | undefined
-    , projects: any, routes:any) => {
-  try {
-    console.log(user?.userId)
-   const res =  await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-         subID: "lgbXFD7du7UwUNgzXPC7ic",
-         appId: 3242,
-         appToken: "lgbXFD7du7UwUNgzXPC7ic",
-         title: `${projects.title}`,
-         message: `${projects.content}`,
-         });
-         console.log(res.data)
-     } catch(e) {
-      //  console.log("response",e)
-      //  Alert.alert("Something went wrong. Please try again, and make sure you are connected to the internet.")
-     }
-  }
-
+  useEffect(() => {
+    if (pushDataObject.screenName) {
+      props.navigation.navigate(routes.home)
+    }
+  }) 
 
 
   const getRecents = () => {
@@ -114,16 +101,17 @@ const navigate = () => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={{paddingVertical: 10}}> 
-        <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
+        <View style={{display: "flex", alignItems: "center", paddingVertical: 10, flexDirection:"row", justifyContent:"center"}}>
         <Image
-        source={QuickSos}
+        source={LagosLogo}
         alt="Icon"
         style={{
-            width:60,
+            width:30,
             height:30,
             resizeMode: "contain",
         }}
         />
+      <Text style={{fontWeight: "bold"}}>Ekobot</Text>
         </View>
         </View>
         <ScrollView>

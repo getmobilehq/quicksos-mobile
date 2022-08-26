@@ -13,6 +13,8 @@ import useAuthContext from '../../checkUserIsVerified';
 import { Feather } from '@expo/vector-icons';
 import { scale } from 'react-native-size-matters';
 import validator from 'validator';
+const LagosLogo = require('../../../assets/lagos_logo.png')
+
 
 const QuickSos = require('../../../assets/QuickSOS.png')
 export default function HomeScreen(props: any) {
@@ -45,18 +47,19 @@ const ClickOnLogin = () => {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={{display: "flex", alignItems: "center", paddingVertical: 10,}}>
+        <View style={{display: "flex", alignItems: "center", paddingVertical: 10, flexDirection: "row", justifyContent: "center"}}>
         <Image
         alt="Icon"
-        source={QuickSos}
+        source={LagosLogo}
         style={{
-            width:60,
+            width:30,
             height:30,
             resizeMode: "contain",
         }}
         />
+        <Text style={{fontWeight: "bold"}}>Ekobot</Text>
         </View>
-        
+
         <Text style={styles.loginIntro}>Login into your account</Text>
         <Text style={styles.smallText}>Please enter the details below to log into your account.</Text>
 
