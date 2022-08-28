@@ -44,7 +44,7 @@ export default function HomeScreen(props: any) {
 
   useEffect(() => {
     if (pushDataObject.screenName) {
-      props.navigation.navigate(routes.home)
+      props.navigation.navigate(pushDataObject.screenName)
     }
   }) 
 

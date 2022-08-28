@@ -40,34 +40,17 @@ const queryClient = new QueryClient()
 
 const Stack = createNativeStackNavigator();
 
-const AppComponent = (props) => {
+const AppComponent = () => {
   const [data, setData] = useState([]);
   const {user} = useAuthContext()
-  const [notification, setNotitfication] = useState(null)
-  let pushDataObject = getPushDataObject()
-  // const navigation = useNavigation()
-
-  // useEffect(() => {
-  //   // if (pushDataObject.screenName) {
-  //     navigation.navigate(routes.ResetPassword)
-  //   // }
-  // }) 
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       let notifications = await getIndieNotificationInbox(`${user?.userId}`, 3242, 'lgbXFD7du7UwUNgzXPC7ic');
-//       console.log("notifications: ", notifications);
-//       setData(notifications);
-//     }
-//     // fetchData()
-    
-// }, []);
 
 React.useEffect(() => {
     const onValueChange =  database().ref(`notifications/${user?.userId}`)
           .on('value', snapshot => {
         const data = snapshot.val()
-        PostNotification(data)
+        if (data) {
+          PostNotification(data)
+        }
       })
       return () => database().ref(`/users/${user.userId}`).off('value', onValueChange)
   }, [])
