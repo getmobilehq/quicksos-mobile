@@ -6,8 +6,6 @@ import { primaryColors } from '../../../constants'
 import styles from "./stylesAlert"
 import AppHeader from '../../components/AppHeader/AppHeader'
 import { useQuery } from 'react-query'
-import getArrive from '../../requests/query/getArrive'
-import getRespond from '../../requests/query/getRespond'
 import routes from '../../routes'
 import LabelComponnt from '../../components/LabeComponent/LabelComponnt'
 import { scale } from 'react-native-size-matters'
@@ -20,8 +18,16 @@ const AlertScreen = (props: any) => {
   const [loading, setLoading] = React.useState(false)
   const CaseDetails = props.route.params.data.case_detail
   const MoreDetails:any = props.route.params.data
-  const [buttonText, setButtonText] = React.useState(!MoreDetails.respond ? "Respond":"Arrived")
+  const [buttonText, setButtonText] = React.useState("Respond")
   const API = useAxios()
+  console.log(MoreDetails)
+
+  React.useEffect(() => {
+    if (MoreDetails.responded && !MoreDetails.arrived) { 
+      setButtonText("Arrived")
+    }
+
+  }, [])
 
 
   const getRespond = async (caseId: string) => {
@@ -80,7 +86,7 @@ const AlertScreen = (props: any) => {
 
         <ScrollView style={styles.alertContainer}>
         <Text style={styles.alertHeader}>Alerts</Text>
-      <Stack  space={4} w="100%" py={5}> 
+      <Stack  space={4} w="100%" py={2}> 
           <LabelComponnt
           headerStyle={styles.label}
           contentStyle={styles.contentStyle}
@@ -89,7 +95,7 @@ const AlertScreen = (props: any) => {
               content={!!CaseDetails.name && CaseDetails.name }
               />
         </Stack>
-        <Stack  space={4} w="100%" py={5}> 
+        <Stack  space={4} w="100%" py={2}> 
              <LabelComponnt
           headerStyle={styles.label}
           contentStyle={styles.contentStyle}
@@ -99,7 +105,7 @@ const AlertScreen = (props: any) => {
               />
         </Stack>
 
-        <Stack  space={4} w="100%" py={5}> 
+        <Stack  space={4} w="100%" py={2}> 
                <LabelComponnt
           headerStyle={styles.label}
           contentStyle={styles.contentStyle}
@@ -108,6 +114,19 @@ const AlertScreen = (props: any) => {
               content={!!CaseDetails.address && CaseDetails.address}
               />
         </Stack>
+
+      {MoreDetails.escalator_note !== "" &&
+        <Stack  space={4} w="100%" py={2}> 
+               <LabelComponnt
+          headerStyle={styles.label}
+          contentStyle={styles.contentStyle}
+          bottomColor={primaryColors.white}
+              title="Escalator Note"
+              content={!!MoreDetails.escalator_note && MoreDetails.escalator_note}
+              />
+        </Stack>} 
+
+
        {MoreDetails?.img_url !== "" && <View>
             <Text style={styles.label}>Multimedia</Text>
             <View style={{paddingTop: 10}}> 

@@ -9,6 +9,7 @@ import routes from '../../routes'
 
 const Index = (props: any) => {
   const navigation = useNavigation()
+  console.log(props)
 
   const navigate = () => {
     // case: MoreDetails
@@ -17,6 +18,11 @@ const Index = (props: any) => {
       case: props
     })
     }
+
+    // if (props.responded && !props.arrived) {
+
+    // }
+
     if(!props.responded || !props.arrived){
        navigation.navigate(routes.Alert, {
         data: {

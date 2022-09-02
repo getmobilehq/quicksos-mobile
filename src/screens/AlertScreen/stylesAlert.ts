@@ -9,8 +9,9 @@ container: {
 },
 contentStyle: {
     color: primaryColors.white,
+    paddingVertical: 10,
     fontSize: 18,
-    lineHeight: 30,
+    lineHeight: scale(30),
     paddingTop: scale(5)
   },
 label: {
@@ -29,7 +30,7 @@ paddingVertical:scale(10),
 },
 alertContainer: {
 backgroundColor: primaryColors.naturalColor,
-height: "100%",
+// height: "100%",
 paddingHorizontal: scale(20),
 paddingVertical: scale(10),
 flex: 1,

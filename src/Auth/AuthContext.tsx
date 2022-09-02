@@ -31,6 +31,7 @@ export default function AuthContextProvider({
 }) {
     const [user, setUser] = React.useState<UserDetails | null>(null)
     const [profile, setProfile] = React.useState<UserProfile | string>("")
+    const [cases, setCases] = React.useState("")
 
 
  const getDataFromStore = async ()  => {
@@ -40,7 +41,13 @@ export default function AuthContextProvider({
     if (!JSON.parse(jsonValue) && !token ){
       setUser(null)
     }
+
+
 }   
+
+const fetchCases = async () => {
+
+}
 
 React.useEffect(() => {
     getDataFromStore()

@@ -1,6 +1,6 @@
 import { Avatar, Image, Popover  } from 'native-base';
 import React, {PropsWithChildren, useEffect, useState} from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, FlatList } from 'react-native';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -39,8 +39,12 @@ export default function HomeScreen(props: any) {
   const {user, setProfile,profile } = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
   let pushDataObject = getPushDataObject()
+  const [refreshComponent, setRefeshComponent] = React.useState(false)
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
   let API = useAxios()
+
+  
 
   useEffect(() => {
     if (pushDataObject.screenName) {
@@ -73,15 +77,38 @@ export default function HomeScreen(props: any) {
     setParams("")
   }
 
+  const renderItem = ({ item }: any) => {
+    return (
+      // <Item
+      //   item={item}
+      //   onPress={() => setSelectedId(item.id)}
+      //   backgroundColor={{ backgroundColor }}
+      //   textColor={{ color }}
+      // />
+      <NotificationComponent 
+      key={props.id} 
+      navigate={() => navigate()} 
+      {...item}/>
+    );
+  };
+
 
 const navigate = () => {
   props.navigation.navigate(props.alert)
 }
+ const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
 
 // React.useEffect(() => {
-  const {isLoading, data, isError, error} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params, API), {enabled: true})
+  const {isLoading, data, refetch} = useQuery([GET_ISSUE_KEY, params],() => getIssues(params, API), {enabled: true})
 
-  const {isLoading: profileLoading, data: profileData} = useQuery("profile", () => getProfile(API), {enabled: true})
+  const onRefresh = async () => {
+    setIsRefreshing(true)
+    await refetch()
+    setIsRefreshing(false)
+  }
+
+ 
+
   React.useEffect(() => {
     if (!profileLoading && profileData) {
     setProfile({
@@ -97,6 +124,8 @@ const navigate = () => {
   }, [profileData])
 
   const filteredData = !isLoading && data?.filter((data:any) => data.status !== "complete")
+
+  console.log("fltereredData", filteredData)
 
     return (
       <SafeAreaView style={styles.container}>
@@ -114,7 +143,7 @@ const navigate = () => {
       <Text style={{fontWeight: "bold"}}>Ekobot</Text>
         </View>
         </View>
-        <ScrollView>
+        <View>
 
         {/* DashBoard */}
         <View style={styles.dashboard}>
@@ -211,8 +240,8 @@ const navigate = () => {
           </View>
         
         </View>
-        <ScrollView 
-        // style={{marginVertical: 20,}}
+        <View 
+        style={{flex: 1, height: "100%",}}
         >
           {isLoading && 
           <View style={{height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
@@ -223,15 +252,32 @@ const navigate = () => {
             !isLoading && !filteredData?.length && 
             <Text style={{color: primaryColors.white, textAlign:"center", marginTop: 50 }}>No results found</Text>
            }
+           
 
-           {!isLoading && filteredData?.length > 0 && filteredData.map((props: Case) => (
-               <NotificationComponent key={props.id} navigate={() => navigate()} {...props}/>
-             )) }
-        </ScrollView>
+           {!isLoading && filteredData?.length > 0 && 
+            <FlatList
+            
+            contentContainerStyle={{
+              marginVertical: scale(20),
+              marginHorizontal: scale(10),
+              paddingBottom: scale(40) 
+              // height:400,
+
+            }}
+              data={filteredData}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              onRefresh={onRefresh}
+              refreshing={isRefreshing}
+              // extraData={selectedId}
+              
+       />}
+
+        </View>
 
 
         </View>
-        </ScrollView>
+        </View>
 
       </SafeAreaView>
     );

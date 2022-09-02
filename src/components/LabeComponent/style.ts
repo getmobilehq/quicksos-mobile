@@ -6,7 +6,7 @@ container: {
     width: "100%",
     borderBottomWidth: 1,
     borderStyle: "solid",
-    height: 50,
+    // height: 50,
     display: "flex",
     justifyContent: "space-between",
 },

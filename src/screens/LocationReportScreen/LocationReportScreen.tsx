@@ -159,8 +159,8 @@ const {data: Responders} = useQuery("agencies", () => getResponders(API))
           onChangeText={(text: string) => setReportText(text)}
         _focus={{borderColor: "white"}}
           variant="underlined" color={primaryColors.white}
-          placeholderTextColor={primaryColors.white}
-        placeholder="Emergency has been calmed, casulties have been evacuated and injured persons have been attended to" 
+          // placeholderTextColor={primaryColors.white}
+        placeholder="State emergency status and report" 
         size={"md"}
         />
           </View>

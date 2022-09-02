@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
             flex: 1,
             marginVertical: 10,
             marginHorizontal: 10,
+        //    paddingBottom: 20,
 
         },
         dashboard: {
